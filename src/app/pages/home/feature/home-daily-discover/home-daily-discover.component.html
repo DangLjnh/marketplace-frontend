@@ -1,0 +1,29 @@
+<div>
+  <div class="mb-3 bg-white ">
+    <p class="py-3 font-medium text-center uppercase">Daily discover</p>
+    <p class="py-[3px] bg-blue-500"></p>
+  </div>
+  <div class="grid grid-cols-6 gap-3">
+    <div class="flex flex-col w-full h-full transition-all bg-white rounded hover:shadow-xl">
+      <div class="relative">
+        <img
+          src="https://cdn.shopify.com/s/files/1/0685/2237/7522/products/Polomanor_ao-polo_Blaro_050123_1.jpg?v=1673001524"
+          class="h-[190px] w-full object-cover" alt="">
+        <span class="absolute px-2 py-1 text-xs font-medium text-red-500 bg-red-200 rounded -left-2 top-1">-42%</span>
+      </div>
+      <div class="flex flex-col flex-1 p-2">
+        <div class="flex-1 text-xs">
+          <p>Áo Polo nam có cổ UGO-BLACK vải cá sấu cotton UNI
+          </p>
+        </div>
+        <div class="my-2">
+          <app-icon-discount [percent]="'10%'"></app-icon-discount>
+        </div>
+        <div class="flex items-center justify-between mt-auto">
+          <span class="font-medium text-red-500">139.000</span>
+          <span class="text-xs text-gray-400">387 sold</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
