@@ -1,0 +1,31 @@
+<app-header></app-header>
+
+<main class="mb-5">
+  <p class="container my-5 text-xl font-bold">Shopping Cart</p>
+  <div class="container grid grid-cols-12 mt-5 gap-x-5">
+    <div class="col-span-9">
+      <div class="flex flex-col gap-5">
+
+        <div class="bg-white rounded grid grid-cols-[420px_190px_190px_120px_30px] p-3 font-medium">
+          <span class="flex items-center">Unit price</span>
+          <span class="flex items-center">Quantity</span>
+          <span class="flex items-center">Total price</span>
+          <div class="flex items-center">
+            <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt=""
+              class="w-[18px] h-[18px]">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-span-3">
+      <app-cart-address></app-cart-address>
+
+
+    </div>
+
+  </div>
+</main>
+
+<app-footer></app-footer>
