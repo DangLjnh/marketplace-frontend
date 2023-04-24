@@ -1,0 +1,18 @@
+.hide {
+  color: #999999;
+  transition: 0.2 all linear;
+}
+.or {
+  @apply relative z-[2];
+  &::after {
+    content: "";
+    @apply border-t border-lightGray w-1/2 absolute right-0 top-1/2 -translate-y-1/2;
+  }
+  &::before {
+    content: "";
+    @apply border-t border-lightGray w-1/2 absolute left-0 top-1/2 -translate-y-1/2;
+  }
+  span {
+    @apply bg-white px-4 relative text-lightGray z-10 uppercase;
+  }
+}

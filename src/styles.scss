@@ -2,8 +2,18 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-body {
-  background-color: #efefef;
+
+@layer base {
+  body {
+    @apply bg-content text-black text-sm;
+    line-height: 1.5 !important;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+  }
+  main {
+    @apply min-h-[40vh] my-5;
+  }
 }
 *,
 *::before,
@@ -42,7 +52,7 @@ h6 {
   overflow-wrap: break-word;
 }
 .icon-header {
-  @apply flex items-center justify-center px-5 py-3 transition-all rounded-lg hover:bg-slate-100;
+  @apply flex items-center justify-center px-4 py-3 transition-all rounded-lg hover:bg-slate-100;
 }
 .open {
   display: block;

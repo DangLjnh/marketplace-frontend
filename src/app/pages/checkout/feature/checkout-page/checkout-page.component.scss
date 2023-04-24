@@ -1,0 +1,7 @@
+.ship-option {
+  position: relative;
+  &::after {
+    content: "";
+    @apply absolute block w-5 h-5 bg-extraWhiteBlue border border-b-lightBlue border-r-lightBlue border-l-0 border-t-0 left-1/2 -translate-x-1/2 bottom-[-0.6px] translate-y-1/2 rotate-45 rounded-br;
+  }
+}

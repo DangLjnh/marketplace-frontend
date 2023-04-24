@@ -1,0 +1,32 @@
+<div class="p-3 bg-white rounded">
+  <div class="flex items-center justify-between pb-3 mb-3 border-b">
+    <div class="">
+      <p class="text-lg font-medium">My Addresses</p>
+      <p class="text-darkGray">Manage your address</p>
+    </div>
+    <app-button text="Add New Address"></app-button>
+  </div>
+  <div class="flex flex-col gap-2">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-x-2">
+        <span class="pr-2 text-lg border-r">Dang Linh</span>
+        <span class="text-darkGray">0969552196</span>
+        <div class="flex items-center gap-x-1">
+          <div class="flex items-center justify-center w-4 h-4 border rounded-full border-lightGreen">
+            <app-icon-check [color]="'#00AB56'"></app-icon-check>
+          </div>
+          <p class="text-xs text-lightGreen">Default address</p>
+        </div>
+      </div>
+      <span>Edit</span>
+    </div>
+    <div class="flex items-center justify-between text-darkGray">
+      <div class="">
+        <span>271 đường số 1</span>
+        <p>Phường Bình Hưng Hòa B, Quận Bình Tân, TP. Hồ Chí Minh</p>
+      </div>
+      <button class="px-2 py-1 border rounded hover:bg-slate-100">Set as default</button>
+    </div>
+
+  </div>
+</div>

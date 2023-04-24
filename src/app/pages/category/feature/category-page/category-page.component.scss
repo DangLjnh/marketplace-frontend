@@ -1,0 +1,6 @@
+.category-active {
+  @apply text-hotRed;
+  svg {
+    @apply opacity-100 fill-hotRed;
+  }
+}

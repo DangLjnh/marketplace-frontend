@@ -1,0 +1,21 @@
+<div class="p-3 bg-white rounded">
+  <div class="flex items-center mb-3 gap-x-3">
+    <img
+      src="https://scontent.fsgn13-4.fna.fbcdn.net/v/t39.30808-6/329099713_713019453638776_1692961499504191347_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=cBkfU_-AwdgAX-rJfS5&_nc_ht=scontent.fsgn13-4.fna&oh=00_AfCNW2uN7wjHiR69_dJ8lmpRlfKb572dpAUt4b0Jopdhzw&oe=6446E429"
+      alt="" class="w-[45px] h-[45px] rounded-full object-cover">
+    <div class="">
+      <span class="font-light">Account of</span>
+      <p class="font-medium">Dang Linh</p>
+    </div>
+  </div>
+  <a *ngFor="let account of accountNav"
+    class="flex items-center px-4 py-3 transition-all rounded gap-x-5 hover:bg-slate-100" href={{account.url}}>
+    <ng-container [ngSwitch]="account.icon">
+      <app-icon-account *ngSwitchCase="'account'"></app-icon-account>
+      <app-icon-lock *ngSwitchCase="'lock'"></app-icon-lock>
+      <app-icon-location *ngSwitchCase="'location'"></app-icon-location>
+      <app-icon-order *ngSwitchCase="'order'"></app-icon-order>
+    </ng-container>
+    <span>{{account.name}}</span>
+  </a>
+</div>
