@@ -10,6 +10,15 @@ import { ButtonComponent } from './UI/button/button.component';
 import { CartAddressComponent } from '../pages/cart/feature/cart-address/cart-address.component';
 import { ProductItemComponent } from './UI/product/product-item/product-item.component';
 import { IconModule } from './UI/icon/icon.module';
+import { InputSearchComponent } from './UI/input-search/input-search.component';
+import { LayoutSharedComponent } from './UI/layout/layout-shared/layout-shared.component';
+import { SharedRoutingModule } from './shared-routing.module';
+import { InputCounterComponent } from './UI/input-counter/input-counter.component';
+import { ButtonOptionComponent } from './UI/button/button-option/button-option.component';
+import { StarListComponent } from './UI/star-list/star-list.component';
+import { SwiperListComponent } from './UI/section/swiper-list/swiper-list.component';
+import { SwiperModule } from 'swiper/angular';
+import { ProductSectionComponent } from './UI/product/product-section/product-section.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +28,13 @@ import { IconModule } from './UI/icon/icon.module';
     ButtonComponent,
     CartAddressComponent,
     ProductItemComponent,
+    InputSearchComponent,
+    LayoutSharedComponent,
+    InputCounterComponent,
+    ButtonOptionComponent,
+    StarListComponent,
+    SwiperListComponent,
+    ProductSectionComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +43,8 @@ import { IconModule } from './UI/icon/icon.module';
     MatBadgeModule,
     MatInputModule,
     IconModule,
+    SharedRoutingModule,
+    SwiperModule,
   ],
   exports: [
     HeaderComponent,
@@ -35,6 +53,13 @@ import { IconModule } from './UI/icon/icon.module';
     ButtonComponent,
     CartAddressComponent,
     ProductItemComponent,
+    InputSearchComponent,
+    LayoutSharedComponent,
+    InputCounterComponent,
+    ButtonOptionComponent,
+    StarListComponent,
+    SwiperListComponent,
+    ProductSectionComponent,
   ],
 })
 export class SharedModule {}

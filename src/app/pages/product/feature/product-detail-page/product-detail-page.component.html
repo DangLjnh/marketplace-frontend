@@ -1,0 +1,286 @@
+<div class="flex flex-col gap-5 -mt-5">
+  <div class="container flex items-center mt-5 bg-white rounded gap-x-10">
+    <div class="max-w-[450px]">
+      <div class="p-3">
+        <div class="w-[450px]">
+          <div class="product-image rounded mb-3 w-full h-[450px]"></div>
+          <div class="flex items-center justify-between w-full">
+            <img src="https://down-vn.img.susercontent.com/file/21a64463b0502f51971e4dfe0a98a291" alt=""
+              class="h-[82px] object-contain rounded">
+            <img src="https://down-vn.img.susercontent.com/file/21a64463b0502f51971e4dfe0a98a291" alt=""
+              class="h-[82px] object-contain rounded">
+            <img src="https://down-vn.img.susercontent.com/file/21a64463b0502f51971e4dfe0a98a291" alt=""
+              class="h-[82px] object-contain rounded">
+            <img src="https://down-vn.img.susercontent.com/file/21a64463b0502f51971e4dfe0a98a291" alt=""
+              class="h-[82px] object-contain rounded">
+            <img src="https://down-vn.img.susercontent.com/file/21a64463b0502f51971e4dfe0a98a291" alt=""
+              class="h-[82px] object-contain rounded">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="flex flex-col gap-2 p-3">
+        <p class="text-xl">Áo Polo nam có cổ UGO-BLACK vải cá sấu cotton UNI, nam tính, thanh lịch, sang trọng -
+          POLOMANOR
+        </p>
+
+        <div class="flex items-center gap-x-2">
+          <div class="pr-3 mr-3 border-r">
+            <span class="mr-1">4.9</span>
+            <app-star-list></app-star-list>
+          </div>
+          <div class="pr-3 mr-3 border-r">
+            <span class="mr-1">1.1</span>
+            <span>Ratings</span>
+          </div>
+          <div class="">
+            <span class="mr-1">4,2K</span>
+            <span>Sold</span>
+          </div>
+        </div>
+
+        <div class="px-4 py-5 rounded bg-gray-50">
+          <div class="flex items-center gap-x-3 ">
+            <span class="line-through text-lightGray">₫329.000</span>
+            <span class="text-2xl font-medium text-hotRed">₫296.000</span>
+            <span class="p-1 text-[10px] text-white bg-hotRed rounded-sm">10% OFF</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-5">
+
+          <div class="flex items-center gap-x-2">
+            <div class="w-[110px]">
+              <span class="text-darkGray">Shipping</span>
+            </div>
+            <div class="flex items-center flex-1 gap-x-3">
+              <app-icon-truck color="black" stroke="black"></app-icon-truck>
+              <span class="text-darkGray">Shipping Voucher:</span>
+              <span class="px-2 py-1 text-sm font-medium rounded text-hotRed bg-red-50">₫15k OFF</span>
+              <span class="px-2 py-1 text-sm font-medium rounded text-hotRed bg-red-50">₫30k OFF</span>
+            </div>
+          </div>
+
+          <app-product-category-option [nameType]="'Color'"
+            [nameOptionList]="['Black','White','Coral']"></app-product-category-option>
+
+          <app-product-category-option [nameType]="'Size'"
+            [nameOptionList]="['S','M','L']"></app-product-category-option>
+
+          <div class="flex items-center gap-x-2">
+            <div class="w-[110px]">
+              <span class="text-darkGray">Quantity</span>
+            </div>
+            <div class="flex flex-wrap items-center flex-1 gap-3">
+              <app-input-counter [valueCounter]="valueCounter" (checkedMinus)="onCountMinus($event)"
+                (checkedPlus)="onCountPlus($event)"></app-input-counter>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-x-5">
+              <app-button theme="blue" className="flex items-center gap-x-2">
+                <app-icon-plus-cart color="#0A68FF" stroke="#0A68FF"></app-icon-plus-cart>
+                <span>Add To Cart</span>
+              </app-button>
+              <app-button>
+                Buy Now
+              </app-button>
+            </div>
+            <div class="flex items-center p-3 border rounded gap-x-5">
+              <span class="font-medium">28 other shops</span>
+              <app-button theme="blue" className=" flex items-center gap-x-2">
+                <span>Compare price</span>
+              </app-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container bg-white rounded">
+
+    <div class="flex items-center p-3">
+      <div class="flex items-start gap-x-5 max-w-[27.5rem] min-w-[250px] pr-5 mr-5 border-r">
+        <img src="https://down-vn.img.susercontent.com/file/02cc55b581a1da07745c4e19070c0f16_tn" alt=""
+          class="w-[75px] h-[75px] rounded-full border-2 border-gray-200">
+        <div class="flex flex-col gap-1 overflow-hidden">
+          <span class="line-clamp-1">coolmate.vn</span>
+          <div class="w-[200px]">
+            <app-button theme="blue" className="flex items-center gap-x-2 !text-black !w-auto">
+              <app-icon-store stroke="#0A68FF" color="#0A68FF" fill="#0A68FF"></app-icon-store>
+              <span class="text-sm text-primary">View shop</span>
+            </app-button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="grid w-full grid-cols-3 gap-x-16">
+        <div class="flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span>Score Ratings</span>
+            <span class="text-hotRed">2.5k</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span>Review</span>
+            <span class="text-hotRed">2.5k</span>
+          </div>
+        </div>
+        <div class="flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span>Products</span>
+            <span class="text-hotRed">499</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span>Joined</span>
+            <span class="text-hotRed">6 years ago</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container bg-white rounded">
+    <div class="flex flex-col gap-5 p-3">
+      <div class="p-3 bg-gray-100 rounded">
+        <p class="text-lg font-medium tracking-wide uppercase">Product Specifications</p>
+      </div>
+
+      <div class="flex flex-col gap-5">
+        <div class="flex items-center gap-x-3">
+          <span class="w-36">
+            Category
+          </span>
+          <span>Men Clothes</span>
+        </div>
+        <div class="flex items-center gap-x-3">
+          <span class="w-36">
+            Brand
+          </span>
+          <span>COOLMATE</span>
+        </div>
+        <div class="flex items-center gap-x-3">
+          <span class="w-36">
+            Style
+          </span>
+          <span>Basic, Athletic, Nam tính</span>
+        </div>
+        <div class="flex items-center gap-x-3">
+          <span class="w-36">
+            Country of Origin
+          </span>
+          <span>Vietnam</span>
+        </div>
+        <div class="flex items-center gap-x-3">
+          <span class="w-36">
+            Material
+          </span>
+          <span>Mềm mại và khử mùi hiệu quả, 50% S.Café + 50% Recycled PET</span>
+        </div>
+      </div>
+
+      <div class="p-3 bg-gray-100 rounded">
+        <p class="text-lg font-medium tracking-wide uppercase">Product Description</p>
+      </div>
+
+      <p class="leading-7">Bạn có bất ngờ nếu Coolmate nói rằng chiếc áo Polo này được làm từ nguyên liệu tái chế, bền
+        vững và thân thiện
+        với môi
+        trường. Coolmate tin chiếc Áo Polo nam Cafe này chính là chiếc áo thực sự xứng đáng có trong tủ đồ của bạn với
+        công nghệ
+        xử lý và may vượt trội đem lại trải nghiệm tốt nhất đến bạn.
+        <br>
+        Chất liệu: 50% S.Café + 50% Recycled PET, đem đến sự mềm mại và khử mùi hiệu quả
+        <br>
+        Ứng dụng công nghệ Hydroponic tăng khả năng bốc hơi nước khỏi vải, giúp nhanh khô
+        <br>
+        Chỉ số chống tia UV tự nhiên lên đến >95%
+        <br>
+        Điều hoà và làm mát cơ thể, giảm 1-2*C so với vải thường
+        <br>
+        Phần bo cổ sản xuất tại nhà máy chất lượng cao, sử dụng sợi Hightwisted 45D/75D tạo co giãn và bền form
+        <br>
+        Nguyên liệu bền vững, thân thiện với môi trường
+        <br>
+        Người mẫu:
+        <br>
+        1m86 - [72px]kg; mặc áo size XL
+      </p>
+    </div>
+  </div>
+
+  <div class="container bg-white rounded">
+    <div class="flex flex-col gap-5 p-3">
+      <p class="text-xl">Product Ratings</p>
+      <div class="flex items-center gap-7 p-5 border border-yellow-100 bg-[#fffbf8]">
+        <div class="flex flex-col items-center min-w-[130px]">
+          <p class="text-[30px] text-hotRed font-medium">4.9 <span class="text-xl font-normal">out of 5</span></p>
+          <app-star-list sizeStar="20"></app-star-list>
+        </div>
+        <app-product-category-option [hasType]="false"
+          [nameOptionList]="['All','5 Star','4 Star']"></app-product-category-option>
+      </div>
+
+      <div class="flex items-start border-b mb-7 pb-7 gap-x-5">
+        <app-icon-avatar-default></app-icon-avatar-default>
+        <div class="flex flex-col gap-1">
+          <p>Dang Linh</p>
+          <app-star-list></app-star-list>
+          <p class="text-xs text-lightGray">2023-01-11 18:50 | Variation: Xám Nhạt,XL</p>
+          <p>Bố mình mặc rất vừa . Shop tv size chuẩn . Vải còn đẹp nữa . LikeeeeeeBố mình mặc rất vừa </p>
+          <div class="flex flex-wrap gap-3">
+            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-start border-b mb-7 pb-7 gap-x-5">
+        <app-icon-avatar-default></app-icon-avatar-default>
+        <div class="flex flex-col gap-1">
+          <p>Dang Linh</p>
+          <app-star-list></app-star-list>
+          <p>2023-01-11 18:50 | Variation: Xám Nhạt,XL</p>
+          <p>Bố mình mặc rất vừa . Shop tv size chuẩn . Vải còn đẹp nữa . LikeeeeeeBố mình mặc rất vừa </p>
+          <div class="flex flex-wrap gap-3">
+            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <p class="my-5 text-xl text-darkGray">FROM THE SAME SHOP</p>
+    <app-swiper-list></app-swiper-list>
+  </div>
+
+  <div class="container">
+    <p class="my-5 text-xl text-darkGray">YOU MAY ALSO LIKE</p>
+    <div class="grid grid-cols-6 gap-5">
+      <app-product-item></app-product-item>
+      <app-product-item></app-product-item>
+      <app-product-item></app-product-item>
+      <app-product-item></app-product-item>
+      <app-product-item></app-product-item>
+      <app-product-item></app-product-item>
+      <app-product-item></app-product-item>
+      <app-product-item></app-product-item>
+      <app-product-item></app-product-item>
+      <app-product-item></app-product-item>
+      <app-product-item></app-product-item>
+      <app-product-item></app-product-item>
+    </div>
+  </div>
+
+</div>

@@ -1,3 +1,6 @@
 .full {
   width: 100%;
 }
+.themeBlue {
+  @apply bg-blue-50 text-primary border border-primary;
+}

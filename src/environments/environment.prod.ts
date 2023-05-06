@@ -1,3 +1,5 @@
 export const environment = {
   production: true,
+  backendUrl: 'http://localhost:8080/api/v1',
+  addressUrl: 'https://provinces.open-api.vn/api',
 };

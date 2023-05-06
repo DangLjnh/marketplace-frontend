@@ -14,6 +14,12 @@ import { IconOrderComponent } from './icon-order/icon-order.component';
 import { IconCartComponent } from './icon-cart/icon-cart.component';
 import { IconLocationComponent } from './icon-location/icon-location.component';
 import { IconLockComponent } from './icon-lock/icon-lock.component';
+import { IconTruckComponent } from './icon-truck/icon-truck.component';
+import { IconGuardComponent } from './icon-guard/icon-guard.component';
+import { IconPlusCartComponent } from './icon-plus-cart/icon-plus-cart.component';
+import { IconStarRatingComponent } from './icon-star-rating/icon-star-rating.component';
+import { IconAvatarDefaultComponent } from './icon-avatar-default/icon-avatar-default.component';
+import { IconPlusComponent } from './icon-plus/icon-plus.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +37,12 @@ import { IconLockComponent } from './icon-lock/icon-lock.component';
     IconCartComponent,
     IconLocationComponent,
     IconLockComponent,
+    IconTruckComponent,
+    IconGuardComponent,
+    IconPlusCartComponent,
+    IconStarRatingComponent,
+    IconAvatarDefaultComponent,
+    IconPlusComponent,
   ],
   imports: [CommonModule],
   exports: [
@@ -48,6 +60,12 @@ import { IconLockComponent } from './icon-lock/icon-lock.component';
     IconCartComponent,
     IconLocationComponent,
     IconLockComponent,
+    IconTruckComponent,
+    IconGuardComponent,
+    IconPlusCartComponent,
+    IconStarRatingComponent,
+    IconAvatarDefaultComponent,
+    IconPlusComponent,
   ],
 })
 export class IconModule {}

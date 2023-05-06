@@ -1,0 +1,15 @@
+<div class="flex items-center w-full">
+  <div class="relative flex flex-row w-full h-10 rounded-lg">
+    <button data-action="decrement" (click)="checkedMinus.emit(valueCounter)"
+      class="w-10 h-full text-gray-600 transition-all rounded-l cursor-pointer bg-whiteGray hover:bg-gray-200 ">
+      <span class="m-auto text-2xl font-thin">−</span>
+    </button>
+    <input type="number"
+      class="flex items-center w-[20%] font-semibold text-center bg-whiteGray outline-none focus:outline-none text-md hover:text-black focus:text-black"
+      name="custom-input-number" [value]="valueCounter" min="1" (input)="onInputChange($event)">
+    <button data-action=" increment" (click)="checkedPlus.emit(valueCounter)"
+      class="w-10 h-full text-gray-600 transition-all rounded-r cursor-pointer bg-whiteGray hover:bg-gray-200">
+      <span class="m-auto text-2xl font-thin">+</span>
+    </button>
+  </div>
+</div>

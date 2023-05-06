@@ -1,1 +1,69 @@
-<p>customer-purchase works!</p>
+<div class="flex flex-col gap-3">
+  <div class="sticky top-0 flex z-[3] items-center justify-between bg-white rounded">
+    <a *ngFor="let purchase of purchases" href="" class="w-full border-b-[2px] border-gray-300 py-3">
+      <div class="w-full text-center ">
+        <span>{{purchase.name}}</span>
+      </div>
+    </a>
+  </div>
+
+  <app-input-search placeholder="You can search by Shop name, Order ID or Product name"></app-input-search>
+
+  <div class="p-3 bg-white rounded">
+    <div class="flex items-center justify-between pb-3 mb-3 border-b ">
+      <div class="flex items-center gap-x-2">
+        <app-icon-store></app-icon-store>
+        <span>Shondo VietNam</span>
+      </div>
+      <div class="flex items-center gap-x-2">
+        <div class="flex items-center pr-2 border-r gap-x-2">
+          <app-icon-truck color="#00AB56" stroke="#00AB56"></app-icon-truck>
+          <span class="whitespace-nowrap text-lightGreen">Order have been delivered successfully</span>
+        </div>
+        <span class="text-hotRed">COMPLETED</span>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between pb-3 mb-3 border-b">
+      <div class="flex items-start gap-x-5">
+        <img src="https://pos.nvncdn.net/04f7ff-92233/ps/20230210_azLkF6mDpZjEUgQJ.jpeg" alt=""
+          class="object-contain w-20 h-20">
+        <div class="flex flex-col gap-[2px]">
+          <p class="line-clamp-2">Giày Sandals Unisex Shondo F7 Racing Đế Trắng Phối Đen Quai Đen F7R0010
+          </p>
+          <span class="text-lightGray">Option: 44</span>
+          <span>x1</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-x-2">
+        <span class="line-through text-lightGray">₫479.000</span>
+        <span class="text-hotRed">₫352.000</span>
+      </div>
+    </div>
+    <div class="flex items-center justify-between pb-3 mb-3 border-b">
+      <div class="flex items-start gap-x-5">
+        <img src="https://pos.nvncdn.net/04f7ff-92233/ps/20230210_lPEAdaZ8FnZ4Ip13.jpeg" alt=""
+          class="object-contain w-20 h-20">
+        <div class="flex flex-col gap-[2px]">
+          <p class="line-clamp-2">Giày Sandals Unisex Shondo F7 Racing Đế Trắng Phối Đen Quai Đen F7R0010
+          </p>
+          <span class="text-lightGray">Option: 44</span>
+          <span>x1</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-x-2">
+        <span class="line-through text-lightGray">₫479.000</span>
+        <span class="text-hotRed">₫352.000</span>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-end">
+      <div class="flex items-center gap-x-2">
+        <app-icon-guard></app-icon-guard>
+        <p class="text-lg">Order total: <span class="ml-2 text-2xl text-hotRed">₫353.200</span></p>
+      </div>
+    </div>
+  </div>
+
+
+</div>

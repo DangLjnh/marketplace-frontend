@@ -1,32 +1,51 @@
 <div class="p-3 bg-white rounded">
-  <div class="flex items-center justify-between pb-3 mb-3 border-b">
+  <div class="flex items-center justify-between pb-5 mb-5 border-b">
     <div class="">
       <p class="text-lg font-medium">My Addresses</p>
       <p class="text-darkGray">Manage your address</p>
     </div>
-    <app-button text="Add New Address"></app-button>
+
+    <app-button (click)="openModalCreateAddress()">
+      <div class="flex items-center gap-x-3">
+        <app-icon-plus></app-icon-plus>
+        <span>Add new address</span>
+      </div>
+    </app-button>
   </div>
-  <div class="flex flex-col gap-2">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-x-2">
-        <span class="pr-2 text-lg border-r">Dang Linh</span>
-        <span class="text-darkGray">0969552196</span>
-        <div class="flex items-center gap-x-1">
-          <div class="flex items-center justify-center w-4 h-4 border rounded-full border-lightGreen">
-            <app-icon-check [color]="'#00AB56'"></app-icon-check>
+  <div class="flex flex-col gap-5">
+
+    <ng-container *ngIf="listAddress">
+      <div *ngFor="let address of listAddress; index as idx" class="flex flex-col gap-2"
+        [class.border-bottom]="idx !== listAddress.length-1">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-x-2">
+            <span class="pr-2 text-lg border-r">{{address.Address_Detail.full_name}}</span>
+            <span class="text-darkGray">{{address.Address_Detail.phone}}</span>
+            <div class="flex items-center gap-x-1" *ngIf="address.isDefault">
+              <div class="flex items-center justify-center w-4 h-4 border rounded-full border-lightGreen">
+                <app-icon-check [color]="'#00AB56'"></app-icon-check>
+              </div>
+              <p class="text-xs text-lightGreen">Default address</p>
+            </div>
           </div>
-          <p class="text-xs text-lightGreen">Default address</p>
+          <div class="flex items-center gap-x-2">
+            <button class="text-primary" (click)="openModalEditAddress(address.id)">Edit</button>
+            <button *ngIf="!address.isDefault" class="p-2 rounded bg-whiteGray text-hotRed"
+              (click)="handleDeleteAddress(address.id)">Delete</button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-darkGray">
+          <div class="text-fs14">
+            <p class="mb-1">{{address.Address_Detail.address}}</p>
+            <p class="tracking-wide">{{address.Address_Detail.ward}}, {{address.Address_Detail.district}},
+              {{address.Address_Detail.city}}</p>
+          </div>
+          <button *ngIf="!address.isDefault" (click)="handleChangeDefaultAddress(address.id)"
+            class="px-2 py-1 text-black transition-all border rounded hover:bg-gray-50">Set as
+            default</button>
         </div>
       </div>
-      <span>Edit</span>
-    </div>
-    <div class="flex items-center justify-between text-darkGray">
-      <div class="">
-        <span>271 đường số 1</span>
-        <p>Phường Bình Hưng Hòa B, Quận Bình Tân, TP. Hồ Chí Minh</p>
-      </div>
-      <button class="px-2 py-1 border rounded hover:bg-slate-100">Set as default</button>
-    </div>
+    </ng-container>
 
   </div>
 </div>

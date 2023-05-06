@@ -1,0 +1,30 @@
+.svg-icon {
+  display: inline-block;
+  fill: currentColor;
+  position: relative;
+}
+.rating-stars__hollow-star {
+  color: #ee4d2d;
+  display: block;
+  stroke: currentColor;
+}
+.rating-stars__star-wrapper {
+  position: relative;
+  margin-right: 1px;
+}
+.rating-stars__star-wrapper > .rating-stars__lit {
+  overflow: hidden;
+  position: absolute !important;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.rating-stars__primary-star {
+  color: #ee4d2d;
+  stroke: #ee4d2d;
+  display: block;
+  position: absolute !important;
+  left: 0;
+  overflow-x: hidden;
+}

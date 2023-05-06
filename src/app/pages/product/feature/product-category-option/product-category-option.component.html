@@ -1,0 +1,16 @@
+<div *ngIf="hasType;else notHasType" class="flex items-center gap-x-2">
+  <div class="w-[110px]">
+    <span class="text-darkGray">{{nameType}}</span>
+  </div>
+  <div class="flex flex-wrap items-center flex-1 gap-3">
+    <app-button-option *ngFor="let nameOption of nameOptionList" (checkedChange)="onChecked($event, nameOption)"
+      [isActive]="nameOption === activeOption" [nameOption]="nameOption"></app-button-option>
+  </div>
+</div>
+
+<ng-template #notHasType>
+  <div class="flex flex-wrap items-center flex-1 gap-3">
+    <app-button-option *ngFor="let nameOption of nameOptionList" (checkedChange)="onChecked($event, nameOption)"
+      [isActive]="nameOption === activeOption" [nameOption]="nameOption"></app-button-option>
+  </div>
+</ng-template>

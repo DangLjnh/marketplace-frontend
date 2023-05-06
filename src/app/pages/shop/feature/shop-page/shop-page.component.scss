@@ -1,0 +1,12 @@
+.background-shop {
+  @apply object-cover absolute top-0 left-0 right-0 bottom-0 z-10;
+  background-image: url("https://salt.tikicdn.com/ts/sellercenterFE/af/03/9b/57f855e860180c28a25949bce95c1266.png");
+  background-position: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(2px);
+  &::after {
+    content: "";
+    @apply absolute top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,.4)] z-[11];
+  }
+}

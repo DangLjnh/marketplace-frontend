@@ -1,46 +1,40 @@
-<app-header></app-header>
+<div class="container grid grid-cols-12 mt-5 gap-x-5">
+  <div class="flex flex-col col-span-9 gap-5">
+    <div class="flex flex-col gap-5">
+      <div class="p-3 bg-white rounded">
+        <p class="mb-5 text-xl font-medium">Shipping Option</p>
+        <div class="flex flex-col gap-8 ">
 
-<main>
-  <div class="container grid grid-cols-12 mt-5 gap-x-5">
-    <div class="flex flex-col col-span-9 gap-5">
-      <div class="flex flex-col gap-5">
-        <div class="p-3 bg-white rounded">
-          <p class="mb-5 text-xl font-medium">Shipping Option</p>
-          <div class="flex flex-col gap-8 ">
-
-            <div class="w-full">
-              <mat-radio-group aria-label="Select an option" class="block w-full">
-                <mat-radio-button value="1" [checked]="true"
-                  class="block w-[50%] p-3 border rounded-lg bg-extraWhiteBlue border-lightBlue ship-option">
-                  <div class="flex items-center gap-x-2">
-                    <app-icon-fast></app-icon-fast>
-                    <p>Save Delivery</p>
-                    <span class="p-1 text-xs font-bold bg-white rounded text-lightGreen">-15K</span>
-                  </div>
-                </mat-radio-button>
-              </mat-radio-group>
-            </div>
-
-            <app-checkout-package></app-checkout-package>
-
+          <div class="w-full">
+            <mat-radio-group aria-label="Select an option" class="block w-full">
+              <mat-radio-button value="1" [checked]="true"
+                class="block w-[50%] p-3 border rounded-lg bg-extraWhiteBlue border-lightBlue ship-option">
+                <div class="flex items-center gap-x-2">
+                  <app-icon-fast></app-icon-fast>
+                  <p>Save Delivery</p>
+                  <span class="p-1 text-xs font-bold bg-white rounded text-lightGreen">-15K</span>
+                </div>
+              </mat-radio-button>
+            </mat-radio-group>
           </div>
-        </div>
-      </div>
 
-      <app-checkout-payment></app-checkout-payment>
-    </div>
+          <app-checkout-package></app-checkout-package>
 
-    <div class="flex flex-col col-span-3 gap-5">
-      <app-cart-address></app-cart-address>
-      <div class="bg-white rounded">
-        <p class="p-3 text-lg font-medium border-b">Order</p>
-        <div class="p-3">
-          <app-checkout-order></app-checkout-order>
         </div>
       </div>
     </div>
 
+    <app-checkout-payment></app-checkout-payment>
   </div>
-</main>
 
-<app-footer></app-footer>
+  <div class="flex flex-col col-span-3 gap-5">
+    <app-cart-address></app-cart-address>
+    <div class="bg-white rounded">
+      <p class="p-3 text-lg font-medium border-b">Order</p>
+      <div class="p-3">
+        <app-checkout-order></app-checkout-order>
+      </div>
+    </div>
+  </div>
+
+</div>

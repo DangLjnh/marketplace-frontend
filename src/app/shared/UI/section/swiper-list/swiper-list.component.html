@@ -1,0 +1,48 @@
+<div class="relative swiper-wrapper" (mouseover)="isActiveArrow = true" (mouseout)="isActiveArrow = false">
+  <swiper #swiper [config]="config">
+    <ng-template swiperSlide>
+      <app-product-item></app-product-item>
+    </ng-template>
+    <ng-template swiperSlide>
+      <app-product-item></app-product-item>
+    </ng-template>
+    <ng-template swiperSlide>
+      <app-product-item></app-product-item>
+    </ng-template>
+    <ng-template swiperSlide>
+      <app-product-item></app-product-item>
+    </ng-template>
+    <ng-template swiperSlide>
+      <app-product-item></app-product-item>
+    </ng-template>
+    <ng-template swiperSlide>
+      <app-product-item></app-product-item>
+    </ng-template>
+    <ng-template swiperSlide>
+      <app-product-item></app-product-item>
+    </ng-template>
+    <ng-template swiperSlide>
+      <app-product-item></app-product-item>
+    </ng-template>
+    <ng-template swiperSlide>
+      <app-product-item></app-product-item>
+    </ng-template>
+    <ng-template swiperSlide>
+      <app-product-item></app-product-item>
+    </ng-template>
+  </swiper>
+  <button *ngIf="isStart === false" (click)="slidePrev()"
+    class="absolute left-0 -translate-x-1/2 top-1/2 -translate-y-1/2 z-10 w-[30px] h-[30px] shadow-2xl text-xl bg-white rounded-full flex items-center justify-center transition-all"
+    [class.is-active-arrow]="isActiveArrow">
+    <svg enable-background="new 0 0 13 20" viewBox="0 0 13 20" x="0" y="0" class="w-[45%] h-[45%]">
+      <polygon points="4.2 10 12.1 2.1 10 -.1 1 8.9 -.1 10 1 11 10 20 12.1 17.9"></polygon>
+    </svg>
+  </button>
+  <button *ngIf="!isEnd" (click)="slideNext()"
+    class="absolute right-0 translate-x-1/2 top-1/2 -translate-y-1/2 z-10 w-[30px] h-[30px] shadow-2xl text-xl bg-white rounded-full flex items-center justify-center transition-all"
+    [class.is-active-arrow]="isActiveArrow">
+    <svg enable-background="new 0 0 13 21" viewBox="0 0 13 21" x="0" y="0" class="w-[45%] h-[45%]">
+      <polygon points="11.1 9.9 2.1 .9 -.1 3.1 7.9 11 -.1 18.9 2.1 21 11.1 12 12.1 11"></polygon>
+    </svg>
+  </button>
+</div>

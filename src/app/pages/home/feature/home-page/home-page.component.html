@@ -1,29 +1,23 @@
-<app-header></app-header>
+<div class="container grid grid-cols-12 mt-5 gap-x-5">
 
-<main>
-  <div class="container grid grid-cols-12 mt-5 gap-x-5">
+  <nav class="col-span-2">
+    <app-home-sidebar></app-home-sidebar>
+  </nav>
 
-    <nav class="col-span-2">
-      <app-home-sidebar></app-home-sidebar>
-    </nav>
+  <div class="flex flex-col col-span-10 gap-y-5 widget">
 
-    <div class="flex flex-col col-span-10 gap-y-5 widget">
+    <app-home-banner></app-home-banner>
 
-      <app-home-banner></app-home-banner>
+    <section class="">
+      <app-home-flash-sale></app-home-flash-sale>
+    </section>
 
-      <section class="">
-        <app-home-flash-sale></app-home-flash-sale>
-      </section>
+    <section>
+      <app-home-ads></app-home-ads>
+    </section>
 
-      <section>
-        <app-home-ads></app-home-ads>
-      </section>
-
-      <section>
-        <app-home-daily-discover></app-home-daily-discover>
-      </section>
-    </div>
+    <section>
+      <app-home-daily-discover></app-home-daily-discover>
+    </section>
   </div>
-</main>
-
-<app-footer></app-footer>
+</div>

@@ -6,42 +6,42 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () =>
-      import('./pages/auth/auth-shell/auth.module').then((m) => m.AuthModule),
+      import('./pages/auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'home',
     loadChildren: () =>
-      import('./pages/home/feature/home-shell/home.module').then(
-        (m) => m.HomeModule
-      ),
+      import('./pages/home/home.module').then((m) => m.HomeModule),
   },
   {
     path: 'cart',
     loadChildren: () =>
-      import('./pages/cart/feature/cart-shell/cart.module').then(
-        (m) => m.CartModule
-      ),
+      import('./pages/cart/cart.module').then((m) => m.CartModule),
   },
   {
     path: 'checkout',
     loadChildren: () =>
-      import('./pages/checkout/feature/checkout-shell/checkout.module').then(
-        (m) => m.CheckoutModule
-      ),
+      import('./pages/checkout/checkout.module').then((m) => m.CheckoutModule),
   },
   {
     path: 'category',
     loadChildren: () =>
-      import('./pages/category/feature/category-shell/category.module').then(
-        (m) => m.CategoryModule
-      ),
+      import('./pages/category/category.module').then((m) => m.CategoryModule),
   },
   {
     path: 'customer',
     loadChildren: () =>
-      import('./pages/customer/feature/customer-shell/customer.module').then(
-        (m) => m.CustomerModule
-      ),
+      import('./pages/customer/customer.module').then((m) => m.CustomerModule),
+  },
+  {
+    path: 'product',
+    loadChildren: () =>
+      import('./pages/product/product.module').then((m) => m.ProductModule),
+  },
+  {
+    path: 'shop',
+    loadChildren: () =>
+      import('./pages/shop/shop.module').then((m) => m.ShopModule),
   },
 ];
 

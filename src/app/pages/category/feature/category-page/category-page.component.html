@@ -1,125 +1,62 @@
-<app-header></app-header>
-<main>
-  <div class="container flex flex-col gap-5">
-    <div class="w-full h-[360px] rounded bg-red-200"></div>
+<div class="container flex flex-col gap-5">
+  <div class="w-full h-[360px] rounded bg-red-200"></div>
 
-    <div class="p-3 bg-white rounded">
-      <div class="flex items-center justify-between mb-3 font-medium text-hotRed">
-        <span class="text-lg uppercase">All shop</span>
-        <span class="text-md ">See All</span>
-      </div>
-      <div class="grid grid-cols-6 border-t border-l">
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-        <div class="h-[120px] border-b border-r">
-          <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-            class="object-contain w-full h-full">
-        </div>
-      </div>
+  <div class="p-3 bg-white rounded">
+    <div class="flex items-center justify-between mb-3 font-medium text-hotRed">
+      <span class="text-lg uppercase">All shop</span>
+      <span class="text-md ">See All</span>
     </div>
-
-    <div class="grid grid-cols-12 gap-5">
-      <div class="col-span-3">
-        <div class="p-3 bg-white rounded">
-          <div class="flex items-center pb-3 mb-3 border-b gap-x-2">
-            <app-icon-all-cat></app-icon-all-cat>
-            <span class="text-[17px] font-medium">All Categories</span>
-          </div>
-          <div class="">
-            <div class="flex items-center mb-3 gap-x-2 category-active">
-              <div class="flex items-center w-3 h-4">
-                <svg viewBox="0 0 4 7" class="w-[7px] h-[7px] opacity-0">
-                  <polygon points="4 3.5 0 0 0 7"></polygon>
-                </svg>
-              </div>
-              <p class="font-medium">Men Clothes</p>
-            </div>
-            <ul class="flex flex-col gap-3">
-              <li class="flex items-center gap-x-2">
-                <div class="flex items-center w-3 h-4">
-                  <app-icon-arrow-right></app-icon-arrow-right>
-                </div>
-                <span>Jackets, Coats & Vests</span>
-              </li>
-              <li class="flex items-center gap-x-2">
-                <div class="flex items-center w-3 h-4">
-                  <svg viewBox="0 0 4 7" class="w-[7px] h-[7px] opacity-0">
-                    <polygon points="4 3.5 0 0 0 7"></polygon>
-                  </svg>
-                </div>
-                <span>Suit Jackets & Blazers</span>
-              </li>
-            </ul>
-          </div>
-        </div>
+    <div class="grid grid-cols-6 border-t border-l">
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
       </div>
-
-      <div class="flex flex-col col-span-9 gap-5">
-        <div class="p-3 bg-white rounded">
-          <div class="flex items-center gap-x-3">
-            <span class="text-darkGray">Sort by </span>
-            <span class="px-3 py-1 border rounded cursor-pointer hover:bg-slate-50"
-              *ngFor="let sort of sortBy">{{sort.name}}</span>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-5 gap-3">
-          <app-product-item></app-product-item>
-          <app-product-item></app-product-item>
-          <app-product-item></app-product-item>
-          <app-product-item></app-product-item>
-          <app-product-item></app-product-item>
-          <app-product-item></app-product-item>
-          <app-product-item></app-product-item>
-          <app-product-item></app-product-item>
-          <app-product-item></app-product-item>
-          <app-product-item></app-product-item>
-        </div>
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
+      </div>
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
+      </div>
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
+      </div>
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
+      </div>
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
+      </div>
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
+      </div>
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
+      </div>
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
+      </div>
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
+      </div>
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
+      </div>
+      <div class="h-[120px] border-b border-r">
+        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
+          class="object-contain w-full h-full">
       </div>
     </div>
   </div>
-</main>
 
-<app-footer></app-footer>
+  <app-product-section></app-product-section>
+</div>

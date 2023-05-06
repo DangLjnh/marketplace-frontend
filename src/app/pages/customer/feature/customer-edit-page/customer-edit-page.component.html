@@ -3,42 +3,48 @@
     <p class="text-lg font-medium">My Profile</p>
     <p class="text-darkGray">Manage and protect your account</p>
   </div>
-  <form class="grid grid-cols-3 gap-x-5">
+  <form class="grid grid-cols-3 gap-x-5" [formGroup]="editUserForm" (ngSubmit)="submitForm()">
 
     <div class="flex flex-col col-span-2 gap-5 px-10 py-5 border-r">
       <div class="flex items-center gap-x-5">
-        <span class="flex-1">Name</span>
-        <input type="text" class="w-[80%] px-2 py-2 border">
+        <span class="flex-1">Full name</span>
+        <input type="text" class="w-[80%] px-2 py-2 border" formControlName="fullName">
       </div>
       <div class="flex items-center gap-x-5">
         <span class="flex-1">Email</span>
-        <input type="text" class="w-[80%] px-2 py-2 border">
+        <input type="text" class="w-[80%] px-2 py-2 border" formControlName="email">
       </div>
       <div class="flex items-center gap-x-5">
         <span class="flex-1 whitespace-nowrap">Phone number</span>
-        <input type="text" class="w-[80%] px-2 py-2 border">
+        <input type="text" class="w-[80%] px-2 py-2 border" formControlName="phone">
       </div>
       <div class="flex items-center gap-x-5">
         <span class="whitespace-nowrap">Gender</span>
-        <mat-radio-group aria-label="Select an option">
-          <mat-radio-button value="1">Male</mat-radio-button>
-          <mat-radio-button value="2">Female</mat-radio-button>
+        <mat-radio-group aria-label="Select an option" formControlName="sex">
+          <mat-radio-button value="0">Male</mat-radio-button>
+          <mat-radio-button value="1">Female</mat-radio-button>
+          <mat-radio-button value="2">Other</mat-radio-button>
         </mat-radio-group>
       </div>
     </div>
 
     <div class="flex flex-col items-center justify-center">
       <div class="flex flex-col items-center gap-2">
-        <img
-          src="https://scontent.fsgn13-4.fna.fbcdn.net/v/t39.30808-6/329099713_713019453638776_1692961499504191347_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=cBkfU_-AwdgAX-rJfS5&_nc_ht=scontent.fsgn13-4.fna&oh=00_AfCNW2uN7wjHiR69_dJ8lmpRlfKb572dpAUt4b0Jopdhzw&oe=6446E429"
-          class="w-[100px] h-[100px] rounded-full border-[4px] border-whiteBlue" alt="">
-        <button class="px-4 py-2 my-2 transition-all border rounded hover:bg-slate-100">Select Image</button>
+        <img *ngIf="base64Image;else noBase64" [src]="'data:image/jpeg;base64'+base64Image"
+          class="w-[100px] object-cover h-[100px] rounded-full border-[4px] border-whiteBlue" alt="">
+        <ng-template #noBase64>
+          <img *ngIf="dataUser" [src]="dataUser.User_Detail.photo_url || '../../../../../assets/img/default-user.png'"
+            class="w-[100px] object-cover h-[100px] rounded-full border-[4px] border-whiteBlue" alt="">
+        </ng-template>
+        <input type="file" name="file" id="file" accept="image/png, image/gif, image/jpeg" class="inputFile"
+          (change)="handleChangeFile($event)" />
+        <label for="file">Choose a file</label>
         <span>File size: maximum 1 MB</span>
         <span>File extension: .JPEG, .PNG</span>
       </div>
 
     </div>
 
-    <app-button class="col-span-2 mx-[200px]" text="Save change"></app-button>
+    <app-button types="submit" class="col-span-2 mx-[200px]">Save change</app-button>
   </form>
 </div>

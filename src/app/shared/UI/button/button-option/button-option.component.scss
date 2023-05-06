@@ -1,0 +1,11 @@
+.product_tick:before {
+  border: 0.9375rem solid transparent;
+  @apply border-b-[15px] border-b-primary;
+  content: "";
+  position: absolute;
+  right: -0.9375rem;
+  bottom: 0;
+}
+.is-active {
+  @apply text-primary border-primary;
+}
