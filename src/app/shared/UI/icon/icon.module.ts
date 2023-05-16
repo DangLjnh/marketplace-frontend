@@ -20,6 +20,7 @@ import { IconPlusCartComponent } from './icon-plus-cart/icon-plus-cart.component
 import { IconStarRatingComponent } from './icon-star-rating/icon-star-rating.component';
 import { IconAvatarDefaultComponent } from './icon-avatar-default/icon-avatar-default.component';
 import { IconPlusComponent } from './icon-plus/icon-plus.component';
+import { IconAddImageProductComponent } from './icon-add-image-product/icon-add-image-product.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { IconPlusComponent } from './icon-plus/icon-plus.component';
     IconStarRatingComponent,
     IconAvatarDefaultComponent,
     IconPlusComponent,
+    IconAddImageProductComponent,
   ],
   imports: [CommonModule],
   exports: [
@@ -66,6 +68,7 @@ import { IconPlusComponent } from './icon-plus/icon-plus.component';
     IconStarRatingComponent,
     IconAvatarDefaultComponent,
     IconPlusComponent,
+    IconAddImageProductComponent,
   ],
 })
 export class IconModule {}

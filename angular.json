@@ -29,6 +29,7 @@
               "src/theme.scss",
               "node_modules/ngx-toastr/toastr.css"
             ],
+            "allowedCommonJsDependencies": ["sweetalert2"],
             "scripts": []
           },
           "configurations": {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CustomerService } from '../../data-access/customer.service';
 import {
   FormBuilder,
@@ -7,24 +7,21 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
-import { IAddressResponse, IUser } from 'src/app/shared/model/interface';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { IUser } from 'src/app/shared/model/interface';
+
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { map, Observable } from 'rxjs';
+import { map } from 'rxjs';
 import { resetForm } from 'src/app/shared/utils/function';
+import { ToastrService } from 'ngx-toastr';
+import { errorCode } from 'src/app/shared/model/model';
 @Component({
   selector: 'app-customer-address-modal',
   templateUrl: './customer-address-modal.component.html',
   styleUrls: ['./customer-address-modal.component.scss'],
 })
 export class CustomerAddressModalComponent {
-  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
   check: boolean = false;
+  loading: boolean = false;
   dataUser!: IUser;
   dataAddress!: any;
   type!: string;
@@ -45,7 +42,7 @@ export class CustomerAddressModalComponent {
       ]),
     ],
     city: ['', Validators.required],
-    district: ['Huyện Bạch Thông', Validators.required],
+    district: ['', Validators.required],
     ward: ['', Validators.required],
     address: ['', Validators.required],
     isDefault: [false],
@@ -54,13 +51,15 @@ export class CustomerAddressModalComponent {
   submitForm() {
     const formErrors = this.getFormErrors(this.addressForm);
     if (formErrors.length > 0) {
-      formErrors.forEach((item: any) => {
-        this._snackBar.open(item.error, 'Close', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-      });
+      for (let i = 0; i < formErrors.length; i++) {
+        const item: any = formErrors[i];
+        this.toastrService.error(item.error);
+        if (item) {
+          break;
+        }
+      }
     } else {
+      this.loading = true;
       const rawAddressData = {
         id: this.addressID,
         userID: this.dataUser.id,
@@ -75,34 +74,45 @@ export class CustomerAddressModalComponent {
       };
       if (this.type === 'create') {
         this.customerService.createAddress(rawAddressData).subscribe((data) => {
-          this._snackBar.open(data.EM, 'Close', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-          });
-
-          // reset form with form builder
-          resetForm(this.addressForm);
-
-          this.customerService
-            .readAddressOfUser(this.dataUser.id)
-            .subscribe((data) => {
-              this.customerService.listAddress = data.DT;
-            });
+          this.loading = false;
+          if (
+            +data.EC === errorCode.ERROR_PARAMS ||
+            +data.EC === errorCode.ERROR_SERVER
+          ) {
+            this.toastrService.error(data.EM);
+            return;
+          }
+          if (+data.EC === errorCode.SUCCESS) {
+            this.toastrService.success(data.EM);
+            // reset form with form builder
+            resetForm(this.addressForm);
+            this.customerService
+              .readAddressOfUser(this.dataUser.id)
+              .subscribe((data) => {
+                this.customerService.listAddress = data.DT;
+              });
+          }
         });
       }
       if (this.type === 'edit') {
         this.customerService.updateAddress(rawAddressData).subscribe((data) => {
-          this._snackBar.open(data.EM, 'Close', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-          });
-
-          this.customerService
-            .readAddressOfUser(this.dataUser.id)
-            .subscribe((data) => {
-              this.customerService.listAddress = data.DT;
-              this.dialogRef.close();
-            });
+          this.loading = false;
+          if (
+            +data.EC === errorCode.ERROR_PARAMS ||
+            +data.EC === errorCode.ERROR_SERVER
+          ) {
+            this.toastrService.error(data.EM);
+            return;
+          }
+          if (+data.EC === errorCode.SUCCESS) {
+            this.toastrService.success(data.EM);
+            this.customerService
+              .readAddressOfUser(this.dataUser.id)
+              .subscribe((data) => {
+                this.customerService.listAddress = data.DT;
+                this.dialogRef.close();
+              });
+          }
         });
       }
     }
@@ -164,7 +174,7 @@ export class CustomerAddressModalComponent {
   constructor(
     private customerService: CustomerService,
     private authService: AuthService,
-    private _snackBar: MatSnackBar,
+    private toastrService: ToastrService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<CustomerAddressModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any

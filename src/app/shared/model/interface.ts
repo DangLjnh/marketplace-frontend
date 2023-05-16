@@ -44,16 +44,6 @@ export interface IGroup {
   desc?: string;
 }
 
-export interface IUser {
-  id: number;
-  username: string;
-  phone: string;
-  id_login_method: string;
-  id_status: number;
-  User_Detail: TUserDetail;
-  Group: IGroup;
-}
-
 export interface IAddress {
   id?: number | null | undefined;
   userID: number;
@@ -80,4 +70,40 @@ export interface IAddressResponse {
   userID: number;
   isDefault: boolean;
   Address_Detail: IAddressDetail;
+}
+
+type IShopDetail = {
+  name: string | null | undefined;
+  email: string | null | undefined;
+  phone: string | null | undefined;
+  photo_url: string | null | undefined;
+  address: string | null | undefined;
+  city: string | null | undefined;
+  district: string | null | undefined;
+  ward: string | null | undefined;
+};
+
+type IWarehouse = {
+  id: string;
+};
+
+export interface IShop {
+  id?: number;
+  feedback_rating: number;
+  score_rating: number;
+  id_status: number;
+  createdAt: any;
+  Shop_Detail: IShopDetail;
+  Warehouse: IWarehouse;
+}
+
+export interface IUser {
+  id: number;
+  username: string;
+  phone: string;
+  id_login_method: string;
+  id_status: number;
+  User_Detail: TUserDetail;
+  Group: IGroup;
+  Shop: IShop;
 }

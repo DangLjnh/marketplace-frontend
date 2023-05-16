@@ -4,3 +4,6 @@
 .themeBlue {
   @apply bg-blue-50 text-primary border border-primary;
 }
+.disabled {
+  @apply bg-opacity-[0.85];
+}

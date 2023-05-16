@@ -5,9 +5,9 @@
         <div class="w-full h-full background-shop"></div>
         <div class="absolute z-20 -translate-y-1/2 left-5 top-1/2">
           <div class="flex items-center gap-x-5">
-            <img src="https://down-aka-vn.img.susercontent.com/02cc55b581a1da07745c4e19070c0f16_tn" alt=""
+            <img *ngIf="shop" [src]="shop.Shop_Detail.photo_url" alt=""
               class="w-20 h-20 rounded-full border-[5px] border-[hsla(0,0%,100%,.4)] ">
-            <p class="text-xl text-white">Coolmate - Official Store</p>
+            <p *ngIf="shop" class="text-xl text-white">{{shop.Shop_Detail.name}}</p>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
             </g>
           </svg>
           <div class="">Joined:</div>
-          <span class="text-hotRed">6 years ago</span>
+          <span *ngIf="shop" class="text-hotRed">{{shop.createdAt}}</span>
         </div>
       </div>
       <div class="flex flex-col gap-5">

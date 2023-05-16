@@ -1,0 +1,132 @@
+<div class="container">
+  <div class="flex gap-x-5">
+    <div class="w-[230px]">
+      <ul class="py-4 bg-white rounded">
+        <li class="py-2 text-[15px] px-7 hover:bg-whiteGray" *ngFor="let item of list">{{item.name}}</li>
+      </ul>
+    </div>
+    <form [formGroup]="productForm" (ngSubmit)="submitForm()" class="flex flex-col flex-1 gap-5">
+
+      <div class="p-4 bg-white rounded">
+        <p class="mb-5 text-xl font-bold">Thông tin cơ bản</p>
+        <div class="flex flex-col gap-5">
+          <app-form-product-row title="Hình ảnh sản phẩm">
+            <app-icon-add-image-product [countImage]="listImage.length"
+              (handleChange)="handleChangeImageProduct($event)"></app-icon-add-image-product>
+          </app-form-product-row>
+          <app-form-product-row title="Tên sản phẩm">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput formControlName="name">
+            </mat-form-field>
+          </app-form-product-row>
+          <app-form-product-row title="Nghành hàng">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput formControlName="category">
+            </mat-form-field>
+          </app-form-product-row>
+          <app-form-product-row title="Mô tả sản phẩm">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput formControlName="desc">
+            </mat-form-field>
+          </app-form-product-row>
+        </div>
+      </div>
+
+      <div class="p-4 bg-white rounded">
+        <p class="mb-5 text-xl font-bold">Thông tin chi tiết</p>
+        <div class="grid grid-cols-2 gap-5">
+          <app-form-product-row title="Thương hiệu">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput>
+            </mat-form-field>
+          </app-form-product-row>
+          <app-form-product-row title="Chất liệu">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput>
+            </mat-form-field>
+          </app-form-product-row>
+          <app-form-product-row title="Xuất xứ">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput>
+            </mat-form-field>
+          </app-form-product-row>
+          <app-form-product-row title="Màu sắc">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput>
+            </mat-form-field>
+          </app-form-product-row>
+          <app-form-product-row title="Size">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput>
+            </mat-form-field>
+          </app-form-product-row>
+          <app-form-product-row title="Kiểu dáng">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput>
+            </mat-form-field>
+          </app-form-product-row>
+        </div>
+      </div>
+
+      <div class="p-4 bg-white rounded">
+        <p class="mb-5 text-xl font-bold">Thông tin bán hàng</p>
+        <div class="flex flex-col gap-5">
+          <app-form-product-row title="Giá">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput formControlName="price_original">
+            </mat-form-field>
+          </app-form-product-row>
+          <app-form-product-row title="Kho hàng">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput formControlName="quantity">
+            </mat-form-field>
+          </app-form-product-row>
+        </div>
+      </div>
+
+      <div class="p-4 bg-white rounded">
+        <p class="mb-5 text-xl font-bold">Vận chuyển</p>
+        <div class="flex flex-col gap-5">
+          <app-form-product-row title="Cân nặng">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào (đơn vị gr)</mat-label>
+              <input type="text" matInput formControlName="weight">
+            </mat-form-field>
+          </app-form-product-row>
+          <app-form-product-row title="Kích thước đóng gói">
+            <div class="flex items-center gap-x-5">
+              <mat-form-field class="w-full">
+                <mat-label>Dài (đơn vị cm)</mat-label>
+                <input type="text" matInput formControlName="length">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Rộng (đơn vị cm)</mat-label>
+                <input type="text" matInput formControlName="width">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Cao (đơn vị cm)</mat-label>
+                <input type="text" matInput formControlName="height">
+              </mat-form-field>
+            </div>
+          </app-form-product-row>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-x-5">
+        <button class="px-10 py-2 transition-all bg-white border rounded hover:bg-whiteGray">Hủy</button>
+        <app-button types="submit" className="!w-[135.48px]">Lưu và hiển thị</app-button>
+      </div>
+    </form>
+  </div>
+</div>

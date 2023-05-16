@@ -4,7 +4,6 @@
     <p class="text-darkGray">Manage and protect your account</p>
   </div>
   <form class="grid grid-cols-3 gap-x-5" [formGroup]="editUserForm" (ngSubmit)="submitForm()">
-
     <div class="flex flex-col col-span-2 gap-5 px-10 py-5 border-r">
       <div class="flex items-center gap-x-5">
         <span class="flex-1">Full name</span>
@@ -29,22 +28,11 @@
     </div>
 
     <div class="flex flex-col items-center justify-center">
-      <div class="flex flex-col items-center gap-2">
-        <img *ngIf="base64Image;else noBase64" [src]="'data:image/jpeg;base64'+base64Image"
-          class="w-[100px] object-cover h-[100px] rounded-full border-[4px] border-whiteBlue" alt="">
-        <ng-template #noBase64>
-          <img *ngIf="dataUser" [src]="dataUser.User_Detail.photo_url || '../../../../../assets/img/default-user.png'"
-            class="w-[100px] object-cover h-[100px] rounded-full border-[4px] border-whiteBlue" alt="">
-        </ng-template>
-        <input type="file" name="file" id="file" accept="image/png, image/gif, image/jpeg" class="inputFile"
-          (change)="handleChangeFile($event)" />
-        <label for="file">Choose a file</label>
-        <span>File size: maximum 1 MB</span>
-        <span>File extension: .JPEG, .PNG</span>
-      </div>
-
+      <app-input-file [base64Image]="base64Image" [dataUser]="dataUser"
+        (handleChange)="handleChangeFile($event)"></app-input-file>
     </div>
 
-    <app-button types="submit" class="col-span-2 mx-[200px]">Save change</app-button>
+    <app-button types="submit" class="col-span-2 mx-[200px]" className="w-[237.6px] h-[40px]" [loading]="loading">Save
+      change</app-button>
   </form>
 </div>

@@ -8,18 +8,14 @@ import {
   IUser,
 } from 'src/app/shared/model/interface';
 import { environment } from 'src/environments/environment.prod';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private _dataUser = new BehaviorSubject<any>(null);
-  set dataUser(value: IUser) {
+  set dataUser(value: IUser | null) {
     this._dataUser.next(value);
   }
   get dataUser$(): Observable<IUser> {

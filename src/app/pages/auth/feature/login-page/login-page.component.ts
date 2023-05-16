@@ -1,33 +1,24 @@
-import { Component } from '@angular/core';
+import { errorCode } from 'src/app/shared/model/model';
+import { statusUser } from './../../../../shared/model/model';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../data-access/auth.service';
 import { Router } from '@angular/router';
-import {
-  IResponseToken,
-  ILogin,
-  IResponse,
-} from 'src/app/shared/model/interface';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
 })
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit {
   hide = true;
-  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
+  loading = false;
   loginForm = this.fb.group({
     username: ['', Validators.compose([Validators.required])],
     password: [
@@ -36,6 +27,46 @@ export class LoginPageComponent {
     ],
   });
 
+  submitForm() {
+    const formErrors = this.getFormErrors(this.loginForm);
+    if (formErrors.length > 0) {
+      for (let i = 0; i < formErrors.length; i++) {
+        const item: any = formErrors[i];
+        this.toastrService.error(item.error);
+        if (item) {
+          break;
+        }
+      }
+    } else {
+      this.loading = true;
+      const rawUserDataLogin = {
+        username: this.loginForm.value['username'],
+        password: this.loginForm.value['password'],
+      };
+      this.authService.loginUser(rawUserDataLogin).subscribe({
+        next: (data: any) => {
+          localStorage.setItem('access_token', data.access_token);
+          localStorage.setItem('refresh_token', data.refresh_token);
+          this.authService.accountUser().subscribe((data: any) => {
+            this.loading = false;
+            if (data.EC === errorCode.ERROR_PARAMS) {
+              this.toastrService.error(data.EM);
+              return;
+            }
+            if (data.EC === errorCode.SUCCESS) {
+              this.loading = false;
+              this.authService.dataUser = data.DT;
+              this.router.navigate(['home']);
+            }
+          });
+        },
+        error: (err) => {
+          this.loading = false;
+          this.toastrService.error(err.error);
+        },
+      });
+    }
+  }
   getFormErrors(formGroup: FormGroup): string[] {
     const errors: any[] = [];
     Object.keys(formGroup.controls).forEach((key) => {
@@ -69,45 +100,11 @@ export class LoginPageComponent {
     });
     return errors;
   }
-
-  submitForm() {
-    const formErrors = this.getFormErrors(this.loginForm);
-    if (formErrors.length > 0) {
-      formErrors.forEach((item: any) => {
-        this._snackBar.open(item.error, 'Close', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-      });
-    } else {
-      const rawUserDataLogin = {
-        username: this.loginForm.value['username'],
-        password: this.loginForm.value['password'],
-      };
-
-      this.authService.loginUser(rawUserDataLogin).subscribe({
-        next: (data) => {
-          localStorage.setItem('access_token', data.access_token);
-          localStorage.setItem('refresh_token', data.refresh_token);
-          this.authService.accountUser().subscribe((data: any) => {
-            this.authService.dataUser = data.DT;
-            this.router.navigate(['home']);
-          });
-        },
-        error: (err) => {
-          this._snackBar.open(err.error, 'Close', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-          });
-        },
-      });
-    }
-  }
   constructor(
     private fb: FormBuilder,
-    private _snackBar: MatSnackBar,
     private toastrService: ToastrService,
     private authService: AuthService,
     private router: Router
   ) {}
+  ngOnInit(): void {}
 }

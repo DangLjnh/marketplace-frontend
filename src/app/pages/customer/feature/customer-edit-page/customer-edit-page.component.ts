@@ -5,16 +5,14 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+
 import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
 import { IUser } from 'src/app/shared/model/interface';
 import { emailValidator } from 'src/app/shared/pipes/CustomValidate';
 import { toBase64 } from 'src/app/shared/utils/function';
 import { CustomerService } from '../../data-access/customer.service';
+import { ToastrService } from 'ngx-toastr';
+import { errorCode } from 'src/app/shared/model/model';
 @Component({
   selector: 'app-customer-edit-page',
   templateUrl: './customer-edit-page.component.html',
@@ -23,9 +21,8 @@ import { CustomerService } from '../../data-access/customer.service';
 export class CustomerEditPageComponent implements OnInit {
   dataUser!: IUser;
   base64Image!: string;
-  fileImage!: any;
-  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
+  fileImage!: File;
+  loading: boolean = false;
 
   editUserForm = this.fb.group({
     fullName: [''],
@@ -41,27 +38,27 @@ export class CustomerEditPageComponent implements OnInit {
   });
 
   async handleChangeFile(e: any) {
-    if (e.target && e.target.files[0]) {
-      let strToReplace = await toBase64(e.target.files[0]);
-      this.base64Image = String(strToReplace)?.replace(
-        /^data:image\/[a-z]+;base64/,
-        ''
-      );
-      this.fileImage = e.target.files[0];
-    }
+    let strToReplace = await toBase64(e.target.files[0]);
+    this.base64Image = String(strToReplace)?.replace(
+      /^data:image\/[a-z]+;base64/,
+      ''
+    );
+    this.fileImage = e.target.files[0];
   }
 
   submitForm() {
     const formErrors = this.getFormErrors(this.editUserForm);
     const formValue = this.editUserForm.value;
     if (formErrors.length > 0 && formValue.email !== '') {
-      formErrors.forEach((item: any) => {
-        this._snackBar.open(item.error, 'Close', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-      });
+      for (let i = 0; i < formErrors.length; i++) {
+        const item: any = formErrors[i];
+        this.toastrService.error(item.error);
+        if (item) {
+          break;
+        }
+      }
     } else {
+      this.loading = true;
       const formData = new FormData();
       const data: any = {
         id: this.dataUser.id,
@@ -81,15 +78,20 @@ export class CustomerEditPageComponent implements OnInit {
       formData.append('file', this.fileImage);
       formData.append('data', JSON.stringify(data));
       this.customerService.updateUser(formData).subscribe((data) => {
-        if (data) {
-          this.authService.accountUser().subscribe((dataUser: any) => {
+        this.authService.accountUser().subscribe((dataUser: any) => {
+          this.loading = false;
+          if (
+            +data.EC === errorCode.ERROR_PARAMS ||
+            +data.EC === errorCode.ERROR_SERVER
+          ) {
+            this.toastrService.error(data.EM);
+            return;
+          }
+          if (+data.EC === errorCode.SUCCESS) {
             this.authService.dataUser = dataUser.DT;
-            this._snackBar.open(data.EM, 'Close', {
-              horizontalPosition: this.horizontalPosition,
-              verticalPosition: this.verticalPosition,
-            });
-          });
-        }
+            this.toastrService.success(data.EM);
+          }
+        });
       });
     }
   }
@@ -119,17 +121,18 @@ export class CustomerEditPageComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private customerService: CustomerService,
-    private fb: FormBuilder,
-    private _snackBar: MatSnackBar
+    private toastrService: ToastrService,
+    private fb: FormBuilder
   ) {}
+
   ngOnInit(): void {
     this.authService.dataUser$.subscribe((data: any) => {
       this.dataUser = data;
       this.editUserForm.patchValue({
-        fullName: this.dataUser.User_Detail.full_name,
-        email: this.dataUser.User_Detail.email,
-        phone: this.dataUser.phone,
-        sex: this.dataUser.User_Detail.sex,
+        fullName: this.dataUser?.User_Detail.full_name,
+        email: this.dataUser?.User_Detail.email,
+        phone: this.dataUser?.phone,
+        sex: this.dataUser?.User_Detail.sex,
         // update other form controls here
       });
     });

@@ -19,6 +19,10 @@ import { StarListComponent } from './UI/star-list/star-list.component';
 import { SwiperListComponent } from './UI/section/swiper-list/swiper-list.component';
 import { SwiperModule } from 'swiper/angular';
 import { ProductSectionComponent } from './UI/product/product-section/product-section.component';
+import { LoadingSpinnerComponent } from './UI/loading/loading-spinner/loading-spinner.component';
+import { LoadingSkeletonComponent } from './UI/loading/loading-skeleton/loading-skeleton.component';
+import { InputFileComponent } from './UI/input-file/input-file.component';
+import { FormProductRowComponent } from './UI/form/form-product-row/form-product-row.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,10 @@ import { ProductSectionComponent } from './UI/product/product-section/product-se
     StarListComponent,
     SwiperListComponent,
     ProductSectionComponent,
+    LoadingSpinnerComponent,
+    LoadingSkeletonComponent,
+    InputFileComponent,
+    FormProductRowComponent,
   ],
   imports: [
     CommonModule,
@@ -60,6 +68,10 @@ import { ProductSectionComponent } from './UI/product/product-section/product-se
     StarListComponent,
     SwiperListComponent,
     ProductSectionComponent,
+    LoadingSpinnerComponent,
+    LoadingSkeletonComponent,
+    InputFileComponent,
+    FormProductRowComponent,
   ],
 })
 export class SharedModule {}

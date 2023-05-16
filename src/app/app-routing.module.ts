@@ -43,6 +43,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/shop/shop.module').then((m) => m.ShopModule),
   },
+  {
+    path: 'seller',
+    loadChildren: () =>
+      import('./pages/seller/seller.module').then((m) => m.SellerModule),
+  },
 ];
 
 @NgModule({

@@ -44,7 +44,8 @@
     </ng-container>
     <ng-template #addressDefault>
       <button
-        matTooltip="The default address cannot be un-selected. You can set another address as default address instead">
+        matTooltip="The default address cannot be un-selected. You can set another address as default address instead"
+        class="cursor-not-allowed" disabled>
         <mat-checkbox [disabled]="true" [checked]="true">Set a default address</mat-checkbox>
       </button>
     </ng-template>
@@ -52,7 +53,7 @@
   <div mat-dialog-actions class="flex items-center !justify-end">
     <div class="flex items-center gap-x-2">
       <app-button mat-dialog-close className="bg-white !text-black hover:bg-slate-100">Close</app-button>
-      <app-button types="submit">Save</app-button>
+      <app-button [loading]="loading" types="submit" className="w-[66.21px] h-[40px]">Save</app-button>
     </div>
   </div>
 </form>

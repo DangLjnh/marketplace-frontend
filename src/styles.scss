@@ -2,7 +2,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
+@import "ngx-toastr/toastr";
 @layer base {
   body {
     @apply bg-content text-black text-sm;
@@ -59,4 +59,14 @@ h6 {
 }
 #toast-container > div {
   opacity: 1;
+}
+body
+  > app-root
+  > app-seller
+  > main
+  > app-seller-portal
+  > div
+  > div
+  > app-seller-portal-form {
+  width: 100%;
 }

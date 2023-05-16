@@ -1,7 +1,6 @@
 import { AuthService } from './../../data-access/auth.service';
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { CookieService } from 'ngx-cookie-service';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import {
@@ -10,11 +9,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+
 import {
   emailValidator,
   validateSamePassword,
@@ -30,9 +25,7 @@ const PASSWORD_PATTERN = /^(?=.*[A-Z])(?=.*[0-9]).+$/;
 })
 export class RegisterComponent {
   hide = true;
-  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
-  formSubmit$ = new Subject();
+  loading = false;
   registerForm = this.fb.group(
     {
       email: ['', Validators.compose([Validators.required, emailValidator()])],
@@ -63,6 +56,56 @@ export class RegisterComponent {
     },
     { validators: validateSamePassword('password', 'confirmPassword') }
   );
+
+  submitForm() {
+    const formErrors = this.getFormErrors(this.registerForm);
+    if (formErrors.length > 0) {
+      for (let i = 0; i < formErrors.length; i++) {
+        const item: any = formErrors[i];
+        this.toastrService.error(item.error);
+        if (item) {
+          break;
+        }
+      }
+    } else if (this.registerForm.errors?.['passwordNotMatch']) {
+      this.toastrService.error('Your password not match confirm password!');
+    } else {
+      this.loading = true;
+      const rawUserDataRegister = {
+        email: this.registerForm.value['email'],
+        username: this.registerForm.value['email'],
+        phone: this.registerForm.value['phone'],
+        password: this.registerForm.value['password'],
+      };
+      this.authService
+        .registerUser(rawUserDataRegister)
+        .subscribe((data: IResponse) => {
+          if (
+            +data.EC === errorCode.ERROR_PARAMS ||
+            +data.EC === errorCode.ERROR_SERVER
+          ) {
+            this.loading = false;
+            this.toastrService.error(data.EM);
+            return;
+          }
+          if (+data.EC === errorCode.SUCCESS) {
+            const rawUserDataLogin = {
+              username: this.registerForm.value['email'],
+              password: this.registerForm.value['password'],
+            };
+            this.authService
+              .loginUser(rawUserDataLogin)
+              .subscribe((dataLogin: IResponseToken) => {
+                this.loading = false;
+                this.toastrService.success(data.EM);
+                localStorage.setItem('access_token', dataLogin.access_token);
+                localStorage.setItem('refresh_token', dataLogin.refresh_token);
+                this.router.navigate(['home']);
+              });
+          }
+        });
+    }
+  }
 
   getFormErrors(formGroup: FormGroup): string[] {
     const errors: any[] = [];
@@ -113,68 +156,8 @@ export class RegisterComponent {
     return errors;
   }
 
-  submitForm() {
-    const formErrors = this.getFormErrors(this.registerForm);
-    if (formErrors.length > 0) {
-      formErrors.forEach((item: any) => {
-        this._snackBar.open(item.error, 'Close', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-      });
-    } else if (this.registerForm.errors?.['passwordNotMatch']) {
-      this._snackBar.open(
-        'Your password not match confirm password!',
-        'Close',
-        {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        }
-      );
-    } else {
-      const rawUserDataRegister = {
-        email: this.registerForm.value['email'],
-        username: this.registerForm.value['email'],
-        phone: this.registerForm.value['phone'],
-        password: this.registerForm.value['password'],
-      };
-      this.authService
-        .registerUser(rawUserDataRegister)
-        .subscribe((data: IResponse) => {
-          this._snackBar.open(data.EM, 'Close', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-          });
-          if (+data.EC === errorCode.SUCCESS) {
-            const rawUserDataLogin = {
-              username: this.registerForm.value['email'],
-              password: this.registerForm.value['password'],
-            };
-            this.authService
-              .loginUser(rawUserDataLogin)
-              .subscribe((data: IResponseToken) => {
-                localStorage.setItem('access_token', data.access_token);
-                localStorage.setItem('refresh_token', data.refresh_token);
-                this.router.navigate(['home']);
-              });
-          }
-        });
-    }
-  }
-
-  // submitForm() {
-  //   const formErrors = this.getFormErrors(this.registerForm);
-  //   if (formErrors.length > 0) {
-  //     formErrors.forEach((item: any) => {
-  //       this.toastrService.error(item.error);
-  //     });
-  //   } else if (this.registerForm.errors?.['passwordNotMatch']) {
-  //     this.toastrService.error('Your password not match confirm password!');
-  //   }
-  // }
   constructor(
     private fb: FormBuilder,
-    private _snackBar: MatSnackBar,
     private authService: AuthService,
     private toastrService: ToastrService,
     private router: Router

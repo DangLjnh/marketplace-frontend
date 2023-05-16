@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthComponent } from 'src/app/layouts/auth/auth.component';
 import { IconModule } from 'src/app/shared/UI/icon/icon.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RegisterComponent } from './feature/register/register.component';
 import { LoginPageComponent } from './feature/login-page/login-page.component';
 @NgModule({
@@ -23,7 +22,6 @@ import { LoginPageComponent } from './feature/login-page/login-page.component';
     MatIconModule,
     IconModule,
     ReactiveFormsModule,
-    MatSnackBarModule,
   ],
 })
 export class AuthModule {}

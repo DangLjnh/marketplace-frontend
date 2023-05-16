@@ -1,5 +1,10 @@
 <button [type]="types"
   class="w-full px-4 py-2 text-base text-white transition-all rounded bg-hotRed hover:bg-opacity-[0.85] {{className}}"
-  [class.themeBlue]="theme == 'blue'">
-  <ng-content></ng-content>
+  [class.themeBlue]="theme == 'blue'" [disabled]="loading" [class.disabled]="loading">
+  <div *ngIf="loading; else noLoading" class="flex items-center justify-center">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <ng-template #noLoading>
+    <ng-content></ng-content>
+  </ng-template>
 </button>
