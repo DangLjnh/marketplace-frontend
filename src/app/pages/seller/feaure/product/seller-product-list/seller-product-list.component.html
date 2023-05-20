@@ -1,0 +1,77 @@
+<div class="bg-white rounded">
+  <ul class="flex items-center border-b-2 tab-navs">
+    <li *ngFor="let nav of navTabs" class="p-4 transition-all cursor-pointer hover:text-primary">{{nav.name}}</li>
+  </ul>
+  <div class="flex items-center justify-between p-4">
+    <span class="text-lg font-bold">1 Sản Phẩm</span>
+    <app-button>
+      <div class="flex items-center gap-x-3">
+        <app-icon-plus></app-icon-plus>
+        <span>Thêm 1 sản phẩm mới</span>
+      </div>
+    </app-button>
+  </div>
+  <div class="relative p-3 overflow-x-auto">
+    <table class="w-full text-sm text-left">
+      <thead class="bg-gray-100">
+        <tr class="">
+          <td class="w-[50px]"></td>
+          <th scope="col" class="px-6 py-4 w-[250px]">
+            Tên sản phẩm
+          </th>
+          <th scope="col" class="px-6 py-4">
+            <div class="grid grid-cols-5">
+              <p>Thể loại</p>
+              <p>Phân Loại hàng</p>
+              <p>Giá</p>
+              <p>Kho hàng</p>
+              <p>Doanh số</p>
+            </div>
+          </th>
+          <th scope="col" class="px-6 py-4 w-[180px]">
+            Thao tác
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="productList">
+          <tr *ngFor="let product of productList " class="bg-white border-b-2">
+            <td class="w-[50px]"></td>
+            <th scope="col" class="px-6 py-5 w-[250px]">
+              <div class="flex items-center gap-x-2">
+                <img [src]="product.Image_Products[0].Image_Product_Detail.photo_url" alt=""
+                  class="w-[56px] h-[70px] object-cover rounded-sm ">
+                <p class="font-medium">{{product.Product_Detail.name}}</p>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-5 ">
+              <div class="grid grid-cols-5">
+                <p>Điện thoại</p>
+                <p>Đỏ</p>
+                <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}đ</p>
+                <p>{{product.Stock.quantity}}</p>
+                <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}đ</p>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-5 w-[180px]">
+              <div class="flex items-center text-xs gap-x-3">
+                <a class="px-4 py-2 bg-red-100 rounded">Xóa</a>
+                <a [routerLink]="'/seller/portal/product/'+product.id" class="px-4 py-2 bg-yellow-100 rounded">Sửa</a>
+                <a class="px-4 py-2 bg-green-100 rounded whitespace-nowrap">Sao chép</a>
+              </div>
+            </th>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <div class="flex items-center justify-end px-4 pt-4 text-base gap-x-5">
+      <p class="text-lightGray">
+        < </p>
+          <p>1</p>
+          <p>/</p>
+          <p>1</p>
+          <p class="text-lightGray">></p>
+    </div>
+  </div>
+
+</div>

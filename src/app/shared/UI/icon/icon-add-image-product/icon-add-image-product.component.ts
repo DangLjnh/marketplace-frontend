@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IImageProducts } from 'src/app/shared/model/interface';
 
 @Component({
   selector: 'app-icon-add-image-product',
@@ -7,5 +8,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class IconAddImageProductComponent {
   @Input() countImage: number = 0;
+  @Input() listBase64!: any[];
+  @Input() listImages!: IImageProducts[];
   @Output() handleChange = new EventEmitter<any>();
+  @Output() handleDeleteImage = new EventEmitter<any>();
+  @Output() handleFocus = new EventEmitter<string>();
 }

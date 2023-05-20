@@ -1,8 +1,14 @@
-<div class="p-3 bg-white rounded-lg sidebar">
-  <p class="mb-2">Category</p>
-  <ul>
-    <li class="px-4 py-2 transition-all rounded-md hover:bg-slate-100">Bear</li>
-    <li class="px-4 py-2 transition-all rounded-md hover:bg-slate-100">Red</li>
-    <li class="px-4 py-2 transition-all rounded-md hover:bg-slate-100">Blue</li>
-  </ul>
+<div class="flex flex-col gap-5">
+  <div class="p-3 bg-white rounded-lg sidebar">
+    <p class="mb-2">Category</p>
+    <ul>
+      <li class="px-4 py-2 transition-all rounded-md hover:bg-slate-100">Bear</li>
+      <li class="px-4 py-2 transition-all rounded-md hover:bg-slate-100">Red</li>
+      <li class="px-4 py-2 transition-all rounded-md hover:bg-slate-100">Blue</li>
+    </ul>
+  </div>
+
+  <div class="text-center bg-white border border-gray-300 rounded-lg sidebar-2">
+    <p [routerLink]="'/seller'" class="p-3 font-medium rounded-lg cursor-pointer hover:bg-slate-100">Seller center</p>
+  </div>
 </div>

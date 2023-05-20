@@ -1,41 +1,52 @@
 <div class="container">
   <div class="flex gap-x-5">
-    <div class="w-[230px]">
+    <div class="fixed w-[250px] flex flex-col gap-5">
       <ul class="py-4 bg-white rounded">
-        <li class="py-2 text-[15px] px-7 hover:bg-whiteGray" *ngFor="let item of list">{{item.name}}</li>
+        <li class="py-2 text-[15px] px-7 hover:bg-whiteGray" *ngFor="let item of list"
+          (click)="scrollToSection(item.section)">{{item.name}}</li>
       </ul>
+      <app-seller-hint-total [focusInput]="focusInput"></app-seller-hint-total>
     </div>
-    <form [formGroup]="productForm" (ngSubmit)="submitForm()" class="flex flex-col flex-1 gap-5">
-
-      <div class="p-4 bg-white rounded">
+    <form #formContainer [formGroup]="productForm" (ngSubmit)="submitForm()"
+      class="w-full flex flex-col gap-5 ml-5 pl-[250px]">
+      <div id="section1" class="p-4 bg-white rounded">
         <p class="mb-5 text-xl font-bold">Thông tin cơ bản</p>
         <div class="flex flex-col gap-5">
           <app-form-product-row title="Hình ảnh sản phẩm">
-            <app-icon-add-image-product [countImage]="listImage.length"
-              (handleChange)="handleChangeImageProduct($event)"></app-icon-add-image-product>
+            <div class="flex flex-col items-start gap-3">
+              <!-- <p>Hình ảnh tỷ lệ 3:4 <span class="ml-2 text-darkGray">Giúp sản phẩm thời trang thêm nổi bật
+                  với
+                  tỷ lệ hình
+                  ảnh 3:4.</span></p> -->
+              <app-icon-add-image-product (handleFocus)="handleFocus($event)" [listImages]="listImage"
+                [countImage]="(listBase64 ? listBase64.length : 0) + (listImage ? listImage.length : 0)"
+                [listBase64]="listBase64" (handleChange)="handleChangeImageProduct($event)"
+                (handleDeleteImage)="handleDeleteImage($event)"></app-icon-add-image-product>
+            </div>
           </app-form-product-row>
           <app-form-product-row title="Tên sản phẩm">
             <mat-form-field class="w-full">
               <mat-label>Nhập vào</mat-label>
-              <input type="text" matInput formControlName="name">
+              <input type="text" matInput formControlName="name" (focus)="handleFocus('name')">
             </mat-form-field>
           </app-form-product-row>
           <app-form-product-row title="Nghành hàng">
             <mat-form-field class="w-full">
               <mat-label>Nhập vào</mat-label>
-              <input type="text" matInput formControlName="category">
+              <input type="text" matInput formControlName="category" (focus)="handleFocus('category')">
             </mat-form-field>
           </app-form-product-row>
           <app-form-product-row title="Mô tả sản phẩm">
             <mat-form-field class="w-full">
               <mat-label>Nhập vào</mat-label>
-              <input type="text" matInput formControlName="desc">
+              <textarea matInput placeholder="Ex. It makes me feel..." formControlName="desc"
+                (focus)="handleFocus('desc')"></textarea>
             </mat-form-field>
           </app-form-product-row>
         </div>
       </div>
 
-      <div class="p-4 bg-white rounded">
+      <div id="section2" class="p-4 bg-white rounded">
         <p class="mb-5 text-xl font-bold">Thông tin chi tiết</p>
         <div class="grid grid-cols-2 gap-5">
           <app-form-product-row title="Thương hiệu">
@@ -77,55 +88,65 @@
         </div>
       </div>
 
-      <div class="p-4 bg-white rounded">
+      <div id="section3" class="p-4 bg-white rounded">
         <p class="mb-5 text-xl font-bold">Thông tin bán hàng</p>
         <div class="flex flex-col gap-5">
           <app-form-product-row title="Giá">
             <mat-form-field class="w-full">
               <mat-label>Nhập vào</mat-label>
-              <input type="text" matInput formControlName="price_original">
+              <input type="number" matInput formControlName="price_original" (focus)="handleFocus('price_original')">
             </mat-form-field>
           </app-form-product-row>
           <app-form-product-row title="Kho hàng">
             <mat-form-field class="w-full">
               <mat-label>Nhập vào</mat-label>
-              <input type="text" matInput formControlName="quantity">
+              <input type="number" matInput formControlName="quantity" (focus)="handleFocus('quantity')">
             </mat-form-field>
           </app-form-product-row>
         </div>
       </div>
 
-      <div class="p-4 bg-white rounded">
+      <div id="section4" class="p-4 bg-white rounded">
         <p class="mb-5 text-xl font-bold">Vận chuyển</p>
         <div class="flex flex-col gap-5">
           <app-form-product-row title="Cân nặng">
             <mat-form-field class="w-full">
               <mat-label>Nhập vào (đơn vị gr)</mat-label>
-              <input type="text" matInput formControlName="weight">
+              <input type="number" matInput formControlName="weight" (focus)="handleFocus('weight')">
             </mat-form-field>
           </app-form-product-row>
+
           <app-form-product-row title="Kích thước đóng gói">
             <div class="flex items-center gap-x-5">
               <mat-form-field class="w-full">
                 <mat-label>Dài (đơn vị cm)</mat-label>
-                <input type="text" matInput formControlName="length">
+                <input type="number" matInput formControlName="length" (focus)="handleFocus('length')">
               </mat-form-field>
               <mat-form-field class="w-full">
                 <mat-label>Rộng (đơn vị cm)</mat-label>
-                <input type="text" matInput formControlName="width">
+                <input type="number" matInput formControlName="width" (focus)="handleFocus('length')">
               </mat-form-field>
               <mat-form-field class="w-full">
                 <mat-label>Cao (đơn vị cm)</mat-label>
-                <input type="text" matInput formControlName="height">
+                <input type="number" matInput formControlName="height" (focus)="handleFocus('length')">
               </mat-form-field>
+            </div>
+          </app-form-product-row>
+
+          <app-form-product-row title="Phí vận chuyển">
+            <div class="flex items-center gap-x-5">
+              <mat-radio-button value="1" [checked]="true">Tiêu chuẩn (nhanh)</mat-radio-button>
+              <p class="px-5 py-2 text-xs uppercase border rounded border-primary bg-blue-50 text-primary">S-market vận
+                chuyển</p>
             </div>
           </app-form-product-row>
         </div>
       </div>
 
       <div class="flex items-center justify-end gap-x-5">
-        <button class="px-10 py-2 transition-all bg-white border rounded hover:bg-whiteGray">Hủy</button>
-        <app-button types="submit" className="!w-[135.48px]">Lưu và hiển thị</app-button>
+        <a [routerLink]="'/seller/portal/product/list'"
+          class="px-10 py-2 transition-all bg-white border rounded hover:bg-whiteGray">Hủy</a>
+        <app-button [loading]="loading" types="submit" className="!w-[135.48px]">Lưu và hiển thị</app-button>
       </div>
     </form>
   </div>

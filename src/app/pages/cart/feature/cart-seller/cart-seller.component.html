@@ -3,30 +3,36 @@
     <mat-checkbox class="example-margin"></mat-checkbox>
     <img src="https://salt.tikicdn.com/ts/upload/30/24/79/8317b36e87e7c0920e33de0ab5c21b62.png"
       class="w-[15px] h-[15px]" alt="">
-    <p class="text-base font-semibold">Tiki Trading</p>
+    <p class="text-base font-semibold">{{cartItems[0].Shop.Shop_Detail.name}}</p>
     <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/Path.svg" alt="" class="w-[6px] h-[10px]">
   </div>
-  <div class="grid grid-cols-[420px_190px_190px_120px_30px]">
-    <div class="flex items-center">
-      <mat-checkbox class="example-margin"></mat-checkbox>
-      <img class="object-contain w-20 h-20"
-        src="https://salt.tikicdn.com/ts/product/8d/55/83/657a633328880cc2956fb7d781cd792d.jpg" alt="">
-      <div class="flex flex-col gap-1">
-        <span class="line-clamp-2">Steve Jobs Biography</span>
-        <div class="flex items-center gap-x-1">
-          <app-icon-fast></app-icon-fast>
-          <span class="text-xs font-semibold uppercase text-lightGreen">save delivery</span>
+  <div class="flex flex-col gap-7">
+    <div *ngFor="let cart of cartItems" class="grid grid-cols-[420px_190px_190px_120px_30px]">
+      <div class="flex items-center gap-x-2">
+        <mat-checkbox class="example-margin"></mat-checkbox>
+        <img class="object-cover w-20 h-28" [src]="cart.Product.Image_Products[0].Image_Product_Detail.photo_url"
+          alt="">
+        <div class="flex flex-col gap-1">
+          <span class="line-clamp-2">{{cart.Product.Product_Detail.name}}</span>
+          <div class="flex items-center gap-x-1">
+            <app-icon-fast></app-icon-fast>
+            <span class="text-xs font-semibold uppercase text-lightGreen">save delivery</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="flex items-center gap-x-2 text-fs13">
-      <span class="font-medium">94.000₫</span>
-      <span class="line-through text-darkGray">99.000₫</span>
-    </div>
-    <app-input-counter></app-input-counter>
-    <span class="flex items-center font-medium text-hotRed">94.000₫</span>
-    <div class="flex items-center">
-      <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt="" class="w-[18px] h-[18px]">
+      <div class="flex items-center gap-x-2 text-fs13">
+        <span class="font-medium">99.000₫</span>
+        <span
+          class="line-through text-darkGray">{{cart.Product.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
+      </div>
+      <div class="flex items-center">
+        <app-input-counter></app-input-counter>
+      </div>
+      <span class="flex items-center font-medium text-hotRed">94.000₫</span>
+      <div class="flex items-center">
+        <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt=""
+          class="w-[18px] h-[18px]">
+      </div>
     </div>
   </div>
 </div>

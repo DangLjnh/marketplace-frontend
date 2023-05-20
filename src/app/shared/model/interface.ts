@@ -72,7 +72,7 @@ export interface IAddressResponse {
   Address_Detail: IAddressDetail;
 }
 
-type IShopDetail = {
+type TShopDetail = {
   name: string | null | undefined;
   email: string | null | undefined;
   phone: string | null | undefined;
@@ -83,8 +83,12 @@ type IShopDetail = {
   ward: string | null | undefined;
 };
 
-type IWarehouse = {
-  id: string;
+type TWarehouse = {
+  id: number;
+};
+
+type TDiscount = {
+  id: number;
 };
 
 export interface IShop {
@@ -93,8 +97,9 @@ export interface IShop {
   score_rating: number;
   id_status: number;
   createdAt: any;
-  Shop_Detail: IShopDetail;
-  Warehouse: IWarehouse;
+  Shop_Detail: TShopDetail;
+  Warehouse: TWarehouse;
+  Discount: TDiscount;
 }
 
 export interface IUser {
@@ -106,4 +111,40 @@ export interface IUser {
   User_Detail: TUserDetail;
   Group: IGroup;
   Shop: IShop;
+}
+
+type TStock = {
+  id: number;
+  quantity: number;
+};
+
+type TProductDetail = {
+  desc: string;
+  weight: number;
+  height: number;
+  width: number;
+  length: number;
+  name: string;
+  price_discount?: number;
+  price_original: number;
+};
+
+type TImageProductDetail = {
+  photo_url: string;
+};
+
+export interface IImageProducts {
+  id: number;
+  Image_Product_Detail: TImageProductDetail;
+}
+
+export interface IProduct {
+  id: number;
+  status: number;
+  shopID: number;
+  discountPercentID?: number;
+  categoryFilterID: number;
+  Stock: TStock;
+  Product_Detail: TProductDetail;
+  Image_Products: IImageProducts[];
 }

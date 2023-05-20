@@ -93,15 +93,28 @@ export class RegisterComponent {
               username: this.registerForm.value['email'],
               password: this.registerForm.value['password'],
             };
-            this.authService
-              .loginUser(rawUserDataLogin)
-              .subscribe((dataLogin: IResponseToken) => {
+            this.authService.loginUser(rawUserDataLogin).subscribe({
+              next: (data: any) => {
+                localStorage.setItem('access_token', data.access_token);
+                localStorage.setItem('refresh_token', data.refresh_token);
+                this.authService.accountUser().subscribe((data: any) => {
+                  this.loading = false;
+                  if (data.EC === errorCode.ERROR_PARAMS) {
+                    this.toastrService.error(data.EM);
+                    return;
+                  }
+                  if (data.EC === errorCode.SUCCESS) {
+                    this.loading = false;
+                    this.authService.dataUser = data.DT;
+                    this.router.navigate(['home']);
+                  }
+                });
+              },
+              error: (err) => {
                 this.loading = false;
-                this.toastrService.success(data.EM);
-                localStorage.setItem('access_token', dataLogin.access_token);
-                localStorage.setItem('refresh_token', dataLogin.refresh_token);
-                this.router.navigate(['home']);
-              });
+                this.toastrService.error(err.error);
+              },
+            });
           }
         });
     }

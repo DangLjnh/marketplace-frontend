@@ -11,7 +11,8 @@ import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
 import { CustomerService } from 'src/app/pages/customer/data-access/customer.service';
 import { IUser } from 'src/app/shared/model/interface';
 import { toBase64 } from 'src/app/shared/utils/function';
-import { SellerService } from '../../data-access/seller.service';
+import { SellerService } from '../../../data-access/seller.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-seller-portal-form',
@@ -59,6 +60,7 @@ export class SellerPortalFormComponent implements OnInit {
         this.authService.dataUser$.subscribe((data: IUser) => {
           this.loading = false;
           this.dataUser = data;
+          this.router.navigate(['/seller']);
         });
       });
     }
@@ -167,7 +169,8 @@ export class SellerPortalFormComponent implements OnInit {
     private sellerService: SellerService,
     private authService: AuthService,
     private toastrService: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.cities$ = this.customerService.readAllCity();

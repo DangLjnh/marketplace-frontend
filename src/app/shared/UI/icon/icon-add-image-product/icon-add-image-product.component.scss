@@ -13,18 +13,19 @@
   display: inline-block;
 }
 
-.inputFile:focus + label,
-.inputFile + label:hover {
-  // background-color: red;
-}
 .inputFile + label {
   cursor: pointer; /* "hand" cursor */
-}
-.inputFile:focus + label {
 }
 .disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
-.disabled:hover {
+.outer-image:hover {
+  img {
+    opacity: 0.7;
+  }
+  .close {
+    display: flex;
+    cursor: pointer;
+  }
 }

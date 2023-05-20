@@ -18,12 +18,14 @@
         </div>
       </div>
 
+      <ng-container *ngFor="let cartItems of dataCarts">
+        <app-cart-seller [cartItems]="cartItems"></app-cart-seller>
+      </ng-container>
+      <!-- <app-cart-seller></app-cart-seller>
       <app-cart-seller></app-cart-seller>
       <app-cart-seller></app-cart-seller>
       <app-cart-seller></app-cart-seller>
-      <app-cart-seller></app-cart-seller>
-      <app-cart-seller></app-cart-seller>
-      <app-cart-seller></app-cart-seller>
+      <app-cart-seller></app-cart-seller> -->
 
     </div>
   </div>

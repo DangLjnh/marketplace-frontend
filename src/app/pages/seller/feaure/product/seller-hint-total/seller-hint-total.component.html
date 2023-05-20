@@ -1,0 +1,49 @@
+<app-seller-hint *ngIf="focusInput === 'name'" title="Thêm sản phẩm">
+	<p>Sử dụng tiếng Việt có dấu, không viết tắt, tối thiểu 10 ký tự, 20 ký tự đối với Shopee Mall Độ dài tối đa của tên
+		sản
+		phẩm cho tất cả các Shop là 120 ký tự (bao gồm cả khoảng trắng).</p>
+</app-seller-hint>
+
+<app-seller-hint *ngIf="focusInput === 'category'" title="Nghành hàng">
+	<p>- Việc đăng tải sản phẩm đúng ngành hàng giúp Người mua dễ dàng tìm thấy sản phẩm của Shop khi đang tìm kiếm trong
+		ngành
+		hàng đó.</p>
+	<p>- Người bán có thể dễ dàng tìm thấy ngành hàng phù hợp cho sản phẩm của thông qua nghành hàng.</p>
+</app-seller-hint>
+
+<app-seller-hint *ngIf="focusInput === 'desc'" title="Mô tả sản phẩm">
+	<strong>Lưu ý: </strong>
+	<span>Đối với một số mặt hàng nhất định, Người bán cần cung cấp các thông tin sau tại mục "Mô tả sản phẩm" theo quy
+		định của
+		Nghị định 85/2021/NĐ-CP </span>
+	<p>- Số chứng nhận phê duyệt kiểu</p>
+	<p>- Khuyến cáo</p>
+	<p>- Hướng dẫn sử dụng</p>
+	<p>- Thông số kỹ thuật</p>
+	<p>- Thông tin cảnh báo</p>
+</app-seller-hint>
+
+<app-seller-hint *ngIf="focusInput === 'price_original'" title="Mô tả sản phẩm">
+	<p class="mb-3">Giá sản phẩm phải tính bằng đơn vị VNĐ</p>
+	<p>⚠️Lưu ý với bài đăng cho nhiều sản phẩm, Giá phải được phân loại rõ ràng dựa trên kích cỡ, màu sắc, chất lượng</p>
+</app-seller-hint>
+
+<app-seller-hint *ngIf="focusInput === 'quantity'" title="Kho hàng">
+	<p>Cập nhật só lượng tồn kho thực tế của sản phẩm để tránh hủy/ trễ đơn hàng.</p>
+</app-seller-hint>
+
+<app-seller-hint *ngIf="focusInput === 'weight'" title=" Kích thước đóng gói (Sau khi đóng gói)">
+	<p class="mb-3">- Là khối lượng của sản phẩm SAU KHI ĐÓNG GÓI</p>
+	<p>⚠️Nhà vận chuyển có quyền từ chối lấy hàng nếu khối lượng thực tế cao hơn khối lượng thiết lập</p>
+</app-seller-hint>
+
+<app-seller-hint *ngIf="focusInput === 'length'"
+	title=" Kích thước đóng gói (Phí vận chuyển thực tế sẽ thay đổi nếu bạn nhập sai kích thước)">
+	<p>⚠️Nhà vận chuyển có quyền từ chối lấy hàng nếu khối lượng thực tế cao hơn khối lượng thiết lập</p>
+</app-seller-hint>
+
+<app-seller-hint *ngIf="focusInput === 'image'" title="Hình ảnh sản phẩm">
+	<strong>Hình ảnh tỷ lệ 3:4</strong>
+	<p class="mt-3">- Giúp sản phẩm thời trang thêm nổi bật với tỷ lệ hình ảnh 3:4.</p>
+	<p class="">- Hình ảnh đầu tiên thêm vào sẽ là ảnh bìa cho sản phẩm!</p>
+</app-seller-hint>
