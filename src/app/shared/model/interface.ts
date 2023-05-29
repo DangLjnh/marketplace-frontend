@@ -91,6 +91,13 @@ type TDiscount = {
   id: number;
 };
 
+export interface ICart {
+  id: number;
+  isGroupCart: boolean;
+  name: string;
+  userID: number;
+}
+
 export interface IShop {
   id?: number;
   feedback_rating: number;
@@ -111,6 +118,7 @@ export interface IUser {
   User_Detail: TUserDetail;
   Group: IGroup;
   Shop: IShop;
+  Carts: ICart[];
 }
 
 type TStock = {

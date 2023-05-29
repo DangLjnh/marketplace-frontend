@@ -12,6 +12,7 @@ import { IProduct } from 'src/app/shared/model/interface';
 })
 export class SellerProductListComponent implements OnInit {
   productList!: IProduct[];
+
   navTabs = [
     {
       name: 'Tất cả',
@@ -38,7 +39,7 @@ export class SellerProductListComponent implements OnInit {
   ngOnInit(): void {
     this.authService.dataUser$.subscribe((data) => {
       this.productService
-        .readAllProductOfShop(data.Shop.id)
+        .readAllProductOfShop(data?.Shop?.id)
         .subscribe((data) => {
           console.log(
             '🚀 ~ file: seller-product-list.component.ts:43 ~ SellerProductListComponent ~ .subscribe ~ data:',

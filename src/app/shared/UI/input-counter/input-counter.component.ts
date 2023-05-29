@@ -9,6 +9,7 @@ export class InputCounterComponent {
   @Input() valueCounter!: number;
   @Output() checkedPlus = new EventEmitter<number>();
   @Output() checkedMinus = new EventEmitter<number>();
+  @Output() handleInputChange = new EventEmitter<Event>();
 
   onInputChange(event: Event) {
     const input = event.target as HTMLInputElement;

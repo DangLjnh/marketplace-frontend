@@ -9,6 +9,7 @@ import { CartPageComponent } from './feature/cart-page/cart-page.component';
 import { CartFreeShipComponent } from './feature/cart-free-ship/cart-free-ship.component';
 import { CartSellerComponent } from './feature/cart-seller/cart-seller.component';
 import { CartTotalPriceComponent } from './feature/cart-total-price/cart-total-price.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     CartPageComponent,
@@ -23,6 +24,7 @@ import { CartTotalPriceComponent } from './feature/cart-total-price/cart-total-p
     MatIconModule,
     MatCheckboxModule,
     IconModule,
+    FormsModule,
   ],
 })
 export class CartModule {}

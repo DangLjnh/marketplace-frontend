@@ -6,7 +6,8 @@
     </button>
     <input type="number"
       class="flex items-center w-[20%] font-semibold text-center bg-whiteGray outline-none focus:outline-none text-md hover:text-black focus:text-black"
-      name="custom-input-number" [value]="valueCounter" min="1" (input)="onInputChange($event)">
+      name="custom-input-number" [value]="valueCounter" min="1" max="99" (input)="onInputChange($event)"
+      (input)="handleInputChange.emit($event)">
     <button data-action=" increment" (click)="checkedPlus.emit(valueCounter)"
       class="w-10 h-full text-gray-600 transition-all rounded-r cursor-pointer bg-whiteGray hover:bg-gray-200">
       <span class="m-auto text-2xl font-thin">+</span>

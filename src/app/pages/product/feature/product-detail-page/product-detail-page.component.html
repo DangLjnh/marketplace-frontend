@@ -3,7 +3,8 @@
     <div class="max-w-[450px]">
       <div class="p-3">
         <div class="w-[450px]">
-          <div class="product-image rounded mb-3 w-full h-[450px]"></div>
+          <img *ngIf="dataProduct" [src]="dataProduct.Image_Products[0].Image_Product_Detail.photo_url"
+            class="object-cover rounded mb-3 w-full h-[450px]"><img>
           <div class="flex items-center justify-between w-full">
             <img src="https://down-vn.img.susercontent.com/file/21a64463b0502f51971e4dfe0a98a291" alt=""
               class="h-[82px] object-contain rounded">
@@ -22,9 +23,7 @@
 
     <div class="">
       <div class="flex flex-col gap-2 p-3">
-        <p class="text-xl">Áo Polo nam có cổ UGO-BLACK vải cá sấu cotton UNI, nam tính, thanh lịch, sang trọng -
-          POLOMANOR
-        </p>
+        <p *ngIf="dataProduct" class="text-xl">{{dataProduct.Product_Detail.name}}</p>
 
         <div class="flex items-center gap-x-2">
           <div class="pr-3 mr-3 border-r">
@@ -43,7 +42,8 @@
 
         <div class="px-4 py-5 rounded bg-gray-50">
           <div class="flex items-center gap-x-3 ">
-            <span class="line-through text-lightGray">₫329.000</span>
+            <span *ngIf="dataProduct"
+              class="line-through text-lightGray">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
             <span class="text-2xl font-medium text-hotRed">₫296.000</span>
             <span class="p-1 text-[10px] text-white bg-hotRed rounded-sm">10% OFF</span>
           </div>
@@ -83,7 +83,7 @@
             <div class="flex items-center gap-x-5">
               <app-button theme="blue" className="flex items-center gap-x-2">
                 <app-icon-plus-cart color="#0A68FF" stroke="#0A68FF"></app-icon-plus-cart>
-                <span>Add To Cart</span>
+                <span (click)="handleAddToCart()">Add To Cart</span>
               </app-button>
               <app-button>
                 Buy Now

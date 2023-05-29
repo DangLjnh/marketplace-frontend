@@ -19,7 +19,9 @@
       </div>
 
       <ng-container *ngFor="let cartItems of dataCarts">
-        <app-cart-seller [cartItems]="cartItems"></app-cart-seller>
+        <app-cart-seller [cartItems]="cartItems" (handleClickCounter)="handleClickCartItem($event)"
+          (checkedPlus)="handleCheckPlus($event)" (checkedMinus)="handleCheckMinus($event)"
+          (handleInputChange)="handleInputChange($event)"></app-cart-seller>
       </ng-container>
       <!-- <app-cart-seller></app-cart-seller>
       <app-cart-seller></app-cart-seller>
@@ -39,4 +41,13 @@
     </div>
   </div>
 
+
 </div>
+<div *ngFor="let message of messageList">
+  <li>
+    {{message}}
+  </li>
+</div>
+
+<input [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()" />
+<button (click)="sendMessage()">Send Message</button>

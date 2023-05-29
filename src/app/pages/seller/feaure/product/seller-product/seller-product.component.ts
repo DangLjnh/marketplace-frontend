@@ -128,23 +128,20 @@ export class SellerProductComponent implements OnInit {
       this.loading = true;
       // add new product
       if (!this.isEdit) {
-        const dataToPersist = {
-          shopID: this.dataUser.Shop.id,
-          categoryFilterID: 1,
-          name: formValue.name,
-          desc: formValue.desc,
-          quantity: formValue.quantity,
-          price_original: formValue.price_original,
-          width: formValue.width,
-          height: formValue.height,
-          length: formValue.length,
-          weight: formValue.weight,
-          warehouseID: this.dataUser.Shop.Warehouse.id,
-        };
         for (let i = 0; i < this.listFile.length; i++) {
-          formData.append('file', this.listFile[i]);
+          formData.append('', this.listFile[i]);
         }
-        formData.append('data', JSON.stringify(dataToPersist));
+        formData.append('shopID', String(this.dataUser.Shop.id));
+        formData.append('categoryFilterID', '1');
+        formData.append('name', String(formValue.name));
+        formData.append('desc', String(formValue.desc));
+        formData.append('quantity', String(formValue.quantity));
+        formData.append('price_original', String(formValue.price_original));
+        formData.append('width', String(formValue.width));
+        formData.append('height', String(formValue.height));
+        formData.append('length', String(formValue.length));
+        formData.append('weight', String(formValue.weight));
+        formData.append('warehouseID', String(this.dataUser.Shop.Warehouse.id));
         this.productService.createProduct(formData).subscribe((data) => {
           this.loading = false;
           if (+data.EC === 1 || +data.EC === -1) {
@@ -156,23 +153,21 @@ export class SellerProductComponent implements OnInit {
         });
       }
       if (this.isEdit) {
-        const dataToPersist = {
-          id: this.productID,
-          categoryFilterID: 1,
-          name: formValue.name,
-          desc: formValue.desc,
-          quantity: formValue.quantity,
-          price_original: formValue.price_original,
-          width: formValue.width,
-          height: formValue.height,
-          length: formValue.length,
-          weight: formValue.weight,
-          listImage: this.listImage,
-        };
         for (let i = 0; i < this.listFile.length; i++) {
-          formData.append('file', this.listFile[i]);
+          formData.append('', this.listFile[i]);
         }
-        formData.append('data', JSON.stringify(dataToPersist));
+        formData.append('shopID', String(this.dataUser.Shop.id));
+        formData.append('categoryFilterID', '1');
+        formData.append('name', String(formValue.name));
+        formData.append('desc', String(formValue.desc));
+        formData.append('quantity', String(formValue.quantity));
+        formData.append('price_original', String(formValue.price_original));
+        formData.append('width', String(formValue.width));
+        formData.append('height', String(formValue.height));
+        formData.append('length', String(formValue.length));
+        formData.append('weight', String(formValue.weight));
+        formData.append('warehouseID', String(this.dataUser.Shop.Warehouse.id));
+        formData.append('listImage', String(this.listImage));
         this.productService.updateProduct(formData).subscribe((data) => {
           this.loading = false;
           if (+data.EC === 1 || +data.EC === -1) {
@@ -395,17 +390,17 @@ export class SellerProductComponent implements OnInit {
         if (data.DT === null) {
           this.router.navigate(['seller/portal/product/new']);
         }
-        if (data.DT !== null) {
+        if (data.DT !== '') {
           this.listImage = data.DT.Image_Products;
           this.productForm.patchValue({
-            name: data.DT.Product_Detail.name,
-            desc: data.DT.Product_Detail.desc,
-            price_original: String(data.DT.Product_Detail.price_original),
-            quantity: String(data.DT.Stock.quantity),
-            length: String(data.DT.Product_Detail.length),
-            width: String(data.DT.Product_Detail.width),
-            height: String(data.DT.Product_Detail.height),
-            weight: String(data.DT.Product_Detail.weight),
+            name: data.DT.Product_Detail?.name,
+            desc: data.DT.Product_Detail?.desc,
+            price_original: String(data.DT.Product_Detail?.price_original),
+            quantity: String(data.DT.Stock?.quantity),
+            length: String(data.DT.Product_Detail?.length),
+            width: String(data.DT.Product_Detail?.width),
+            height: String(data.DT.Product_Detail?.height),
+            weight: String(data.DT.Product_Detail?.weight),
           });
           this.isEdit = true;
         }

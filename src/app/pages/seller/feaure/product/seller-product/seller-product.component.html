@@ -7,6 +7,7 @@
       </ul>
       <app-seller-hint-total [focusInput]="focusInput"></app-seller-hint-total>
     </div>
+
     <form #formContainer [formGroup]="productForm" (ngSubmit)="submitForm()"
       class="w-full flex flex-col gap-5 ml-5 pl-[250px]">
       <div id="section1" class="p-4 bg-white rounded">
@@ -14,10 +15,10 @@
         <div class="flex flex-col gap-5">
           <app-form-product-row title="Hình ảnh sản phẩm">
             <div class="flex flex-col items-start gap-3">
-              <!-- <p>Hình ảnh tỷ lệ 3:4 <span class="ml-2 text-darkGray">Giúp sản phẩm thời trang thêm nổi bật
+              <p>Hình ảnh tỷ lệ 3:4 <span class="ml-2 text-darkGray">Giúp sản phẩm thời trang thêm nổi bật
                   với
                   tỷ lệ hình
-                  ảnh 3:4.</span></p> -->
+                  ảnh 3:4.</span></p>
               <app-icon-add-image-product (handleFocus)="handleFocus($event)" [listImages]="listImage"
                 [countImage]="(listBase64 ? listBase64.length : 0) + (listImage ? listImage.length : 0)"
                 [listBase64]="listBase64" (handleChange)="handleChangeImageProduct($event)"

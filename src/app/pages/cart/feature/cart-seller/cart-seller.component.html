@@ -26,9 +26,12 @@
           class="line-through text-darkGray">{{cart.Product.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
       </div>
       <div class="flex items-center">
-        <app-input-counter></app-input-counter>
+        <app-input-counter [valueCounter]="cart.quantity" (checkedPlus)="checkedPlus.emit($event)"
+          (checkedMinus)="checkedMinus.emit($event)" (click)="handleClickCounter.emit(cart.id)"
+          (handleInputChange)="handleInputChange.emit($event)"></app-input-counter>
       </div>
-      <span class="flex items-center font-medium text-hotRed">94.000₫</span>
+      <span class="flex items-center font-medium text-hotRed">{{(cart.Product.Product_Detail.price_original *
+        cart.quantity).toLocaleString('en-US')}}₫</span>
       <div class="flex items-center">
         <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt=""
           class="w-[18px] h-[18px]">

@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutSharedComponent,
-    children: [{ path: ':slug', component: ProductDetailPageComponent }],
+    children: [{ path: ':id', component: ProductDetailPageComponent }],
   },
 ];
 
