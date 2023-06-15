@@ -32,10 +32,21 @@
             </mat-form-field>
           </app-form-product-row>
           <app-form-product-row title="Nghành hàng">
-            <mat-form-field class="w-full">
+            <ng-container *ngIf="nameCategory && nameCategoryFilter;else noCategory">
+              <div class="flex flex-col items-start">
+                <p class="mb-2">{{nameCategory}} ><span class="ml-1">{{nameCategoryFilter}}</span></p>
+                <app-button (click)="handleFocus('category')" theme="blue" (click)="openModalEditCategory()">Sửa
+                  nghành hàng</app-button>
+              </div>
+            </ng-container>
+            <ng-template #noCategory>
+              <app-button (click)="handleFocus('category')" theme="blue" (click)="openModalChooseCategory()">Chọn nghành
+                hàng</app-button>
+            </ng-template>
+            <!-- <mat-form-field class="w-full">
               <mat-label>Nhập vào</mat-label>
               <input type="text" matInput formControlName="category" (focus)="handleFocus('category')">
-            </mat-form-field>
+            </mat-form-field> -->
           </app-form-product-row>
           <app-form-product-row title="Mô tả sản phẩm">
             <mat-form-field class="w-full">

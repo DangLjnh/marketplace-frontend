@@ -1,0 +1,37 @@
+<div class="bg-white rounded">
+  <ul class="flex items-center border-b-2 tab-navs">
+    <li *ngFor="let nav of navTabs" class="p-4 transition-all cursor-pointer hover:text-primary">{{nav.name}}</li>
+  </ul>
+  <div class="flex items-center justify-between p-4">
+    <span class="text-lg font-bold">{{countItem}}</span>
+    <app-button>
+      <div class="flex items-center gap-x-3">
+        <app-icon-plus></app-icon-plus>
+        <span>{{titleAddNew}}</span>
+      </div>
+    </app-button>
+  </div>
+  <div class="relative p-3 overflow-x-auto">
+    <table class="w-full text-sm text-left">
+      <thead class="bg-gray-100">
+        <tr>
+          <ng-content select="[thead]"></ng-content>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <ng-content select="[tbody]"></ng-content>
+        </tr>
+      </tbody>
+    </table>
+    <div class="flex items-center justify-end px-4 pt-4 text-base gap-x-5">
+      <p class="text-lightGray">
+        < </p>
+          <p>1</p>
+          <p>/</p>
+          <p>1</p>
+          <p class="text-lightGray">></p>
+    </div>
+  </div>
+
+</div>

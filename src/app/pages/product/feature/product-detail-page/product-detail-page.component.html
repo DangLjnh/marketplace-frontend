@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-5 -mt-5">
-  <div class="container flex items-center mt-5 bg-white rounded gap-x-10">
+  <div class="container grid grid-cols-[450px,auto] mt-5 bg-white rounded gap-x-10">
     <div class="max-w-[450px]">
       <div class="p-3">
         <div class="w-[450px]">
@@ -21,8 +21,8 @@
       </div>
     </div>
 
-    <div class="">
-      <div class="flex flex-col gap-2 p-3">
+    <div class="w-full h-full">
+      <div class="flex flex-col w-full h-full gap-5 p-3">
         <p *ngIf="dataProduct" class="text-xl">{{dataProduct.Product_Detail.name}}</p>
 
         <div class="flex items-center gap-x-2">
@@ -42,15 +42,26 @@
 
         <div class="px-4 py-5 rounded bg-gray-50">
           <div class="flex items-center gap-x-3 ">
-            <span *ngIf="dataProduct"
-              class="line-through text-lightGray">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
-            <span class="text-2xl font-medium text-hotRed">₫296.000</span>
-            <span class="p-1 text-[10px] text-white bg-hotRed rounded-sm">10% OFF</span>
+            <ng-container *ngIf="dataProduct?.Product_Detail">
+              <ng-container
+                *ngIf="dataProduct.Product_Detail.price_discount && dataProduct?.Discount_Percent?.percent;else noDiscount">
+                <span *ngIf="dataProduct?.Discount_Percent"
+                  class="line-through text-lightGray">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
+                <span
+                  class="text-2xl font-medium text-hotRed">{{dataProduct.Product_Detail.price_discount.toLocaleString('en-US')}}₫</span>
+                <span *ngIf="dataProduct?.Discount_Percent?.percent"
+                  class="p-1 text-[10px] text-white bg-hotRed rounded-sm">{{dataProduct.Discount_Percent.percent}}%
+                  OFF</span>
+              </ng-container>
+              <ng-template #noDiscount>
+                <span
+                  class="text-2xl font-medium text-hotRed">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
+              </ng-template>
+            </ng-container>
           </div>
         </div>
 
-        <div class="flex flex-col gap-5">
-
+        <div class="flex flex-col gap-12">
           <div class="flex items-center gap-x-2">
             <div class="w-[110px]">
               <span class="text-darkGray">Shipping</span>
@@ -83,7 +94,7 @@
             <div class="flex items-center gap-x-5">
               <app-button theme="blue" className="flex items-center gap-x-2">
                 <app-icon-plus-cart color="#0A68FF" stroke="#0A68FF"></app-icon-plus-cart>
-                <span (click)="handleAddToCart()">Add To Cart</span>
+                <p (click)="handleAddToCart()">Add To Cart</p>
               </app-button>
               <app-button>
                 Buy Now

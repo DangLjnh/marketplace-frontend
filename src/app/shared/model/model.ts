@@ -4,6 +4,12 @@ export const statusUser = {
   BAN: 3,
 };
 
+export const statusProduct = {
+  ACTIVE: 1,
+  PENDING: 2,
+  BAN: 3,
+};
+
 export const groupAccess = {
   CUSTOMER: 1,
 };

@@ -11,7 +11,8 @@ import { IProduct } from 'src/app/shared/model/interface';
   styleUrls: ['./seller-product-list.component.scss'],
 })
 export class SellerProductListComponent implements OnInit {
-  productList!: IProduct[];
+  productList!: any[];
+  productOptions!: any[];
 
   navTabs = [
     {
@@ -41,10 +42,6 @@ export class SellerProductListComponent implements OnInit {
       this.productService
         .readAllProductOfShop(data?.Shop?.id)
         .subscribe((data) => {
-          console.log(
-            '🚀 ~ file: seller-product-list.component.ts:43 ~ SellerProductListComponent ~ .subscribe ~ data:',
-            data
-          );
           this.productList = data.DT;
         });
     });

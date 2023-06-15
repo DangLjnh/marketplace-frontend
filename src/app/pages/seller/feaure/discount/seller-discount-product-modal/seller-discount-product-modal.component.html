@@ -1,0 +1,77 @@
+<form (submit)="onSubmit($event)">
+  <h2 mat-dialog-title>Chọn sản phẩm</h2>
+  <mat-dialog-content class="mat-typography">
+    <table class="w-[800px] text-sm text-left ">
+      <thead class="bg-gray-100">
+        <tr class="">
+          <td class="w-[50px]">
+            <mat-checkbox (change)="handleCheckAll()"></mat-checkbox>
+          </td>
+          <th scope="col" class="px-6 py-4 w-[200px]">
+            Sản phẩm
+          </th>
+          <th scope="col" class="px-6 py-4">
+            <div class="grid grid-cols-4">
+              <p>Phân loại hàng 1</p>
+              <p>Phân loại hàng 2</p>
+              <p>Kho</p>
+              <p>Giá</p>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="productList">
+          <tr *ngFor="let product of productList " class="bg-white border-b-2">
+            <ng-container *ngIf="product.Product_Price_Options.length === 0;">
+              <td class="w-[50px]">
+                <mat-checkbox [checked]="product.checked" (change)="toggleProductCheck($event, product)"
+                  name="productCheckbox"></mat-checkbox>
+              </td>
+              <td scope="col" class="px-6 py-5 w-[200px]">
+                <div class="flex items-center gap-x-2">
+                  <img [src]="product.Image_Products[0].Image_Product_Detail.photo_url" alt=""
+                    class="w-[56px] h-[70px] object-cover rounded-sm ">
+                  <p class="font-medium line-clamp-2">{{product.Product_Detail.name}}</p>
+                </div>
+              </td>
+              <td scope="col">
+                <div class="grid grid-cols-4 px-6 py-4">
+                  <p>Không có</p>
+                  <p>Không có</p>
+                  <p>{{product.Stock.quantity}}</p>
+                  <p>{{product.Product_Detail.price_discount.toLocaleString('en-US')}}đ</p>
+                </div>
+              </td>
+            </ng-container>
+          </tr>
+          <tr *ngFor="let product of productOptionList " class="bg-white border-b-2">
+            <td class="w-[50px]">
+              <mat-checkbox [checked]="product.checked" (change)="toggleProductOptionCheck($event, product)"
+                name="productCheckbox"></mat-checkbox>
+            </td>
+            <td scope="col" class="px-6 py-5 w-[200px]">
+              <div class="flex items-center gap-x-2">
+                <img [src]="product.Image_Products[0].Image_Product_Detail.photo_url" alt=""
+                  class="w-[56px] h-[70px] object-cover rounded-sm ">
+                <p class="font-medium line-clamp-2">{{product.Product_Detail.name}}</p>
+              </div>
+            </td>
+            <td scope="col">
+              <div class="grid grid-cols-4 px-6 py-4">
+                <p>{{product.Product_Price_Options.firstFilter.name_filter}}</p>
+                <p>{{product.Product_Price_Options.secondFilter.name_filter}}</p>
+                <p>{{product.Product_Price_Options.quantity_stock}}</p>
+                <p>{{product.Product_Price_Options.price.toLocaleString('en-US')}}đ</p>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <app-button types="submit">Lưu</app-button>
+  </mat-dialog-actions>
+</form>

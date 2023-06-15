@@ -193,6 +193,10 @@ export class CustomerAddressModalComponent {
       this.addressID = data.addressID;
       this.customerService.readAddressItem(data.addressID).subscribe((data) => {
         this.dataAddress = data.DT;
+        console.log(
+          '🚀 ~ file: customer-address-modal.component.ts:196 ~ CustomerAddressModalComponent ~ this.customerService.readAddressItem ~ dataAddress:',
+          this.dataAddress
+        );
         this.addressForm.patchValue({
           fullName: data.DT.Address_Detail?.full_name,
           phone: data.DT.Address_Detail?.phone,

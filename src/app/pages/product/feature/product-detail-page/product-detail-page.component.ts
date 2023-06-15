@@ -81,7 +81,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.authService.dataUser$.subscribe((data: IUser) => {
       this.dataUser = data;
-      data.Carts.filter((data) => {
+      data?.Carts.filter((data) => {
         if (data.isGroupCart === false) this.cartDefault = data;
       });
     });
@@ -92,11 +92,11 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
         filter((product) => !!product)
       )
       .subscribe((data) => {
-        this.dataProduct = data.DT;
         console.log(
-          '🚀 ~ file: product-detail-page.component.ts:72 ~ ProductDetailPageComponent ~ .subscribe ~ data.DT:',
+          '🚀 ~ file: product-detail-page.component.ts:95 ~ ProductDetailPageComponent ~ .subscribe ~ data:',
           data.DT
         );
+        this.dataProduct = data.DT;
       });
   }
   ngAfterViewInit(): void {

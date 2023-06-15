@@ -72,12 +72,8 @@ export class SellerSidebarComponent {
       title: 'Quản lý giảm giá',
       submenus: [
         {
-          name: 'Giảm giá phần trăm',
-          url: '',
-        },
-        {
-          name: 'Mã giảm giá',
-          url: '',
+          name: 'Danh sách giảm giá',
+          url: '/seller/portal/discount/list',
         },
       ],
     },

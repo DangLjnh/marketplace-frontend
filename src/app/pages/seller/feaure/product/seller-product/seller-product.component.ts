@@ -16,6 +16,9 @@ import {
 import { toBase64 } from 'src/app/shared/utils/function';
 import { ProductService } from '../../../data-access/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SellerProductCategoryModalComponent } from '../seller-product-category-modal/seller-product-category-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CategoryService } from '../../../data-access/category/category.service';
 
 @Component({
   selector: 'app-seller-product',
@@ -25,6 +28,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SellerProductComponent implements OnInit {
   @ViewChild('formContainer') formContainer!: ElementRef;
   fileInputRef!: ElementRef<HTMLInputElement>;
+  nameCategory!: string;
+  nameCategoryFilter!: string;
+  categoryFilterID!: number;
   listFile: any[] = []; // when add file
   listBase64: any[] = []; // when add file
   listImage: IImageProducts[] = []; // list image get from api
@@ -113,6 +119,10 @@ export class SellerProductComponent implements OnInit {
 
     const formErrors = this.getFormErrors(this.productForm);
     const formValue = this.productForm.value;
+    console.log(
+      '🚀 ~ file: seller-product.component.ts:122 ~ SellerProductComponent ~ submitForm ~ formValue:',
+      formValue
+    );
     const formData = new FormData();
     if (this.listFile.length === 0 && this.listImage.length === 0) {
       this.toastrService.error('Vui lòng đính kèm hình ảnh sản phẩm!');
@@ -132,7 +142,7 @@ export class SellerProductComponent implements OnInit {
           formData.append('', this.listFile[i]);
         }
         formData.append('shopID', String(this.dataUser.Shop.id));
-        formData.append('categoryFilterID', '1');
+        formData.append('categoryFilterID', String(this.categoryFilterID));
         formData.append('name', String(formValue.name));
         formData.append('desc', String(formValue.desc));
         formData.append('quantity', String(formValue.quantity));
@@ -142,6 +152,48 @@ export class SellerProductComponent implements OnInit {
         formData.append('length', String(formValue.length));
         formData.append('weight', String(formValue.weight));
         formData.append('warehouseID', String(this.dataUser.Shop.Warehouse.id));
+        // formData.append(
+        //   'productTypes',
+        //   JSON.stringify([
+        //     {
+        //       name_product_type: 'Màu Sắc',
+        //       options: [
+        //         {
+        //           option: 'Xanh',
+        //           prices: [
+        //             {
+        //               stock: 10,
+        //               option: 'L',
+        //               price: 100,
+        //             },
+        //           ],
+        //         },
+        //         {
+        //           option: 'Đỏ',
+        //           prices: [
+        //             {
+        //               stock: 20,
+        //               option: 'M',
+        //               price: 900,
+        //             },
+        //           ],
+        //         },
+        //       ],
+        //     },
+        //     {
+        //       name_product_type: 'Kích thước',
+        //       options: [
+        //         {
+        //           option: 'M',
+        //         },
+        //         {
+        //           option: 'L',
+        //         },
+        //       ],
+        //     },
+        //   ])
+        // );
+
         this.productService.createProduct(formData).subscribe((data) => {
           this.loading = false;
           if (+data.EC === 1 || +data.EC === -1) {
@@ -156,8 +208,9 @@ export class SellerProductComponent implements OnInit {
         for (let i = 0; i < this.listFile.length; i++) {
           formData.append('', this.listFile[i]);
         }
+        formData.append('id', String(this.productID));
         formData.append('shopID', String(this.dataUser.Shop.id));
-        formData.append('categoryFilterID', '1');
+        formData.append('categoryFilterID', String(this.categoryFilterID));
         formData.append('name', String(formValue.name));
         formData.append('desc', String(formValue.desc));
         formData.append('quantity', String(formValue.quantity));
@@ -167,7 +220,7 @@ export class SellerProductComponent implements OnInit {
         formData.append('length', String(formValue.length));
         formData.append('weight', String(formValue.weight));
         formData.append('warehouseID', String(this.dataUser.Shop.Warehouse.id));
-        formData.append('listImage', String(this.listImage));
+        formData.append('listImage', JSON.stringify(this.listImage));
         this.productService.updateProduct(formData).subscribe((data) => {
           this.loading = false;
           if (+data.EC === 1 || +data.EC === -1) {
@@ -355,6 +408,21 @@ export class SellerProductComponent implements OnInit {
     return errors;
   }
 
+  openModalChooseCategory() {
+    this.dialog.open(SellerProductCategoryModalComponent, {
+      data: {
+        type: 'create',
+      },
+    });
+  }
+  openModalEditCategory() {
+    this.dialog.open(SellerProductCategoryModalComponent, {
+      data: {
+        type: 'edit',
+      },
+    });
+  }
+
   handleFocus(inputName: string) {
     this.focusInput = inputName;
   }
@@ -369,11 +437,13 @@ export class SellerProductComponent implements OnInit {
   }
   constructor(
     private authService: AuthService,
+    public dialog: MatDialog,
     private productService: ProductService,
     private toastrService: ToastrService,
     private fb: FormBuilder,
     private readonly route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private categoryService: CategoryService
   ) {}
   ngOnInit(): void {
     this.authService.dataUser$.subscribe((data: any) => {
@@ -402,8 +472,20 @@ export class SellerProductComponent implements OnInit {
             height: String(data.DT.Product_Detail?.height),
             weight: String(data.DT.Product_Detail?.weight),
           });
+          this.categoryService.categoryFilter = data.DT.categoryFilterID;
           this.isEdit = true;
         }
       });
+    this.categoryService.categoryFilter$.subscribe(
+      (categoryFilterID: number) => {
+        this.categoryFilterID = categoryFilterID;
+        this.categoryService
+          .readSingleCategoryFilter(categoryFilterID)
+          .subscribe((data) => {
+            this.nameCategory = data.DT?.Category.name_category;
+            this.nameCategoryFilter = data.DT?.name_category_filter;
+          });
+      }
+    );
   }
 }

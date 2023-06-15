@@ -23,6 +23,7 @@ import { LoadingSpinnerComponent } from './UI/loading/loading-spinner/loading-sp
 import { LoadingSkeletonComponent } from './UI/loading/loading-skeleton/loading-skeleton.component';
 import { InputFileComponent } from './UI/input-file/input-file.component';
 import { FormProductRowComponent } from './UI/form/form-product-row/form-product-row.component';
+import { TableSellerComponent } from './UI/table/table-seller/table-seller.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { FormProductRowComponent } from './UI/form/form-product-row/form-product
     LoadingSkeletonComponent,
     InputFileComponent,
     FormProductRowComponent,
+    TableSellerComponent,
   ],
   imports: [
     CommonModule,
@@ -72,6 +74,7 @@ import { FormProductRowComponent } from './UI/form/form-product-row/form-product
     LoadingSkeletonComponent,
     InputFileComponent,
     FormProductRowComponent,
+    TableSellerComponent,
   ],
 })
 export class SharedModule {}

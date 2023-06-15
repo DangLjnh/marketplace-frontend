@@ -1,1 +1,24 @@
-<p>seller-product-category-modal works!</p>
+<form [formGroup]="categoryProductForm" (ngSubmit)="submitForm()">
+  <h2 mat-dialog-title>Chọn nghành hàng</h2>
+  <mat-dialog-content class="mat-typography">
+    <div class=""></div>
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Nghành hàng</mat-label>
+      <mat-select formControlName="category">
+        <mat-option *ngFor="let category of categories" [value]="category.name_category"
+          (click)="handleChooseCategory(category.id)">{{category.name_category}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Nghành hàng con</mat-label>
+      <mat-select formControlName="category_filter">
+        <mat-option *ngFor="let categoryFilter of categoriesFilter" [value]="categoryFilter.name_category_filter"
+          (click)="handleChooseCategoryFilter(categoryFilter.id)">{{categoryFilter.name_category_filter}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Hủy</button>
+    <app-button types="submit">Lưu</app-button>
+  </mat-dialog-actions>
+</form>

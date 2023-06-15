@@ -27,7 +27,7 @@
       </div>
       <div class="flex items-center">
         <app-input-counter [valueCounter]="cart.quantity" (checkedPlus)="checkedPlus.emit($event)"
-          (checkedMinus)="checkedMinus.emit($event)" (click)="handleClickCounter.emit(cart.id)"
+          (checkedMinus)="checkedMinus.emit($event)" (click)="handleClickCounter.emit(cart)"
           (handleInputChange)="handleInputChange.emit($event)"></app-input-counter>
       </div>
       <span class="flex items-center font-medium text-hotRed">{{(cart.Product.Product_Detail.price_original *

@@ -22,7 +22,22 @@ import { SellerHintTotalComponent } from './feaure/product/seller-hint-total/sel
 import { SellerPortalWelcomeComponent } from './feaure/register/seller-portal-welcome/seller-portal-welcome.component';
 import { SellerPortalFormComponent } from './feaure/register/seller-portal-form/seller-portal-form.component';
 import { SellerProductListComponent } from './feaure/product/seller-product-list/seller-product-list.component';
+import { SellerDiscountListComponent } from './feaure/discount/seller-discount-list/seller-discount-list.component';
+import { SellerDiscountNewComponent } from './feaure/discount/seller-discount-new/seller-discount-new.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatStepperModule } from '@angular/material/stepper';
+import { SellerDiscountProductModalComponent } from './feaure/discount/seller-discount-product-modal/seller-discount-product-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
+import { SellerProductCategoryModalComponent } from './feaure/product/seller-product-category-modal/seller-product-category-modal.component';
 @NgModule({
   declarations: [
     SellerComponent,
@@ -37,6 +52,10 @@ import { SellerProductListComponent } from './feaure/product/seller-product-list
     SellerSidebarComponent,
     SellerPortalLayoutComponent,
     SellerProductListComponent,
+    SellerDiscountListComponent,
+    SellerDiscountNewComponent,
+    SellerDiscountProductModalComponent,
+    SellerProductCategoryModalComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +67,15 @@ import { SellerProductListComponent } from './feaure/product/seller-product-list
     MatFormFieldModule,
     MatSelectModule,
     MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatStepperModule,
+    MatDialogModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
   ],
 })
 export class SellerModule {}

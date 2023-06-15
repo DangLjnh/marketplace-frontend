@@ -146,6 +146,22 @@ export interface IImageProducts {
   Image_Product_Detail: TImageProductDetail;
 }
 
+export interface ICategory {
+  id: number;
+  name_category: string;
+  photo_url: string;
+  status: number;
+  createdAt: any;
+}
+export interface ICategoryFilter {
+  id: number;
+  name_category_filter: string;
+  status: number;
+  categoryID: number;
+  createdAt: any;
+  Category: ICategory;
+}
+
 export interface IProduct {
   id: number;
   status: number;
@@ -155,4 +171,15 @@ export interface IProduct {
   Stock: TStock;
   Product_Detail: TProductDetail;
   Image_Products: IImageProducts[];
+  checked?: boolean;
+  Discount_Percent: IDiscountPercent;
+  Category_Filter: ICategoryFilter;
+}
+
+export interface IDiscountPercent {
+  id?: number;
+  percent: string | null | undefined;
+  date_start?: Date | null | undefined;
+  date_end?: Date | null | undefined;
+  list_product: number[] | null | undefined;
 }

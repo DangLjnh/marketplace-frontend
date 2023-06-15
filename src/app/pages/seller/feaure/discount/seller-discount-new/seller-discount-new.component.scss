@@ -1,0 +1,15 @@
+.type-discount {
+  // border: 0.9375rem solid transparent;
+  border-bottom: 28px solid transparent;
+  border-right: 28px solid rgba(0, 0, 0, 0.5);
+  position: absolute;
+  border-top-right-radius: 4px;
+  right: 0;
+  top: 0;
+}
+.is-active {
+  border-right: 28px solid #0a68ff;
+}
+mat-label {
+  font-size: 14px;
+}

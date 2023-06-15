@@ -1,13 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { IResponse } from 'src/app/shared/model/interface';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { IProduct, IResponse } from 'src/app/shared/model/interface';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
+  private _listCheckProduct = new BehaviorSubject<any>([]);
+  private _listCheckProductOption = new BehaviorSubject<any>([]);
+
+  set listCheckProduct(values: IProduct[]) {
+    this._listCheckProduct.next(values);
+  }
+  get listCheckProduct$(): Observable<IProduct[]> {
+    return this._listCheckProduct.asObservable();
+  }
+
+  set listCheckProductOption(values: IProduct[]) {
+    this._listCheckProductOption.next(values);
+  }
+  get listCheckProductOption$(): Observable<IProduct[]> {
+    return this._listCheckProductOption.asObservable();
+  }
+
   createProduct(rawProductData: any): Observable<IResponse> {
     return this.http.post<IResponse>(
       `${environment.backendUrl}/product/create`,
