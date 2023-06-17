@@ -74,11 +74,17 @@
             </div>
           </div>
 
-          <app-product-category-option [nameType]="'Color'"
-            [nameOptionList]="['Black','White','Coral']"></app-product-category-option>
+          <ng-container *ngFor="let dataFilter of dataProduct?.Product_Types; let i = index">
+            <app-product-category-option [nameType]="dataFilter" [nameOptionList]="dataFilter?.Product_Filters"
+              (handleChooseOption)="handleChooseOptions($event)"></app-product-category-option>
+          </ng-container>
 
-          <app-product-category-option [nameType]="'Size'"
-            [nameOptionList]="['S','M','L']"></app-product-category-option>
+          <ng-container *ngIf="optionResult?.quantity_stock">
+            <p class="text-darkGray">Hiện còn lại <span
+                class="text-black font-medium">{{optionResult.quantity_stock}}</span> sản phẩm</p>
+          </ng-container>
+          <!-- <app-product-category-option [nameType]="'Size'"
+          [nameOptionList]="['S','M','L']"></app-product-category-option> -->
 
           <div class="flex items-center gap-x-2">
             <div class="w-[110px]">

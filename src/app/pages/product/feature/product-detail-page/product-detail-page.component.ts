@@ -8,7 +8,14 @@ import SwiperCore, { Swiper, SwiperOptions, Virtual } from 'swiper';
 SwiperCore.use([Virtual]);
 import { SwiperComponent } from 'swiper/angular';
 import { ProductService } from '../../data-access/product.service';
-import { ICart, IProduct, IUser } from 'src/app/shared/model/interface';
+import {
+  ICart,
+  IProduct,
+  IProductPriceOption,
+  IProductType,
+  IUser,
+  TProductFilter,
+} from 'src/app/shared/model/interface';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/pages/cart/data-access/cart.service';
 import { ToastrService } from 'ngx-toastr';
@@ -27,11 +34,79 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
   isStart!: boolean;
   isActiveArrow!: boolean;
   isEnd!: any;
+  chooseFirstOption?: TProductFilter;
+  chooseSecondOption?: TProductFilter;
+  listFilterAfterChoose: TProductFilter[] = [];
+  listFilterCloneAfterChoose: TProductFilter[] = [];
+  currentChooseOptions: any[] = [];
+  optionResult!: any;
+  isChooseSameOption!: boolean;
+  isChooseSameType!: boolean;
   config: SwiperOptions = {
     slidesPerView: this.slidesPerView,
     spaceBetween: 15,
     slidesPerGroup: 6, // Set number of slides to be grouped together
   };
+
+  handleChooseOptions({
+    option,
+    index,
+    type,
+  }: {
+    option: TProductFilter;
+    index: number;
+    type: IProductType;
+  }) {
+    this.isChooseSameType = this.currentChooseOptions.some(
+      (item) => item.idType === type.id
+    );
+
+    if (this.currentChooseOptions.length < 2) {
+      const isChooseSameOption = this.currentChooseOptions.some(
+        (item) => item.idOption === option.id
+      );
+
+      if (this.isChooseSameType) {
+        this.currentChooseOptions = this.currentChooseOptions.map((item) =>
+          item.idType === type.id ? { ...item, idOption: option.id } : item
+        );
+      }
+
+      if (!isChooseSameOption && !this.isChooseSameType) {
+        this.currentChooseOptions.push({
+          idOption: option.id,
+          idType: type.id,
+        });
+      }
+    } else if (this.isChooseSameType) {
+      this.currentChooseOptions = this.currentChooseOptions.map((item) =>
+        item.idType === type.id ? { ...item, idOption: option.id } : item
+      );
+    } else {
+      this.currentChooseOptions = [];
+    }
+
+    this.dataProduct.Product_Price_Options.forEach((priceOption) => {
+      if (
+        this.currentChooseOptions.length === 2 &&
+        this.currentChooseOptions[0].idOption === priceOption.firstFilter.id &&
+        this.currentChooseOptions[1].idOption === priceOption.secondFilter.id
+      ) {
+        this.optionResult = priceOption;
+      }
+      if (option.name_filter === priceOption.firstFilter.name_filter) {
+        this.listFilterAfterChoose.push(priceOption.secondFilter);
+        this.listFilterCloneAfterChoose = JSON.parse(
+          JSON.stringify(this.listFilterAfterChoose)
+        );
+      }
+    });
+
+    this.listFilterAfterChoose = [];
+    this.dataProduct.Product_Types[1].Product_Filters =
+      this.listFilterCloneAfterChoose;
+  }
+
   slideNext() {
     this.swiper?.swiperRef.slideNext();
     if (this.swiper?.swiperRef.activeIndex !== undefined) {
@@ -92,10 +167,6 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
         filter((product) => !!product)
       )
       .subscribe((data) => {
-        console.log(
-          '🚀 ~ file: product-detail-page.component.ts:95 ~ ProductDetailPageComponent ~ .subscribe ~ data:',
-          data.DT
-        );
         this.dataProduct = data.DT;
       });
   }

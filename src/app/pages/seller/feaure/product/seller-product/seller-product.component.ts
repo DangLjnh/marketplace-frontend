@@ -152,47 +152,61 @@ export class SellerProductComponent implements OnInit {
         formData.append('length', String(formValue.length));
         formData.append('weight', String(formValue.weight));
         formData.append('warehouseID', String(this.dataUser.Shop.Warehouse.id));
-        // formData.append(
-        //   'productTypes',
-        //   JSON.stringify([
-        //     {
-        //       name_product_type: 'Màu Sắc',
-        //       options: [
-        //         {
-        //           option: 'Xanh',
-        //           prices: [
-        //             {
-        //               stock: 10,
-        //               option: 'L',
-        //               price: 100,
-        //             },
-        //           ],
-        //         },
-        //         {
-        //           option: 'Đỏ',
-        //           prices: [
-        //             {
-        //               stock: 20,
-        //               option: 'M',
-        //               price: 900,
-        //             },
-        //           ],
-        //         },
-        //       ],
-        //     },
-        //     {
-        //       name_product_type: 'Kích thước',
-        //       options: [
-        //         {
-        //           option: 'M',
-        //         },
-        //         {
-        //           option: 'L',
-        //         },
-        //       ],
-        //     },
-        //   ])
-        // );
+        formData.append(
+          'productTypes',
+          JSON.stringify([
+            {
+              name_product_type: 'Màu Sắc',
+              options: [
+                {
+                  option: 'Xanh',
+                  prices: [
+                    {
+                      stock: 10,
+                      option: 'L',
+                      price: 100,
+                    },
+                  ],
+                },
+                {
+                  option: 'Đỏ',
+                  prices: [
+                    {
+                      stock: 20,
+                      option: 'M',
+                      price: 900,
+                    },
+                    {
+                      stock: 20,
+                      option: 'S',
+                      price: 900,
+                    },
+                    {
+                      stock: 20,
+                      option: 'L',
+                      price: 900,
+                    },
+                  ],
+                },
+                {
+                  option: 'Tím',
+                  prices: [
+                    {
+                      stock: 20,
+                      option: 'M',
+                      price: 900,
+                    },
+                    {
+                      stock: 15,
+                      option: 'S',
+                      price: 900,
+                    },
+                  ],
+                },
+              ],
+            },
+          ])
+        );
 
         this.productService.createProduct(formData).subscribe((data) => {
           this.loading = false;

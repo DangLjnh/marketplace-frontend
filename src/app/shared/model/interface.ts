@@ -162,6 +162,30 @@ export interface ICategoryFilter {
   Category: ICategory;
 }
 
+export interface IProductPriceOption{
+  discountPercent: number;
+  firstFilter: TProductFilter
+  id: number;
+  name: string;
+  price: number;
+  price_discount: number;
+  productFirstFilterID: number;
+  productSecondFilterID: number;
+  quantity_stock: number;
+  secondFilter: TProductFilter
+}
+
+export type TProductFilter = {
+  id: number;
+  name_filter: string | any;
+}
+
+export interface IProductType{
+  id: number;
+  name_product_type: string;
+  Product_Filters?: TProductFilter[]
+}
+
 export interface IProduct {
   id: number;
   status: number;
@@ -174,6 +198,8 @@ export interface IProduct {
   checked?: boolean;
   Discount_Percent: IDiscountPercent;
   Category_Filter: ICategoryFilter;
+  Product_Price_Options: IProductPriceOption[];
+  Product_Types: IProductType[];
 }
 
 export interface IDiscountPercent {
