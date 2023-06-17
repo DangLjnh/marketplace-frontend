@@ -26,13 +26,22 @@ export class SellerDiscountProductModalComponent implements OnInit {
   }
   toggleProductOptionCheck(event: MatCheckboxChange, product: IProduct): void {
     product.checked = event.checked;
+    console.log(
+      '🚀 ~ file: seller-discount-product-modal.component.ts:28 ~ SellerDiscountProductModalComponent ~ toggleProductOptionCheck ~ product:',
+      product
+    );
   }
   handleCheckAll() {
     const areAllChecked = this.productList.every((product) => product.checked);
+    const areAllCheckedOption = this.productOptionList.every(
+      (product) => product.checked
+    );
     this.productList.forEach((product) => (product.checked = !areAllChecked));
-    this.productList = this.productList.filter((item)=>item.Product_Price_Options.length === 0)
+    this.productList = this.productList.filter(
+      (item) => item.Product_Price_Options.length === 0
+    );
     this.productOptionList.forEach(
-      (product) => (product.checked = !areAllChecked)
+      (product) => (product.checked = !areAllCheckedOption)
     );
   }
   constructor(
@@ -72,7 +81,7 @@ export class SellerDiscountProductModalComponent implements OnInit {
         this.productService.listCheckProduct$.subscribe((data) => {
           this.productList = data;
         });
-        this.productService.listCheckProduct$.subscribe((data) => {
+        this.productService.listCheckProductOption$.subscribe((data) => {
           this.productOptionList = data;
         });
       }

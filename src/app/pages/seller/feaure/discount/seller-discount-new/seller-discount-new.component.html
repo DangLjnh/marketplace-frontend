@@ -82,7 +82,8 @@
           </app-form-product-row>
 
           <app-form-product-row title="Sản phẩm được áp dụng">
-            <ng-container *ngIf="listCheckProduct.length===0; else listProductCheck">
+            <ng-container
+              *ngIf="listCheckProduct.length === 0 && listCheckProductOption.length === 0; else listProductCheck">
               <app-button theme="blue" (click)="openModalCreateProduct()">
                 <div class="flex items-center gap-x-3">
                   <app-icon-plus></app-icon-plus>

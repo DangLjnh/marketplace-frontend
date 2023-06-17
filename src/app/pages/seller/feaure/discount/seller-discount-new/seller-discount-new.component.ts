@@ -50,17 +50,19 @@ export class SellerDiscountNewComponent implements OnInit {
       list_product: listIdProductOption,
     };
     this.discountService.createDiscount(rawDiscountData).subscribe(() => {
-      this.discountService.createDiscountOption(rawDiscountOptionData).subscribe((data) => {
-        if (
-          +data.EC === errorCode.ERROR_PARAMS ||
-          +data.EC === errorCode.ERROR_SERVER
-        ) {
-          this.toastrService.error(data.EM);
-        }
-        if (+data.EC === errorCode.SUCCESS) {
-          this.toastrService.success(data.EM);
-        }
-      })
+      this.discountService
+        .createDiscountOption(rawDiscountOptionData)
+        .subscribe((data) => {
+          if (
+            +data.EC === errorCode.ERROR_PARAMS ||
+            +data.EC === errorCode.ERROR_SERVER
+          ) {
+            this.toastrService.error(data.EM);
+          }
+          if (+data.EC === errorCode.SUCCESS) {
+            this.toastrService.success(data.EM);
+          }
+        });
     });
   }
   openModalCreateProduct() {
@@ -128,6 +130,10 @@ export class SellerDiscountNewComponent implements OnInit {
       (data: IProduct[]) => {
         this.listCheckProductOption = data.filter(
           (data) => data.checked === true
+        );
+        console.log(
+          '🚀 ~ file: seller-discount-new.component.ts:134 ~ SellerDiscountNewComponent ~ ngOnInit ~ this.listCheckProductOption:',
+          this.listCheckProductOption
         );
       }
     );
