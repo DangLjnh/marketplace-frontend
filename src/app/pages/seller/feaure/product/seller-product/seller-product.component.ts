@@ -102,17 +102,27 @@ export class SellerProductComponent implements OnInit {
     const firstOption = valueFirstOption;
     const secondOption = valueSecondOption;
     const result: any[] = [];
-    firstOption.forEach((option1) => {
-      secondOption.forEach((option2) => {
-        result.push({
-          firstOption: option1.toLowerCase(),
-          secondOption: option2,
+
+    if (secondOption.length > 0) {
+      firstOption.forEach((option1) => {
+        secondOption.forEach((option2) => {
+          result.push({
+            firstOption: option1.toLowerCase(),
+            secondOption: option2,
+          });
         });
       });
-    });
+    } else {
+      firstOption.forEach((option1) => {
+        result.push({
+          firstOption: option1.toLowerCase(),
+        });
+      });
+    }
 
     this.totalOptions = result;
   }
+
   submitForm() {
     const formErrors = this.getFormErrors(this.productForm);
     const formValue = this.productForm.value;
@@ -131,28 +141,6 @@ export class SellerProductComponent implements OnInit {
     if (this.productForm.value.first_type) {
       resultType.push(this.productForm.value.first_type);
     }
-
-    // const type: string[] = ['Màu sắc', 'Kích thước'];
-    // const stock: string[] = ['10', '10', '20', '20'];
-    // const price: string[] = ['50', '100', '900', '900'];
-    // const option: { firstOption: string; secondOption: string }[] = [
-    //   {
-    //     firstOption: 'đỏ',
-    //     secondOption: 'M',
-    //   },
-    //   {
-    //     firstOption: 'đỏ',
-    //     secondOption: 'L',
-    //   },
-    //   {
-    //     firstOption: 'xanh',
-    //     secondOption: 'M',
-    //   },
-    //   {
-    //     firstOption: 'xanh',
-    //     secondOption: 'L',
-    //   },
-    // ];
 
     const result: ProductType[] = [];
     let optionSecond: any[] = [];
