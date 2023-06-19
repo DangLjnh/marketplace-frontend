@@ -42,22 +42,45 @@
 
         <div class="px-4 py-5 rounded bg-gray-50">
           <div class="flex items-center gap-x-3 ">
-            <ng-container *ngIf="dataProduct?.Product_Detail">
-              <ng-container
-                *ngIf="dataProduct.Product_Detail.price_discount && dataProduct?.Discount_Percent?.percent;else noDiscount">
-                <span *ngIf="dataProduct?.Discount_Percent"
-                  class="line-through text-lightGray">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
-                <span
-                  class="text-2xl font-medium text-hotRed">{{dataProduct.Product_Detail.price_discount.toLocaleString('en-US')}}₫</span>
-                <span *ngIf="dataProduct?.Discount_Percent?.percent"
-                  class="p-1 text-[10px] text-white bg-hotRed rounded-sm">{{dataProduct.Discount_Percent.percent}}%
-                  OFF</span>
+            <ng-container *ngIf="dataProduct?.Product_Price_Options">
+              <ng-container *ngIf="dataProduct.Product_Price_Options.length > 0 && optionResult; else noOption">
+                <ng-container *ngIf="dataProduct?.Product_Detail">
+                  <ng-container *ngIf="optionResult.price && optionResult.price_discount;else noDiscount">
+                    <span *ngIf="optionResult?.discountPercentID"
+                      class="line-through text-lightGray">{{optionResult.price.toLocaleString('en-US')}}₫</span>
+                    <span
+                      class="text-2xl font-medium text-hotRed">{{optionResult.price_discount.toLocaleString('en-US')}}₫</span>
+                    <span *ngIf="optionResult?.Discount_Percent?.percent"
+                      class="p-1 text-[10px] text-white bg-hotRed rounded-sm">{{optionResult.Discount_Percent.percent}}%
+                      OFF</span>
+                  </ng-container>
+
+                  <ng-template #noDiscount>
+                    <span
+                      class="text-2xl font-medium text-hotRed">{{optionResult.price.toLocaleString('en-US')}}₫</span>
+                  </ng-template>
+                </ng-container>
               </ng-container>
-              <ng-template #noDiscount>
-                <span
-                  class="text-2xl font-medium text-hotRed">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
-              </ng-template>
             </ng-container>
+            <ng-template #noOption>
+              <ng-container *ngIf="dataProduct?.Product_Detail">
+                <ng-container
+                  *ngIf="dataProduct.Product_Detail.price_discount && dataProduct?.Discount_Percent?.percent;else noDiscount">
+                  <span *ngIf="dataProduct?.Discount_Percent"
+                    class="line-through text-lightGray">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
+                  <span
+                    class="text-2xl font-medium text-hotRed">{{dataProduct.Product_Detail.price_discount.toLocaleString('en-US')}}₫</span>
+                  <span *ngIf="dataProduct?.Discount_Percent?.percent"
+                    class="p-1 text-[10px] text-white bg-hotRed rounded-sm">{{dataProduct.Discount_Percent.percent}}%
+                    OFF</span>
+                </ng-container>
+
+                <ng-template #noDiscount>
+                  <span
+                    class="text-2xl font-medium text-hotRed">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
+                </ng-template>
+              </ng-container>
+            </ng-template>
           </div>
         </div>
 
@@ -82,6 +105,11 @@
           <ng-container *ngIf="optionResult?.quantity_stock">
             <p class="text-darkGray">Hiện còn lại <span
                 class="text-black font-medium">{{optionResult.quantity_stock}}</span> sản phẩm</p>
+          </ng-container>
+
+          <ng-container *ngIf="dataProduct?.Stock">
+            <p class="text-darkGray">Hiện còn lại <span
+                class="text-black font-medium">{{dataProduct.Stock.quantity}}</span> sản phẩm</p>
           </ng-container>
           <!-- <app-product-category-option [nameType]="'Size'"
           [nameOptionList]="['S','M','L']"></app-product-category-option> -->

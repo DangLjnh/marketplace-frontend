@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SellerRoutingModule } from './seller-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SellerComponent } from 'src/app/layouts/seller/seller.component';
 import { HeaderSellerComponent } from 'src/app/layouts/header/header-seller/header-seller.component';
 import { SellerPortalComponent } from './feaure/register/seller-portal/seller-portal.component';
@@ -76,6 +76,7 @@ import { SellerProductCategoryModalComponent } from './feaure/product/seller-pro
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
+    FormsModule,
   ],
 })
 export class SellerModule {}

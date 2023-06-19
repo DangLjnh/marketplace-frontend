@@ -103,18 +103,152 @@
       <div id="section3" class="p-4 bg-white rounded">
         <p class="mb-5 text-xl font-bold">Thông tin bán hàng</p>
         <div class="flex flex-col gap-5">
-          <app-form-product-row title="Giá">
-            <mat-form-field class="w-full">
-              <mat-label>Nhập vào</mat-label>
-              <input type="number" matInput formControlName="price_original" (focus)="handleFocus('price_original')">
-            </mat-form-field>
-          </app-form-product-row>
-          <app-form-product-row title="Kho hàng">
-            <mat-form-field class="w-full">
-              <mat-label>Nhập vào</mat-label>
-              <input type="number" matInput formControlName="quantity" (focus)="handleFocus('quantity')">
-            </mat-form-field>
-          </app-form-product-row>
+          <ng-container *ngIf="!isChooseOption; else hasOption">
+            <app-form-product-row title="Phân loại hàng">
+              <app-button theme="blue">
+                <div class="flex items-center gap-x-2" (click)="handleChooseOption()">
+                  <app-icon-plus></app-icon-plus>
+                  <span>Thêm phân loại</span>
+                </div>
+              </app-button>
+            </app-form-product-row>
+            <app-form-product-row title="Giá">
+              <mat-form-field class="w-full">
+                <mat-label>Nhập vào</mat-label>
+                <input type="number" matInput formControlName="price_original" (focus)="handleFocus('price_original')">
+              </mat-form-field>
+            </app-form-product-row>
+            <app-form-product-row title="Kho hàng">
+              <mat-form-field class="w-full">
+                <mat-label>Nhập vào</mat-label>
+                <input type="number" matInput formControlName="quantity" (focus)="handleFocus('quantity')">
+              </mat-form-field>
+            </app-form-product-row>
+          </ng-container>
+          <ng-template #hasOption>
+            <app-form-product-row title="Phân loại hàng">
+              <div class="flex flex-col gap-5  flex-1">
+                <app-button className="!bg-red-50 !text-red-500 !border !border-red-500">Hủy phân loại
+                  hàng</app-button>
+                <div class="flex w-full flex-col px-3 py-5 bg-whiteGray rounded gap-3">
+                  <div class="flex gap-x-5">
+                    <p>Nhóm phân loại 1</p>
+                    <mat-form-field class="w-full">
+                      <mat-label>ví dụ: màu sắc v.v</mat-label>
+                      <input type="text" matInput formControlName="first_type">
+                    </mat-form-field>
+                  </div>
+                  <div class="flex gap-x-5">
+                    <p>Phân loại hàng</p>
+                    <div class="grid grid-cols-3 gap-5">
+                      <ng-container *ngFor="let option of formControlFirstOptions; let i = index">
+                        <div class="flex items-center gap-x-2">
+                          <mat-form-field class="w-full">
+                            <mat-label>ví dụ: trắng, đỏ v.v</mat-label>
+                            <input type="text" #first_option matInput name="first_option"
+                              (change)="handleChangeInput()">
+                          </mat-form-field>
+                          <app-icon-plus (click)="addFirstOption(i)"></app-icon-plus>
+                          <app-icon-trash (click)="deleteFirstOption(i)"></app-icon-trash>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex w-full flex-col px-3 py-5 bg-whiteGray rounded gap-3">
+                  <ng-container>
+                    <div class="flex gap-x-5">
+                      <p>Nhóm phân loại 2</p>
+                      <mat-form-field class="w-full">
+                        <mat-label>ví dụ: kích thước v.v</mat-label>
+                        <input type="text" matInput formControlName="second_type">
+                      </mat-form-field>
+                    </div>
+                    <div class="flex gap-x-5">
+                      <p>Phân loại hàng</p>
+                      <div class="grid grid-cols-3 gap-5">
+                        <ng-container *ngFor="let option of formControlSecondOptions; let i = index">
+                          <div class="flex items-center gap-x-2">
+                            <mat-form-field class="w-full">
+                              <mat-label>ví dụ: S, M v.v</mat-label>
+                              <input type="text" #second_option matInput name="second_option"
+                                (change)="handleChangeInput()">
+                            </mat-form-field>
+                            <app-icon-plus (click)="addSecondOption(i)"></app-icon-plus>
+                            <app-icon-trash (click)="deleteSecondOption(i)"></app-icon-trash>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-template #noChooseSecondOption>
+                    <div class="flex gap-x-5">
+                      <p>Nhóm phân loại 2</p>
+                      <app-button theme="blue" class="w-[198px]">
+                        <div class="flex items-center gap-x-2">
+                          <app-icon-plus></app-icon-plus>
+                          <span>Thêm nhóm phân loại 2</span>
+                        </div>
+                      </app-button>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </app-form-product-row>
+            <app-form-product-row title="Danh sách phân loại hàng">
+              <div class="relative overflow-x-auto w-full">
+                <table class="w-full text-sm text-left text-gray-500">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                      <th scope="col" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
+                        {{productForm.value.first_type !== "" ? productForm.value.first_type : 'Nhóm phân loại 1'}}
+                      </th>
+                      <ng-container *ngIf="productForm.value.second_type">
+                        <th scope="col" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
+                          {{productForm.value.second_type !== "" ? productForm.value.second_type : 'Nhóm phân loại 2'}}
+                        </th>
+                      </ng-container>
+                      <th scope="col" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
+                        Giá
+                      </th>
+                      <th scope="col" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
+                        Kho hàng
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let option of totalOptions">
+                      <tr class="bg-white border-b">
+                        <td scope="row" class="px-6 py-4">
+                          {{option.firstOption}}
+                        </td>
+                        <ng-container *ngIf="productForm.value.second_type">
+                          <td class="px-6 py-4">
+                            {{option.secondOption}}
+                          </td>
+                        </ng-container>
+                        <td class="px-6 py-4">
+                          <mat-form-field class="w-full">
+                            <mat-label>Nhập vào</mat-label>
+                            <input type="number" matInput #option_price name="option_price"
+                              (focus)="handleFocus('price_original')">
+                          </mat-form-field>
+                        </td>
+                        <td class="px-6 py-4">
+                          <mat-form-field class="w-full">
+                            <mat-label>Nhập vào</mat-label>
+                            <input type="number" matInput #option_stock name="option_stock"
+                              (focus)="handleFocus('quantity')">
+                          </mat-form-field>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+
+            </app-form-product-row>
+          </ng-template>
         </div>
       </div>
 

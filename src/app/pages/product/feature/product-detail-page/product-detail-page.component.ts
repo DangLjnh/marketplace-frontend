@@ -94,6 +94,13 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
       ) {
         this.optionResult = priceOption;
       }
+      if (
+        this.currentChooseOptions.length === 1 &&
+        this.currentChooseOptions[0].idOption === priceOption.firstFilter.id &&
+        priceOption.secondFilter === null
+      ) {
+        this.optionResult = priceOption;
+      }
       if (option.name_filter === priceOption.firstFilter.name_filter) {
         this.listFilterAfterChoose.push(priceOption.secondFilter);
         this.listFilterCloneAfterChoose = JSON.parse(
@@ -102,9 +109,11 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
       }
     });
 
-    this.listFilterAfterChoose = [];
-    this.dataProduct.Product_Types[1].Product_Filters =
-      this.listFilterCloneAfterChoose;
+    if (this.dataProduct.Product_Types[1]) {
+      this.listFilterAfterChoose = [];
+      this.dataProduct.Product_Types[1].Product_Filters =
+        this.listFilterCloneAfterChoose;
+    }
   }
 
   slideNext() {
@@ -125,6 +134,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
     const rawCartData = {
       quantity: this.valueCounter,
       productID: this.dataProduct.id,
+      productPriceOptionID: this.optionResult?.id ?? null,
       shopID: this.dataProduct.shopID,
       userID: this.dataUser.id,
       cartID: this.cartDefault.id,

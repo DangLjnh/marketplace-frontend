@@ -6,3 +6,16 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+table {
+  border-collapse: collapse;
+}
+
+th {
+  @apply bg-whiteGray;
+}
+
+table,
+th,
+td {
+  @apply border border-gray-300 p-5;
+}

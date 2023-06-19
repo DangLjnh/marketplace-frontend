@@ -131,10 +131,6 @@ export class SellerDiscountNewComponent implements OnInit {
         this.listCheckProductOption = data.filter(
           (data) => data.checked === true
         );
-        console.log(
-          '🚀 ~ file: seller-discount-new.component.ts:134 ~ SellerDiscountNewComponent ~ ngOnInit ~ this.listCheckProductOption:',
-          this.listCheckProductOption
-        );
       }
     );
     this.formatDate();

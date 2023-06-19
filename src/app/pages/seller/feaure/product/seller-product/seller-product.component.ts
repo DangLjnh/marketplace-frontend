@@ -1,10 +1,18 @@
 import { filter, of, pluck, switchMap, tap } from 'rxjs';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ValidationErrors,
   Validators,
+  FormArray,
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
@@ -20,6 +28,22 @@ import { SellerProductCategoryModalComponent } from '../seller-product-category-
 import { MatDialog } from '@angular/material/dialog';
 import { CategoryService } from '../../../data-access/category/category.service';
 
+interface PriceInfo {
+  stock: number;
+  option: string;
+  price: number;
+}
+
+interface OptionInfo {
+  option: string;
+  prices?: PriceInfo[];
+}
+
+interface ProductType {
+  name_product_type: string;
+  options: OptionInfo[];
+}
+
 @Component({
   selector: 'app-seller-product',
   templateUrl: './seller-product.component.html',
@@ -27,6 +51,10 @@ import { CategoryService } from '../../../data-access/category/category.service'
 })
 export class SellerProductComponent implements OnInit {
   @ViewChild('formContainer') formContainer!: ElementRef;
+  @ViewChildren('first_option') firstOptionControls!: QueryList<any>;
+  @ViewChildren('second_option') secondOptionControls!: QueryList<any>;
+  @ViewChildren('option_price') optionPrice!: QueryList<any>;
+  @ViewChildren('option_stock') optionStock!: QueryList<any>;
   fileInputRef!: ElementRef<HTMLInputElement>;
   nameCategory!: string;
   nameCategoryFilter!: string;
@@ -41,6 +69,11 @@ export class SellerProductComponent implements OnInit {
   isEdit: boolean = false;
   countImage: number = 0;
   productID!: number;
+  isChooseOption: boolean = false;
+  isChooseSecondOption: boolean = false;
+  formControlFirstOptions: number[] = [-1];
+  formControlSecondOptions: number[] = [-1];
+  totalOptions: any[] = [];
   list = [
     {
       name: 'Thông tin cơ bản',
@@ -59,71 +92,114 @@ export class SellerProductComponent implements OnInit {
       section: 'section4',
     },
   ];
+  handleChangeInput() {
+    const valueFirstOption = this.firstOptionControls
+      .toArray()
+      .map((input) => input.nativeElement.value);
+    const valueSecondOption = this.secondOptionControls
+      .toArray()
+      .map((input) => input.nativeElement.value);
+    const firstOption = valueFirstOption;
+    const secondOption = valueSecondOption;
+    const result: any[] = [];
+    firstOption.forEach((option1) => {
+      secondOption.forEach((option2) => {
+        result.push({
+          firstOption: option1.toLowerCase(),
+          secondOption: option2,
+        });
+      });
+    });
 
+    this.totalOptions = result;
+  }
   submitForm() {
-    // this.productService
-    //   .createProductTypeOption({
-    //     productOption: {
-    //       types: [
-    //         {
-    //           // first option
-    //           name: 'Màu sắc',
-    //           option: [
-    //             {
-    //               name: 'Màu đỏ',
-    //               photo_url:
-    //                 'http://res.cloudinary.com/dwkckmmr7/image/upload/v1684376433/foo/tdoy90kxic7hhfa75r83.jpg',
-    //             },
-    //             {
-    //               name: 'Màu xanh',
-    //               photo_url:
-    //                 'http://res.cloudinary.com/dwkckmmr7/image/upload/v1684376433/foo/tdoy90kxic7hhfa75r83.jpg',
-    //             },
-    //           ],
-    //         },
-    //         // second option
-    //         {
-    //           name: 'Chất liệu',
-    //           option: [
-    //             {
-    //               name: 'Cotton',
-    //             },
-    //             {
-    //               name: 'da bò',
-    //             },
-    //           ],
-    //         },
-    //       ],
-    //       options: [
-    //         {
-    //           fistOption: { type: 'Màu sắc', option: 'màu đỏ' },
-    //           secondOption: { type: 'Chất liệu', option: 'cotton' },
-    //           price: 200000,
-    //           quantity: 50,
-    //         },
-    //         {
-    //           fistOption: { type: 'Màu sắc', option: 'màu xanh' },
-    //           secondOption: { type: 'Chất liệu', option: 'cotton' },
-    //           price: 400000,
-    //           quantity: 100,
-    //         },
-    //       ],
-    //     },
-    //   })
-    //   .subscribe((data) => {
-    //     console.log(
-    //       '🚀 ~ file: seller-product.component.ts:97 ~ SellerProductComponent ~ submitForm ~ data:',
-    //       data
-    //     );
-    //   });
-
     const formErrors = this.getFormErrors(this.productForm);
     const formValue = this.productForm.value;
-    console.log(
-      '🚀 ~ file: seller-product.component.ts:122 ~ SellerProductComponent ~ submitForm ~ formValue:',
-      formValue
-    );
     const formData = new FormData();
+
+    const valueOptionPrice = this.optionPrice
+      .toArray()
+      .map((input) => input.nativeElement.value);
+    const valueOptionStock = this.optionStock
+      .toArray()
+      .map((input) => input.nativeElement.value);
+    const resultType: string[] = [];
+    if (this.productForm.value.second_type) {
+      resultType.push(this.productForm.value.second_type);
+    }
+    if (this.productForm.value.first_type) {
+      resultType.push(this.productForm.value.first_type);
+    }
+
+    // const type: string[] = ['Màu sắc', 'Kích thước'];
+    // const stock: string[] = ['10', '10', '20', '20'];
+    // const price: string[] = ['50', '100', '900', '900'];
+    // const option: { firstOption: string; secondOption: string }[] = [
+    //   {
+    //     firstOption: 'đỏ',
+    //     secondOption: 'M',
+    //   },
+    //   {
+    //     firstOption: 'đỏ',
+    //     secondOption: 'L',
+    //   },
+    //   {
+    //     firstOption: 'xanh',
+    //     secondOption: 'M',
+    //   },
+    //   {
+    //     firstOption: 'xanh',
+    //     secondOption: 'L',
+    //   },
+    // ];
+
+    const result: ProductType[] = [];
+    let optionSecond: any[] = [];
+
+    // Convert type, stock, and price into a dictionary
+    resultType.forEach((typeName: string, index: number) => {
+      const options: OptionInfo[] = [];
+      this.totalOptions.forEach((opt) => {
+        if (!options.some((o) => o.option === opt.firstOption)) {
+          if (index === 0) {
+            // if (options[index]?.option !== opt.firstOption)
+            options.push({
+              option: opt.firstOption,
+              prices: [],
+            });
+          }
+          if (index === 1) {
+            if (!optionSecond.includes(opt.secondOption))
+              options.push({
+                option: opt.secondOption,
+              });
+            optionSecond.push(opt.secondOption);
+          }
+        }
+      });
+      const productType: ProductType = {
+        name_product_type: typeName,
+        options,
+      };
+      result.push(productType);
+    });
+
+    // Populate prices for each option
+    this.totalOptions.forEach((opt, index) => {
+      const optionName = opt.firstOption;
+      const optionValue = opt.secondOption;
+      const priceInfo: PriceInfo = {
+        stock: parseInt(valueOptionStock[index]),
+        option: optionValue,
+        price: parseInt(valueOptionPrice[index]),
+      };
+      const optionInfo = result[0].options.find((o) => o.option === optionName);
+      if (optionInfo) {
+        optionInfo.prices?.push(priceInfo);
+      }
+    });
+
     if (this.listFile.length === 0 && this.listImage.length === 0) {
       this.toastrService.error('Vui lòng đính kèm hình ảnh sản phẩm!');
     } else if (formErrors.length > 0) {
@@ -152,61 +228,35 @@ export class SellerProductComponent implements OnInit {
         formData.append('length', String(formValue.length));
         formData.append('weight', String(formValue.weight));
         formData.append('warehouseID', String(this.dataUser.Shop.Warehouse.id));
-        formData.append(
-          'productTypes',
-          JSON.stringify([
-            {
-              name_product_type: 'Màu Sắc',
-              options: [
-                {
-                  option: 'Xanh',
-                  prices: [
-                    {
-                      stock: 10,
-                      option: 'L',
-                      price: 100,
-                    },
-                  ],
-                },
-                {
-                  option: 'Đỏ',
-                  prices: [
-                    {
-                      stock: 20,
-                      option: 'M',
-                      price: 900,
-                    },
-                    {
-                      stock: 20,
-                      option: 'S',
-                      price: 900,
-                    },
-                    {
-                      stock: 20,
-                      option: 'L',
-                      price: 900,
-                    },
-                  ],
-                },
-                {
-                  option: 'Tím',
-                  prices: [
-                    {
-                      stock: 20,
-                      option: 'M',
-                      price: 900,
-                    },
-                    {
-                      stock: 15,
-                      option: 'S',
-                      price: 900,
-                    },
-                  ],
-                },
-              ],
-            },
-          ])
-        );
+        // formData.append(
+        //   'productTypes',
+        //   JSON.stringify([
+        //     {
+        //       name_product_type: 'Màu Sắc',
+        //       options: [
+        //         {
+        //           option: 'Xanh',
+        //           prices: [
+        //             {
+        //               stock: 10,
+        //               price: 100,
+        //             },
+        //           ],
+        //         },
+        //         {
+        //           option: 'Đỏ',
+        //           prices: [
+        //             {
+        //               stock: 20,
+        //               price: 900,
+        //             },
+        //           ],
+        //         },
+        //       ],
+        //     },
+        //   ])
+        // );
+        formData.append('productTypes', JSON.stringify(result));
 
         this.productService.createProduct(formData).subscribe((data) => {
           this.loading = false;
@@ -282,6 +332,8 @@ export class SellerProductComponent implements OnInit {
 
   productForm = this.fb.group({
     name: ['', Validators.compose([Validators.required])],
+    first_type: ['', Validators.compose([Validators.required])],
+    second_type: ['', Validators.compose([Validators.required])],
     category: [''],
     desc: [
       '',
@@ -352,25 +404,28 @@ export class SellerProductComponent implements OnInit {
                 error: 'Mô tả tối thiểu 1000 ký tự!',
               });
             }
-          } else if (key === 'price_original') {
-            if (keyError === 'required') {
-              errors.push({ key: key, error: 'Giá không được để trống!' });
-            } else {
-              errors.push({
-                key: key,
-                error: 'Giá phải là số và là số dương!',
-              });
-            }
-          } else if (key === 'quantity') {
-            if (keyError === 'required') {
-              errors.push({ key: key, error: 'Kho hàng không được để trống!' });
-            } else {
-              errors.push({
-                key: key,
-                error: 'Kho hàng phải là số và là số dương!',
-              });
-            }
-          } else if (key === 'weight') {
+          }
+          // else if (key === 'price_original') {
+          //   if (keyError === 'required') {
+          //     errors.push({ key: key, error: 'Giá không được để trống!' });
+          //   } else {
+          //     errors.push({
+          //       key: key,
+          //       error: 'Giá phải là số và là số dương!',
+          //     });
+          //   }
+          // }
+          // else if (key === 'quantity') {
+          //   if (keyError === 'required') {
+          //     errors.push({ key: key, error: 'Kho hàng không được để trống!' });
+          //   } else {
+          //     errors.push({
+          //       key: key,
+          //       error: 'Kho hàng phải là số và là số dương!',
+          //     });
+          //   }
+          // }
+          else if (key === 'weight') {
             if (keyError === 'required') {
               errors.push({ key: key, error: 'Cân nặng không được để trống!' });
             } else {
@@ -422,6 +477,30 @@ export class SellerProductComponent implements OnInit {
     return errors;
   }
 
+  addFirstOption(i: number) {
+    this.formControlFirstOptions.push(i);
+  }
+
+  deleteFirstOption(i: number) {
+    this.formControlFirstOptions = this.formControlFirstOptions.filter(
+      (item, index) => index !== i
+    );
+  }
+
+  addSecondOption(i: number) {
+    this.formControlSecondOptions.push(i);
+  }
+
+  deleteSecondOption(i: number) {
+    this.formControlSecondOptions = this.formControlSecondOptions.filter(
+      (item, index) => index !== i
+    );
+  }
+
+  handleChooseOption() {
+    this.isChooseOption = true;
+  }
+
   openModalChooseCategory() {
     this.dialog.open(SellerProductCategoryModalComponent, {
       data: {
@@ -429,6 +508,7 @@ export class SellerProductComponent implements OnInit {
       },
     });
   }
+
   openModalEditCategory() {
     this.dialog.open(SellerProductCategoryModalComponent, {
       data: {
@@ -440,6 +520,7 @@ export class SellerProductComponent implements OnInit {
   handleFocus(inputName: string) {
     this.focusInput = inputName;
   }
+
   scrollToSection(sectionId: string) {
     const containerElement: HTMLElement = this.formContainer.nativeElement;
     const sectionElement: HTMLElement | null = containerElement.querySelector(

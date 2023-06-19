@@ -84,6 +84,10 @@ export class CartPageComponent implements OnInit, OnDestroy {
 
       // Set the interval to execute the function every 5 seconds
       this.cartService.readCartDefault(userID).subscribe((data: IResponse) => {
+        console.log(
+          '🚀 ~ file: cart-page.component.ts:87 ~ CartPageComponent ~ this.cartService.readCartDefault ~ data:',
+          data
+        );
         this.dataCarts = data.DT;
       });
       // this.intervalID = setInterval(() => {
