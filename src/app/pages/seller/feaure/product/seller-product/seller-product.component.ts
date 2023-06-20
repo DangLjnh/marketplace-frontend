@@ -74,6 +74,12 @@ export class SellerProductComponent implements OnInit {
   formControlFirstOptions: number[] = [-1];
   formControlSecondOptions: number[] = [-1];
   totalOptions: any[] = [];
+  resultType: string[] = [];
+  valueOptionPrice: string[] = [];
+  valueOptionStock: string[] = [];
+  valueFirstOption: any[] = [];
+  valueSecondOption: any[] = [];
+
   list = [
     {
       name: 'Thông tin cơ bản',
@@ -93,19 +99,17 @@ export class SellerProductComponent implements OnInit {
     },
   ];
   handleChangeInput() {
-    const valueFirstOption = this.firstOptionControls
+    this.valueFirstOption = this.firstOptionControls
       .toArray()
       .map((input) => input.nativeElement.value);
-    const valueSecondOption = this.secondOptionControls
+    this.valueSecondOption = this.secondOptionControls
       .toArray()
       .map((input) => input.nativeElement.value);
-    const firstOption = valueFirstOption;
-    const secondOption = valueSecondOption;
     const result: any[] = [];
 
-    if (secondOption.length > 0) {
-      firstOption.forEach((option1) => {
-        secondOption.forEach((option2) => {
+    if (this.valueSecondOption.length > 0) {
+      this.valueFirstOption.forEach((option1) => {
+        this.valueSecondOption.forEach((option2) => {
           result.push({
             firstOption: option1.toLowerCase(),
             secondOption: option2,
@@ -113,7 +117,7 @@ export class SellerProductComponent implements OnInit {
         });
       });
     } else {
-      firstOption.forEach((option1) => {
+      this.valueFirstOption.forEach((option1) => {
         result.push({
           firstOption: option1.toLowerCase(),
         });
@@ -128,65 +132,68 @@ export class SellerProductComponent implements OnInit {
     const formValue = this.productForm.value;
     const formData = new FormData();
 
-    const valueOptionPrice = this.optionPrice
+    this.valueOptionPrice = this.optionPrice
       .toArray()
       .map((input) => input.nativeElement.value);
-    const valueOptionStock = this.optionStock
+    this.valueOptionStock = this.optionStock
       .toArray()
       .map((input) => input.nativeElement.value);
-    const resultType: string[] = [];
     if (this.productForm.value.second_type) {
-      resultType.push(this.productForm.value.second_type);
+      this.resultType.push(this.productForm.value.second_type);
     }
     if (this.productForm.value.first_type) {
-      resultType.push(this.productForm.value.first_type);
+      this.resultType.push(this.productForm.value.first_type);
     }
 
     const result: ProductType[] = [];
     let optionSecond: any[] = [];
 
     // Convert type, stock, and price into a dictionary
-    resultType.forEach((typeName: string, index: number) => {
-      const options: OptionInfo[] = [];
-      this.totalOptions.forEach((opt) => {
-        if (!options.some((o) => o.option === opt.firstOption)) {
-          if (index === 0) {
-            // if (options[index]?.option !== opt.firstOption)
-            options.push({
-              option: opt.firstOption,
-              prices: [],
-            });
-          }
-          if (index === 1) {
-            if (!optionSecond.includes(opt.secondOption))
+    if (this.resultType) {
+      this.resultType.forEach((typeName: string, index: number) => {
+        const options: OptionInfo[] = [];
+        this.totalOptions.forEach((opt) => {
+          if (!options.some((o) => o.option === opt.firstOption)) {
+            if (index === 0) {
+              // if (options[index]?.option !== opt.firstOption)
               options.push({
-                option: opt.secondOption,
+                option: opt.firstOption,
+                prices: [],
               });
-            optionSecond.push(opt.secondOption);
+            }
+            if (index === 1) {
+              if (!optionSecond.includes(opt.secondOption))
+                options.push({
+                  option: opt.secondOption,
+                });
+              optionSecond.push(opt.secondOption);
+            }
           }
+        });
+        const productType: ProductType = {
+          name_product_type: typeName,
+          options,
+        };
+        result.push(productType);
+      });
+
+      // Populate prices for each option
+      this.totalOptions.forEach((opt, index) => {
+        const optionName = opt.firstOption;
+        const optionValue = opt.secondOption;
+        const priceInfo: PriceInfo = {
+          stock: parseInt(this.valueOptionStock[index]),
+          option: optionValue,
+          price: parseInt(this.valueOptionPrice[index]),
+        };
+        const optionInfo = result[0].options.find(
+          (o) => o.option === optionName
+        );
+        if (optionInfo) {
+          optionInfo.prices?.push(priceInfo);
         }
       });
-      const productType: ProductType = {
-        name_product_type: typeName,
-        options,
-      };
-      result.push(productType);
-    });
-
-    // Populate prices for each option
-    this.totalOptions.forEach((opt, index) => {
-      const optionName = opt.firstOption;
-      const optionValue = opt.secondOption;
-      const priceInfo: PriceInfo = {
-        stock: parseInt(valueOptionStock[index]),
-        option: optionValue,
-        price: parseInt(valueOptionPrice[index]),
-      };
-      const optionInfo = result[0].options.find((o) => o.option === optionName);
-      if (optionInfo) {
-        optionInfo.prices?.push(priceInfo);
-      }
-    });
+    }
 
     if (this.listFile.length === 0 && this.listImage.length === 0) {
       this.toastrService.error('Vui lòng đính kèm hình ảnh sản phẩm!');
@@ -470,9 +477,14 @@ export class SellerProductComponent implements OnInit {
   }
 
   deleteFirstOption(i: number) {
-    this.formControlFirstOptions = this.formControlFirstOptions.filter(
-      (item, index) => index !== i
-    );
+    this.totalOptions = this.totalOptions.filter((item) => {
+      return item.firstOption !== this.valueFirstOption[i];
+    });
+    if (i > 0) {
+      this.formControlFirstOptions = this.formControlFirstOptions.filter(
+        (item, index) => index !== i
+      );
+    }
   }
 
   addSecondOption(i: number) {
@@ -480,13 +492,36 @@ export class SellerProductComponent implements OnInit {
   }
 
   deleteSecondOption(i: number) {
-    this.formControlSecondOptions = this.formControlSecondOptions.filter(
-      (item, index) => index !== i
-    );
+    if (i < 1) {
+      this.isChooseSecondOption = false;
+      this.totalOptions.forEach((obj) => {
+        delete obj.secondOption;
+      });
+    } else {
+      this.totalOptions = this.totalOptions.filter((item) => {
+        return item.secondOption !== this.valueSecondOption[i];
+      });
+      this.formControlSecondOptions = this.formControlSecondOptions.filter(
+        (item, index) => index !== i
+      );
+    }
   }
 
   handleChooseOption() {
     this.isChooseOption = true;
+  }
+
+  destroyOption() {
+    this.isChooseOption = false;
+    this.isChooseSecondOption = false;
+    this.totalOptions = [];
+    this.resultType = [];
+    this.valueOptionPrice = [];
+    this.valueOptionStock = [];
+    this.productForm.patchValue({
+      second_type: '',
+      first_type: '',
+    });
   }
 
   openModalChooseCategory() {

@@ -128,7 +128,8 @@
           <ng-template #hasOption>
             <app-form-product-row title="Phân loại hàng">
               <div class="flex flex-col gap-5  flex-1">
-                <app-button className="!bg-red-50 !text-red-500 !border !border-red-500">Hủy phân loại
+                <app-button (click)="destroyOption()" className="!bg-red-50 !text-red-500 !border !border-red-500">Hủy
+                  phân loại
                   hàng</app-button>
                 <div class="flex w-full flex-col px-3 py-5 bg-whiteGray rounded gap-3">
                   <div class="flex gap-x-5">
@@ -222,7 +223,7 @@
                         <td scope="row" class="px-6 py-4">
                           {{option.firstOption}}
                         </td>
-                        <ng-container *ngIf="productForm.value.second_type">
+                        <ng-container *ngIf="productForm.value.second_type && isChooseSecondOption">
                           <td class="px-6 py-4">
                             {{option.secondOption}}
                           </td>
