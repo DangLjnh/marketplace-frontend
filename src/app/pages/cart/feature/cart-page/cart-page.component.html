@@ -4,7 +4,7 @@
     <div class="flex flex-col gap-5">
 
       <div class="sticky flex flex-col gap-5 py-5 -my-5 top-0 bg-content z-[5]">
-        <app-cart-free-ship></app-cart-free-ship>
+        <app-cart-free-ship [totalPrice]="totalPrice"></app-cart-free-ship>
 
         <div class="bg-white rounded grid grid-cols-[420px_190px_190px_120px_30px] p-3 font-medium">
           <mat-checkbox class="example-margin">All (8 products)</mat-checkbox>
@@ -30,15 +30,15 @@
     <app-cart-address></app-cart-address>
 
     <div class="sticky flex flex-col gap-5 pt-5 top-0 bg-content z-[5]">
-      <app-cart-total-price></app-cart-total-price>
+      <app-cart-total-price [totalPrice]="totalPrice"></app-cart-total-price>
       <app-button [routerLink]="'/checkout'">Buy now!</app-button>
     </div>
   </div>
 
 
 </div>
-<div *ngFor="let message of messageList">
+<!-- <div *ngFor="let message of messageList">
   <li>
     {{message}}
   </li>
-</div>
+</div> -->

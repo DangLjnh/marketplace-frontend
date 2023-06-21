@@ -98,6 +98,15 @@ export interface ICart {
   userID: number;
 }
 
+export interface ICartItem {
+  id: number;
+  quantity: number;
+  Shop: IShop;
+  Product_Price_Option: IProductPriceOption;
+  Product: IProduct;
+  checked: boolean;
+}
+
 export interface IShop {
   id?: number;
   feedback_rating: number;

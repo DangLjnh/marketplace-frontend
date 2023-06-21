@@ -5,13 +5,17 @@
     <p>Freeship 30K</p>
   </div>
   <div class="w-full bg-whiteBlue rounded-full h-[6px] my-1 relative">
-    <div class="bg-lightGreen h-[6px] rounded-full w-[45%]"></div>
+    <div class="bg-lightGreen h-[6px] rounded-full"
+      [style.width.%]="totalPrice < 299000 ? (totalPrice * 100) / 299000 : 100">
+    </div>
     <div
-      class="absolute right-0 flex items-center justify-center w-4 h-4 -translate-y-1/2 border-[2px] border-white rounded-full bg-whiteBlue top-1/2 left-1/2 -translate-x-1/2">
+      class="absolute right-0 flex items-center justify-center w-4 h-4 -translate-y-1/2 border-[2px] border-white rounded-full bg-whiteBlue top-1/2 left-1/2 -translate-x-1/2"
+      [class.active]="totalPrice>=150000">
       <app-icon-check></app-icon-check>
     </div>
     <div
-      class="absolute right-0 flex items-center justify-center w-4 h-4 -translate-y-1/2 border-[2px] border-white rounded-full bg-whiteBlue top-1/2">
+      class="absolute right-0 flex items-center justify-center w-4 h-4 -translate-y-1/2 border-[2px] border-white rounded-full bg-whiteBlue top-1/2"
+      [class.active]="totalPrice>=299000">
       <app-icon-check></app-icon-check>
     </div>
   </div>

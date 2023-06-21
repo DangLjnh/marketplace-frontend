@@ -26,10 +26,6 @@ export class SellerDiscountProductModalComponent implements OnInit {
   }
   toggleProductOptionCheck(event: MatCheckboxChange, product: IProduct): void {
     product.checked = event.checked;
-    console.log(
-      '🚀 ~ file: seller-discount-product-modal.component.ts:28 ~ SellerDiscountProductModalComponent ~ toggleProductOptionCheck ~ product:',
-      product
-    );
   }
   handleCheckAll() {
     const areAllChecked = this.productList.every((product) => product.checked);

@@ -2,11 +2,26 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { IResponse } from 'src/app/shared/model/interface';
+import { ICartItem, IResponse } from 'src/app/shared/model/interface';
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
+  private _listCheckCart = new BehaviorSubject<any>([]);
+  private _cartItem = new BehaviorSubject<any>(null);
+
+  set listCheckCart(values: any[]) {
+    this._listCheckCart.next(values);
+  }
+  set cartItem(values: ICartItem) {
+    this._cartItem.next(values);
+  }
+  get listCheckCart$(): Observable<any[]> {
+    return this._listCheckCart.asObservable();
+  }
+  get cartItem$(): Observable<ICartItem> {
+    return this._cartItem.asObservable();
+  }
   updateQuantityCartItem(rawDataCartItem: any): Observable<IResponse> {
     return this.http.put<any>(
       `${environment.backendUrl}/cart-item/update-quantity`,
