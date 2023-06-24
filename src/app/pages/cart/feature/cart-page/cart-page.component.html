@@ -21,7 +21,8 @@
       <ng-container *ngFor="let cartItems of dataCarts">
         <app-cart-seller [cartItems]="cartItems" (handleClickCounter)="handleClickCartItem($event)"
           (checkedPlus)="handleCheckPlus($event)" (checkedMinus)="handleCheckMinus($event)"
-          (handleInputChange)="handleInputChange($event)"></app-cart-seller>
+          (handleInputChange)="handleInputChange($event)" [arrAllCart]="arrAllCart"
+          [listCheckCart]="listCheckCart"></app-cart-seller>
       </ng-container>
     </div>
   </div>
@@ -37,8 +38,3 @@
 
 
 </div>
-<!-- <div *ngFor="let message of messageList">
-  <li>
-    {{message}}
-  </li>
-</div> -->

@@ -23,6 +23,8 @@ export class CartPageComponent implements OnInit, OnDestroy {
   newMessage = '';
   messageList: string[] = [];
   totalPrice: number = 0;
+  arrAllCart: any = [];
+  listCheckCart: any = [];
   handleClickCartItem(product: any) {
     this.productItem = product;
   }
@@ -108,40 +110,21 @@ export class CartPageComponent implements OnInit, OnDestroy {
       this.dataUser = data;
       this.handleUpdateCart(data?.id);
     });
-    this.cartService.cartItem$.subscribe((data) => {
-      const price =
-        data?.Product_Price_Option?.price_discount ||
-        data?.Product_Price_Option?.price ||
-        data?.Product?.Product_Detail?.price_discount ||
-        data?.Product?.Product_Detail?.price_original;
-      // const currentChoose = JSON.stringify(item) === JSON.stringify(data);
-      if (data?.checked === true) {
-        this.totalPrice += price * data?.quantity;
-      }
-      if (data?.checked !== null && data?.checked === false) {
-        this.totalPrice -= price * data?.quantity;
-      }
-    });
     this.cartService.listCheckCart$.subscribe((cartItems) => {
-      if (cartItems.length > 0) {
-        if (cartItems[0].checked === true) {
-          this.totalPrice = 0;
-        }
-
-        cartItems.forEach((item: any) => {
+      const data = this.cartService.cartItem;
+      this.totalPrice = 0;
+      cartItems.forEach((carts: ICartItem[]) => {
+        carts.forEach((item: ICartItem) => {
           const price =
             item.Product_Price_Option?.price_discount ||
             item.Product_Price_Option?.price ||
             item.Product?.Product_Detail?.price_discount ||
             item.Product?.Product_Detail?.price_original;
-          if (item?.checked === true) {
-            this.totalPrice += price * item?.quantity;
-          }
-          if (item?.checked === false) {
-            this.totalPrice -= price * item?.quantity;
+          if (item.checked === true) {
+            this.totalPrice += price * item.quantity;
           }
         });
-      }
+      });
     });
   }
   ngOnDestroy() {
