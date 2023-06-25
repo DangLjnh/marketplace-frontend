@@ -111,7 +111,6 @@ export class CartPageComponent implements OnInit, OnDestroy {
       this.handleUpdateCart(data?.id);
     });
     this.cartService.listCheckCart$.subscribe((cartItems) => {
-      const data = this.cartService.cartItem;
       this.totalPrice = 0;
       cartItems.forEach((carts: ICartItem[]) => {
         carts.forEach((item: ICartItem) => {

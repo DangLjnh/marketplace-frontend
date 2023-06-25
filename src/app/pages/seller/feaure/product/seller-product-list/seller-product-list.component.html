@@ -57,21 +57,21 @@
                     <div class="grid grid-cols-5">
                       <p class="mb-4">{{option.firstFilter.name_filter}}</p>
                       <p>{{option.secondFilter.name_filter}}</p>
-                      <p>{{option.price.toLocaleString('en-US')}}đ</p>
+                      <p>{{option.price.toLocaleString('en-US')}}₫</p>
                       <p>{{option.quantity_stock}}</p>
-                      <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}đ</p>
-                      <!-- <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}đ</p>
+                      <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
+                      <!-- <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
                         <p>{{product.Stock.quantity}}</p>
-                        <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}đ</p> -->
+                        <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p> -->
                     </div>
                   </ng-container>
                   <ng-template #noHasSecondOption>
                     <div class="grid grid-cols-5">
                       <p class="mb-4">{{option.firstFilter.name_filter}}</p>
                       <p>Không có</p>
-                      <p>{{option.price.toLocaleString('en-US')}}đ</p>
+                      <p>{{option.price.toLocaleString('en-US')}}₫</p>
                       <p>{{option.quantity_stock}}</p>
-                      <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}đ</p>
+                      <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
                     </div>
                   </ng-template>
                 </ng-container>
@@ -80,9 +80,9 @@
                 <div class="grid grid-cols-5">
                   <p>Không có</p>
                   <p>Không có</p>
-                  <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}đ</p>
+                  <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
                   <p>{{product.Stock.quantity}}</p>
-                  <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}đ</p>
+                  <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
                 </div>
               </ng-template>
             </th>

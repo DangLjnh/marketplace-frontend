@@ -62,26 +62,30 @@ export class CartSellerComponent implements OnInit {
     this.cartItems.forEach(
       (product: any) => (product.checked = !areAllChecked)
     );
-    let a = true;
+
     const cloneCart = JSON.stringify(this.cartItems);
     if (this.arrAllCart.length === 0) {
       this.arrAllCart.push(JSON.parse(cloneCart));
-      this.cartService.listCheckCart = this.arrAllCart;
     } else {
+      let a = true;
       this.arrAllCart.forEach((item: ICartItem[], idx: number) => {
         const checkExistShop = item.some(
           (cart) => cart.Shop.id === this.cartItems[0].Shop.id
         );
-        if (!checkExistShop) {
-          // a = false;
+        if (!checkExistShop && a === true) {
+          a = false;
           this.arrAllCart.push(JSON.parse(cloneCart));
-          this.cartService.listCheckCart = this.arrAllCart;
-        } else {
+        }
+        if (checkExistShop) {
           this.arrAllCart.splice(idx, 1);
-          this.cartService.listCheckCart = this.arrAllCart;
         }
       });
     }
+    console.log(
+      '🚀 ~ file: cart-seller.component.ts:79 ~ CartSellerComponent ~ this.arrAllCart.forEach ~ this.arrAllCart:',
+      this.arrAllCart
+    );
+    this.cartService.listCheckCart = this.arrAllCart;
   }
 
   constructor(private cartService: CartService) {}

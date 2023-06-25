@@ -40,7 +40,7 @@
                   <p>Không có</p>
                   <p>Không có</p>
                   <p>{{product.Stock.quantity}}</p>
-                  <p>{{product.Product_Detail.price_discount.toLocaleString('en-US')}}đ</p>
+                  <p>{{product.Product_Detail.price_discount.toLocaleString('en-US')}}₫</p>
                 </div>
               </td>
             </ng-container>
@@ -63,7 +63,7 @@
                   <p>{{product.Product_Price_Options.firstFilter.name_filter}}</p>
                   <p>{{product.Product_Price_Options.secondFilter.name_filter}}</p>
                   <p>{{product.Product_Price_Options.quantity_stock}}</p>
-                  <p>{{product.Product_Price_Options.price.toLocaleString('en-US')}}đ</p>
+                  <p>{{product.Product_Price_Options.price.toLocaleString('en-US')}}₫</p>
                 </div>
               </ng-container>
               <ng-template #noHasSecondFilter>
@@ -71,7 +71,7 @@
                   <p>{{product.Product_Price_Options.firstFilter.name_filter}}</p>
                   <p>Không có</p>
                   <p>{{product.Product_Price_Options.quantity_stock}}</p>
-                  <p>{{product.Product_Price_Options.price.toLocaleString('en-US')}}đ</p>
+                  <p>{{product.Product_Price_Options.price.toLocaleString('en-US')}}₫</p>
                 </div>
               </ng-template>
             </td>
