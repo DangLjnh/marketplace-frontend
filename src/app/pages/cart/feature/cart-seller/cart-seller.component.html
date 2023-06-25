@@ -24,14 +24,32 @@
         </div>
       </div>
       <div class="flex items-center gap-x-2 text-fs13">
-        <ng-container *ngIf="cart?.Product_Price_Option; else noOption">
-          <span class="font-medium">{{cart.Product_Price_Option.price_discount}}</span>
-          <span class="line-through text-darkGray">{{cart.Product_Price_Option.price.toLocaleString('en-US')}}₫</span>
+        <ng-container *ngIf="cart?.Product_Price_Option; else noOptionDiscount">
+          <ng-container *ngIf="cart?.Product_Price_Option?.price_discount; else noDiscount">
+            <ng-container *ngIf="cart?.Product_Price_Option; else noOption">
+              <span class="font-medium">{{cart.Product_Price_Option.price_discount.toLocaleString('en-US')}}₫</span>
+              <span
+                class="line-through text-darkGray">{{cart.Product_Price_Option.price.toLocaleString('en-US')}}₫</span>
+            </ng-container>
+            <ng-template #noOption>
+              <span class="font-medium">{{cart.Product.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
+              <span
+                class="line-through text-darkGray">{{cart.Product.Product_Detail?.price_discount?.toLocaleString('en-US')}}₫</span>
+            </ng-template>
+          </ng-container>
+          <ng-template #noDiscount>
+            <span class="font-medium">{{cart?.Product_Price_Option?.price.toLocaleString('en-US')}}₫</span>
+          </ng-template>
         </ng-container>
-        <ng-template #noOption>
-          <span class="font-medium">{{cart.Product.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
-          <span
-            class="line-through text-darkGray">{{cart.Product.Product_Detail?.price_discount?.toLocaleString('en-US')}}₫</span>
+        <ng-template #noOptionDiscount>
+          <ng-container *ngIf="cart?.Product?.Product_Detail.price_discount; else noDiscount">
+            <span class="font-medium">{{cart.Product.Product_Detail.price_discount.toLocaleString('en-US')}}₫</span>
+            <span
+              class="line-through text-darkGray">{{cart.Product.Product_Detail?.price_original?.toLocaleString('en-US')}}₫</span>
+          </ng-container>
+          <ng-template #noDiscount>
+            <span class="font-medium">{{cart?.Product?.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
+          </ng-template>
         </ng-template>
       </div>
       <div class="flex items-center">

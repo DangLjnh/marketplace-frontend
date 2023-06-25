@@ -81,10 +81,6 @@ export class CartSellerComponent implements OnInit {
         }
       });
     }
-    console.log(
-      '🚀 ~ file: cart-seller.component.ts:79 ~ CartSellerComponent ~ this.arrAllCart.forEach ~ this.arrAllCart:',
-      this.arrAllCart
-    );
     this.cartService.listCheckCart = this.arrAllCart;
   }
 

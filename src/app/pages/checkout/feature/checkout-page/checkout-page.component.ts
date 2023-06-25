@@ -23,7 +23,7 @@ export class CheckoutPageComponent {
       // this.handleUpdateCart(data?.id);
     });
     this.cartService.listCheckCart$.subscribe((data) => {
-      data = this.dataCarts = data;
+      this.dataCarts = data;
     });
   }
 }

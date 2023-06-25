@@ -60,6 +60,10 @@ export class SellerDiscountProductModalComponent implements OnInit {
           )
           .subscribe((data) => {
             this.productList = data;
+            console.log(
+              '🚀 ~ file: seller-discount-product-modal.component.ts:63 ~ SellerDiscountProductModalComponent ~ .subscribe ~ data:',
+              data
+            );
             this.productList.forEach((product) => (product.checked = false));
             this.productList.forEach((item) => {
               item.Product_Price_Options.forEach((option: any) => {

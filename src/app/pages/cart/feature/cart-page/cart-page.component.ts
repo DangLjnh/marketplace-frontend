@@ -121,6 +121,7 @@ export class CartPageComponent implements OnInit, OnDestroy {
             item.Product?.Product_Detail?.price_original;
           if (item.checked === true) {
             this.totalPrice += price * item.quantity;
+            this.cartService.totalPrice = this.totalPrice;
           }
         });
       });

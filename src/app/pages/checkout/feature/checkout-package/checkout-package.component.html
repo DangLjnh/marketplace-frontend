@@ -10,7 +10,7 @@
         <div class="max-w-xl">
           <div class="flex items-center mb-3 gap-x-1">
             <app-icon-store></app-icon-store>
-            <span class="font-medium">{{carts[idx].Shop.Shop_Detail.name}}</span>
+            <span class="font-medium">{{carts[0].Shop.Shop_Detail.name}}</span>
           </div>
           <div class="flex flex-col gap-5">
             <ng-container *ngFor="let cart of carts">
@@ -20,22 +20,25 @@
                     class="object-contain w-12 h-12">
                   <ng-container *ngIf="cart?.Product_Price_Option;else noOption">
                     <div class="flex flex-col flex-1 gap-1 ml-3">
-                      <p class="line-clamp-1 text-darkGray">{{cart.Product.Product_Detail.name}}
+                      <p class="line-clamp-1 text-darkGray">
+                        {{cart.Product.Product_Detail.name}}{{cart?.Product_Price_Option?' - '+
+                        cart?.Product_Price_Option?.firstFilter?.name_filter:''}}{{cart?.Product_Price_Option?.secondFilter&&'
+                        - '+cart?.Product_Price_Option?.secondFilter?.name_filter}}
                       <div class="flex items-center justify-between gap-x-5">
                         <span class="text-darkGray">Quantity: x{{cart.quantity}}</span>
-                        <span class="font-medium">{{(cart.Product_Price_Option.price *
+                        <span class="font-medium">{{((cart.Product_Price_Option.price_discount ?
+                          cart.Product_Price_Option.price_discount: cart.Product_Price_Option.price) *
                           cart.quantity).toLocaleString('en-US')}} ₫</span>
                       </div>
                     </div>
                   </ng-container>
                   <ng-template #noOption>
                     <div class="flex flex-col flex-1 gap-1 ml-3">
-                      <p class="line-clamp-1 text-darkGray">Crazy sale. NEVER GIVE UP, mã G112. Áo thun nam nữ in
-                        chữCrazy
-                        sale. NEVER
-                      <div class="flex items-center justify-between">
+                      <p class="line-clamp-1 text-darkGray">{{cart.Product.Product_Detail.name}}
+                      <div class="flex items-center justify-between gap-x-5">
                         <span class="text-darkGray">Quantity: x{{cart.quantity}}</span>
-                        <span class="font-medium">99.000 ₫</span>
+                        <span class="font-medium">{{cart.Product.Product_Detail.price_discount ??
+                          cart.Product.Product_Detail.price_original.toLocaleString('en-US')}} ₫</span>
                       </div>
                     </div>
                   </ng-template>
@@ -45,7 +48,8 @@
           </div>
         </div>
         <div class="px-4 py-2 rounded-lg text-md bg-whiteGray text-darkGray">
-          Order Total (2 Item): <span class="text-lg font-medium text-hotRed">99.000 ₫</span>
+          Order Total (2 Item): <span
+            class="text-lg font-medium text-hotRed">{{updateTotalPrice(idx).toLocaleString('en-US')}} ₫</span>
         </div>
       </div>
     </div>
