@@ -10,7 +10,6 @@ import { IUser } from 'src/app/shared/model/interface';
   styleUrls: ['./checkout-page.component.scss'],
 })
 export class CheckoutPageComponent {
-  dataUser!: IUser;
   dataCarts!: any;
   constructor(
     private authService: AuthService,
@@ -18,10 +17,6 @@ export class CheckoutPageComponent {
     private toastService: ToastrService
   ) {}
   ngOnInit(): void {
-    this.authService.dataUser$.subscribe((data: IUser) => {
-      this.dataUser = data;
-      // this.handleUpdateCart(data?.id);
-    });
     this.cartService.listCheckCart$.subscribe((data) => {
       this.dataCarts = data;
     });
