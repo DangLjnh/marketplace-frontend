@@ -26,5 +26,6 @@
       alt="">
     <span class="text-sm font-medium text-black">have been applied!</span>
   </div>
-  <app-button [routerLink]="'/customer/account/purchase'">Place Order</app-button>
+  <!-- [routerLink]="'/customer/account/purchase'" -->
+  <app-button (click)="submitOrder()">Place Order</app-button>
 </div>

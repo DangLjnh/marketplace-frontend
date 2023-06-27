@@ -1,26 +1,13 @@
 <div class="p-3 bg-white rounded">
   <p class="mb-3 text-xl font-medium">Payment Method</p>
-  <mat-radio-group aria-label="Select an option" class="flex flex-col gap-5">
-    <mat-radio-button value="1">
-      <div class="flex items-center gap-x-3">
-        <img src="https://salt.tikicdn.com/ts/upload/92/b2/78/1b3b9cda5208b323eb9ec56b84c7eb87.png" class="w-8 h-8"
-          alt="">
-        <span>Cash on Delivery</span>
-      </div>
-    </mat-radio-button>
-    <mat-radio-button value="2">
-      <div class="flex items-center gap-x-3">
-        <img src="https://salt.tikicdn.com/ts/upload/ce/f6/e8/ea880ef285856f744e3ffb5d282d4b2d.jpg" class="w-8 h-8"
-          alt="">
-        <span>Payment by Momo</span>
-      </div>
-    </mat-radio-button>
-    <mat-radio-button value="3">
-      <div class="flex items-center gap-x-3">
-        <img src="https://freepngimg.com/save/13625-paypal-logo-transparent-png/1817x1266"
-          class="object-contain w-8 h-8" alt="">
-        <span>Payment by Paypal</span>
-      </div>
-    </mat-radio-button>
+  <mat-radio-group aria-label="Select an option" class="flex flex-col gap-5" (change)="onRadioChange($event)">
+    <ng-container *ngFor="let pay of arrPay">
+      <mat-radio-button [value]="pay.value">
+        <div class="flex items-center gap-x-3">
+          <img [src]="pay.url" class="w-8 h-8" alt="">
+          <span>{{pay.content}}</span>
+        </div>
+      </mat-radio-button>
+    </ng-container>
   </mat-radio-group>
 </div>

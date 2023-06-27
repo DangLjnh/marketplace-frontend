@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
+import { CheckoutService } from 'src/app/pages/checkout/data-access/checkout.service';
+import { IUser } from 'src/app/shared/model/interface';
 
 @Component({
   selector: 'app-customer-purchase',
@@ -6,6 +11,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./customer-purchase.component.scss'],
 })
 export class CustomerPurchaseComponent {
+  dataOrders!: any;
+  dataUser!: IUser;
   purchases = [
     {
       name: 'All',
@@ -24,4 +31,20 @@ export class CustomerPurchaseComponent {
       url: '',
     },
   ];
+
+  constructor(
+    private checkoutService: CheckoutService,
+    private toastrService: ToastrService,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.authService.dataUser$.subscribe((data: IUser) => {
+      this.dataUser = data;
+    });
+    this.checkoutService
+      .readAllOrderOfUser(this.dataUser.id)
+      .subscribe((data) => {
+        this.dataOrders = data.DT;
+      });
+  }
 }

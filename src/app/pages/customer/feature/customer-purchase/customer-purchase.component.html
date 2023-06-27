@@ -9,61 +9,78 @@
 
   <app-input-search placeholder="You can search by Shop name, Order ID or Product name"></app-input-search>
 
-  <div class="p-3 bg-white rounded">
-    <div class="flex items-center justify-between pb-3 mb-3 border-b ">
-      <div class="flex items-center gap-x-2">
-        <app-icon-store></app-icon-store>
-        <span>Shondo VietNam</span>
-      </div>
-      <div class="flex items-center gap-x-2">
-        <div class="flex items-center pr-2 border-r gap-x-2">
-          <app-icon-truck color="#00AB56" stroke="#00AB56"></app-icon-truck>
-          <span class="whitespace-nowrap text-lightGreen">Order have been delivered successfully</span>
+  <ng-container *ngFor="let order of dataOrders">
+    <div class="p-3 bg-white rounded">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b ">
+        <div class="flex items-center gap-x-2">
+          <app-icon-store></app-icon-store>
+          <span>{{order.Shop.Shop_Detail.name}}</span>
         </div>
-        <span class="text-hotRed">COMPLETED</span>
-      </div>
-    </div>
-
-    <div class="flex items-center justify-between pb-3 mb-3 border-b">
-      <div class="flex items-start gap-x-5">
-        <img src="https://pos.nvncdn.net/04f7ff-92233/ps/20230210_azLkF6mDpZjEUgQJ.jpeg" alt=""
-          class="object-contain w-20 h-20">
-        <div class="flex flex-col gap-[2px]">
-          <p class="line-clamp-2">Giày Sandals Unisex Shondo F7 Racing Đế Trắng Phối Đen Quai Đen F7R0010
-          </p>
-          <span class="text-lightGray">Option: 44</span>
-          <span>x1</span>
+        <div class="flex items-center gap-x-2">
+          <ng-container *ngIf="order.statusID === 2">
+            <div class="flex items-center pr-2 border-r gap-x-2">
+              <app-icon-truck color="#00AB56" stroke="#00AB56"></app-icon-truck>
+              <span class="whitespace-nowrap text-lightGreen">Đơn hàng đã được giao hàng thành công</span>
+            </div>
+          </ng-container>
+          <span class="text-hotRed uppercase">
+            {{ order.statusID === 1 ? "Đang vận chuyển" : order.statusID === 2 ? "Hoàn tất" : "Hủy" }}
+          </span>
         </div>
       </div>
-      <div class="flex items-center gap-x-2">
-        <span class="line-through text-lightGray">₫479.000</span>
-        <span class="text-hotRed">₫352.000</span>
-      </div>
-    </div>
-    <div class="flex items-center justify-between pb-3 mb-3 border-b">
-      <div class="flex items-start gap-x-5">
-        <img src="https://pos.nvncdn.net/04f7ff-92233/ps/20230210_lPEAdaZ8FnZ4Ip13.jpeg" alt=""
-          class="object-contain w-20 h-20">
-        <div class="flex flex-col gap-[2px]">
-          <p class="line-clamp-2">Giày Sandals Unisex Shondo F7 Racing Đế Trắng Phối Đen Quai Đen F7R0010
-          </p>
-          <span class="text-lightGray">Option: 44</span>
-          <span>x1</span>
+
+      <ng-container *ngFor="let orderDetail of order.Order_Details">
+        <div class="flex items-center justify-between pb-3 mb-3 border-b">
+          <div class="flex items-start gap-x-5">
+            <img [src]="orderDetail.Product.Image_Products[0]?.Image_Product_Detail?.photo_url" alt=""
+              class="object-contain w-20 h-20">
+            <div class="flex flex-col gap-[2px]">
+              <p class="line-clamp-2">{{orderDetail.Product.Product_Detail.name}}
+              </p>
+              <ng-container *ngIf="orderDetail?.Product_Price_Option">
+                <span class="text-lightGray">Option: {{orderDetail.Product_Price_Option?.firstFilter?.name_filter}}
+                  {{orderDetail.Product_Price_Option?.secondFilter ?
+                  ", " + orderDetail.Product_Price_Option?.secondFilter?.name_filter:""}}</span>
+              </ng-container>
+              <span>x{{orderDetail.quantity}}</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-x-2">
+            <ng-container *ngIf="orderDetail?.Product_Price_Option; else noOption">
+              <ng-container *ngIf="orderDetail.Product_Price_Option.price_discount; else noDiscount">
+                <span
+                  class="line-through text-lightGray">{{orderDetail.Product_Price_Option.price.toLocaleString('en-US')}}
+                  ₫</span>
+                <span class="text-hotRed">{{orderDetail.Product_Price_Option.price_discount.toLocaleString('en-US')}}
+                  ₫</span>
+              </ng-container>
+              <ng-template #noDiscount>
+                <span class="text-hotRed">{{orderDetail.Product_Price_Option.price.toLocaleString('en-US')}}
+                  ₫</span>
+              </ng-template>
+            </ng-container>
+            <ng-template #noOption>
+              <ng-container *ngIf="orderDetail.Product.Product_Detail.price_discount;else noDiscount">
+                <span class="line-through text-lightGray">₫479.000</span>
+                <span class="text-hotRed">₫352.000</span>
+              </ng-container>
+              <ng-template #noDiscount>
+                <span class="text-hotRed">₫352.000</span>
+              </ng-template>
+            </ng-template>
+
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="flex flex-col items-end">
+        <div class="flex items-center gap-x-2">
+          <app-icon-guard></app-icon-guard>
+          <p class="text-lg">Order total: <span
+              class="ml-2 text-2xl text-hotRed">{{order.total_price.toLocaleString('en-US')}} ₫</span></p>
         </div>
       </div>
-      <div class="flex items-center gap-x-2">
-        <span class="line-through text-lightGray">₫479.000</span>
-        <span class="text-hotRed">₫352.000</span>
-      </div>
     </div>
-
-    <div class="flex flex-col items-end">
-      <div class="flex items-center gap-x-2">
-        <app-icon-guard></app-icon-guard>
-        <p class="text-lg">Order total: <span class="ml-2 text-2xl text-hotRed">₫353.200</span></p>
-      </div>
-    </div>
-  </div>
-
+  </ng-container>
 
 </div>

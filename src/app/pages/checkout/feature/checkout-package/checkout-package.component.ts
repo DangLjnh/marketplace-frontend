@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
 import { ICartItem, IUser } from 'src/app/shared/model/interface';
+import { CheckoutService } from '../../data-access/checkout.service';
 
 @Component({
   selector: 'app-checkout-package',
@@ -31,7 +32,10 @@ export class CheckoutPackageComponent implements OnInit {
     this.totalPrices[idx] = totalPrice;
     return totalPrice;
   }
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private checkoutService: CheckoutService
+  ) {}
   ngOnInit(): void {
     this.totalPrices = this.dataCarts?.map(() => 0);
 
@@ -70,13 +74,13 @@ export class CheckoutPackageComponent implements OnInit {
           dataOrder = {
             quantity: cart.quantity,
             productID: cart.Product.id,
-            productPriceOptionID: cart.Product_Price_Option.id,
+            productPriceOptionID: cart.Product_Price_Option?.id,
             price_original:
-              cart.Product_Price_Option.price ??
-              cart.Product.Product_Detail.price_original,
+              cart.Product_Price_Option?.price ??
+              cart.Product.Product_Detail?.price_original,
             price_discount:
-              cart.Product_Price_Option.price_discount ??
-              cart.Product.Product_Detail.price_discount,
+              cart.Product_Price_Option?.price_discount ??
+              cart.Product.Product_Detail?.price_discount,
           };
           listDataOrder.push(dataOrder);
         });
@@ -84,13 +88,13 @@ export class CheckoutPackageComponent implements OnInit {
           total_price: totalPriceShop,
           payment_method: 'Thanh toán khi nhận hàng',
           note: '',
-          dataOrder: listDataOrder,
-          shopID: carts[index].Shop.id,
+          dataOrders: JSON.stringify(listDataOrder),
+          shopID: carts[0]?.Shop.id,
           userID: this.dataUser.id,
         });
         return dataToPersistArray;
       }
     );
-    console.log(this.dataOrder);
+    this.checkoutService.listDataOrder = this.dataOrder;
   }
 }
