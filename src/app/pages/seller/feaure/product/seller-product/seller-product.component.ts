@@ -259,6 +259,7 @@ export class SellerProductComponent implements OnInit {
             this.toastrService.error(data.EM);
           }
           if (+data.EC === 0) {
+            this.router.navigate(['/seller/portal/product/list']);
             this.toastrService.success(data.EM);
           }
         });

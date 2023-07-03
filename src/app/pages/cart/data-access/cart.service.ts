@@ -24,9 +24,17 @@ export class CartService {
   get totalPrice$(): Observable<number> {
     return this._totalPrice.asObservable();
   }
+
   updateQuantityCartItem(rawDataCartItem: any): Observable<IResponse> {
     return this.http.put<any>(
       `${environment.backendUrl}/cart-item/update-quantity`,
+      rawDataCartItem
+    );
+  }
+
+  updateQuantityCartItemOption(rawDataCartItem: any): Observable<IResponse> {
+    return this.http.put<any>(
+      `${environment.backendUrl}/cart-item-option/update-quantity`,
       rawDataCartItem
     );
   }

@@ -6,16 +6,11 @@
           <img *ngIf="dataProduct" [src]="dataProduct.Image_Products[0].Image_Product_Detail.photo_url"
             class="object-cover rounded mb-3 w-full h-[450px]"><img>
           <div class="flex items-center justify-between w-full">
-            <img src="https://down-vn.img.susercontent.com/file/21a64463b0502f51971e4dfe0a98a291" alt=""
-              class="h-[82px] object-contain rounded">
-            <img src="https://down-vn.img.susercontent.com/file/21a64463b0502f51971e4dfe0a98a291" alt=""
-              class="h-[82px] object-contain rounded">
-            <img src="https://down-vn.img.susercontent.com/file/21a64463b0502f51971e4dfe0a98a291" alt=""
-              class="h-[82px] object-contain rounded">
-            <img src="https://down-vn.img.susercontent.com/file/21a64463b0502f51971e4dfe0a98a291" alt=""
-              class="h-[82px] object-contain rounded">
-            <img src="https://down-vn.img.susercontent.com/file/21a64463b0502f51971e4dfe0a98a291" alt=""
-              class="h-[82px] object-contain rounded">
+            <ng-container *ngFor="let image of dataProduct.Image_Products; let i = index">
+              <ng-container *ngIf="i > 0">
+                <img [src]="image.Image_Product_Detail.photo_url" alt="" class="h-[82px] object-contain rounded">
+              </ng-container>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -43,44 +38,52 @@
         <div class="px-4 py-5 rounded bg-gray-50">
           <div class="flex items-center gap-x-3 ">
             <ng-container *ngIf="dataProduct?.Product_Price_Options">
-              <ng-container *ngIf="dataProduct.Product_Price_Options.length > 0 && optionResult; else noOption">
+              <ng-container *ngIf="dataProduct.Product_Price_Options.length > 0; else noOption">
+                <ng-container
+                  *ngIf="dataProduct.Product_Price_Options.length > 0 && optionResult; else notChooseOption">
+                  <ng-container *ngIf="dataProduct?.Product_Detail">
+                    <ng-container *ngIf="optionResult.price && optionResult.price_discount;else noDiscount">
+                      <span *ngIf="optionResult?.discountPercentID"
+                        class="line-through text-lightGray">{{optionResult.price.toLocaleString('en-US')}}₫</span>
+                      <span
+                        class="text-2xl font-medium text-hotRed">{{optionResult.price_discount.toLocaleString('en-US')}}₫</span>
+                      <span *ngIf="optionResult?.Discount_Percent?.percent"
+                        class="p-1 text-[10px] text-white bg-hotRed rounded-sm">{{optionResult.Discount_Percent.percent}}%
+                        OFF</span>
+                    </ng-container>
+
+                    <ng-template #noDiscount>
+                      <span
+                        class="text-2xl font-medium text-hotRed">{{optionResult.price.toLocaleString('en-US')}}₫</span>
+                    </ng-template>
+                  </ng-container>
+                </ng-container>
+                <ng-template #notChooseOption>
+                  <span class="text-2xl font-medium text-hotRed">~{{(getPriceLow).toLocaleString('en-US')}}₫</span>
+                </ng-template>
+              </ng-container>
+              <ng-template #noOption>
                 <ng-container *ngIf="dataProduct?.Product_Detail">
-                  <ng-container *ngIf="optionResult.price && optionResult.price_discount;else noDiscount">
-                    <span *ngIf="optionResult?.discountPercentID"
-                      class="line-through text-lightGray">{{optionResult.price.toLocaleString('en-US')}}₫</span>
+                  <ng-container
+                    *ngIf="dataProduct.Product_Detail.price_discount && dataProduct?.Discount_Percent?.percent;else noDiscount">
+                    <span *ngIf="dataProduct?.Discount_Percent"
+                      class="line-through text-lightGray">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
                     <span
-                      class="text-2xl font-medium text-hotRed">{{optionResult.price_discount.toLocaleString('en-US')}}₫</span>
-                    <span *ngIf="optionResult?.Discount_Percent?.percent"
-                      class="p-1 text-[10px] text-white bg-hotRed rounded-sm">{{optionResult.Discount_Percent.percent}}%
+                      class="text-2xl font-medium text-hotRed">{{dataProduct.Product_Detail.price_discount.toLocaleString('en-US')}}₫</span>
+                    <span *ngIf="dataProduct?.Discount_Percent?.percent"
+                      class="p-1 text-[10px] text-white bg-hotRed rounded-sm">{{dataProduct.Discount_Percent.percent}}%
                       OFF</span>
                   </ng-container>
 
                   <ng-template #noDiscount>
                     <span
-                      class="text-2xl font-medium text-hotRed">{{optionResult.price.toLocaleString('en-US')}}₫</span>
+                      class="text-2xl font-medium text-hotRed">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
                   </ng-template>
                 </ng-container>
-              </ng-container>
+              </ng-template>
             </ng-container>
-            <ng-template #noOption>
-              <ng-container *ngIf="dataProduct?.Product_Detail">
-                <ng-container
-                  *ngIf="dataProduct.Product_Detail.price_discount && dataProduct?.Discount_Percent?.percent;else noDiscount">
-                  <span *ngIf="dataProduct?.Discount_Percent"
-                    class="line-through text-lightGray">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
-                  <span
-                    class="text-2xl font-medium text-hotRed">{{dataProduct.Product_Detail.price_discount.toLocaleString('en-US')}}₫</span>
-                  <span *ngIf="dataProduct?.Discount_Percent?.percent"
-                    class="p-1 text-[10px] text-white bg-hotRed rounded-sm">{{dataProduct.Discount_Percent.percent}}%
-                    OFF</span>
-                </ng-container>
-
-                <ng-template #noDiscount>
-                  <span
-                    class="text-2xl font-medium text-hotRed">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
-                </ng-template>
-              </ng-container>
-            </ng-template>
+            <!-- <span
+              class="text-2xl font-medium text-hotRed">{{dataProduct.Product_Detail.price_original.toLocaleString('en-US')}}₫</span> -->
           </div>
         </div>
 
@@ -136,7 +139,8 @@
             </div>
             <div class="flex items-center p-3 border rounded gap-x-5">
               <span class="font-medium">28 other shops</span>
-              <app-button theme="blue" className=" flex items-center gap-x-2">
+              <app-button theme="blue" className=" flex items-center gap-x-2"
+                (click)="openModalComparePrice(dataProduct.Product_Detail.name)">
                 <span>Compare price</span>
               </app-button>
             </div>

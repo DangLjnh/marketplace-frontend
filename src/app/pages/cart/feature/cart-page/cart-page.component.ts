@@ -34,18 +34,33 @@ export class CartPageComponent implements OnInit, OnDestroy {
         id: this.productItem.id,
         quantity: quantity + 1,
       };
-      this.cartService
-        .updateQuantityCartItem(rawData)
-        .subscribe((dataUpdateCart: IResponse) => {
-          if (+dataUpdateCart.EC === 1) {
-            this.toastService.error(dataUpdateCart.EM);
-          }
-          this.cartService
-            .readCartDefault(this.dataUser.id)
-            .subscribe((data: IResponse) => {
-              this.dataCarts = data.DT;
-            });
-        });
+      if (this.productItem.Product_Price_Option) {
+        this.cartService
+          .updateQuantityCartItemOption(rawData)
+          .subscribe((dataUpdateCart: IResponse) => {
+            if (+dataUpdateCart.EC === 1) {
+              this.toastService.error(dataUpdateCart.EM);
+            }
+            this.cartService
+              .readCartDefault(this.dataUser.id)
+              .subscribe((data: IResponse) => {
+                this.dataCarts = data.DT;
+              });
+          });
+      } else {
+        this.cartService
+          .updateQuantityCartItem(rawData)
+          .subscribe((dataUpdateCart: IResponse) => {
+            if (+dataUpdateCart.EC === 1) {
+              this.toastService.error(dataUpdateCart.EM);
+            }
+            this.cartService
+              .readCartDefault(this.dataUser.id)
+              .subscribe((data: IResponse) => {
+                this.dataCarts = data.DT;
+              });
+          });
+      }
     }, 1);
   }
   handleCheckMinus(quantity: number) {
@@ -57,13 +72,25 @@ export class CartPageComponent implements OnInit, OnDestroy {
         id: this.productItem.id,
         quantity: quantity === 1 ? 1 : quantity - 1,
       };
-      this.cartService.updateQuantityCartItem(rawData).subscribe((data) => {
+      if (this.productItem.Product_Price_Option) {
         this.cartService
-          .readCartDefault(this.dataUser.id)
-          .subscribe((data: IResponse) => {
-            this.dataCarts = data.DT;
+          .updateQuantityCartItemOption(rawData)
+          .subscribe((data) => {
+            this.cartService
+              .readCartDefault(this.dataUser.id)
+              .subscribe((data: IResponse) => {
+                this.dataCarts = data.DT;
+              });
           });
-      });
+      } else {
+        this.cartService.updateQuantityCartItem(rawData).subscribe((data) => {
+          this.cartService
+            .readCartDefault(this.dataUser.id)
+            .subscribe((data: IResponse) => {
+              this.dataCarts = data.DT;
+            });
+        });
+      }
     }, 1);
   }
   handleInputChange(event: Event) {

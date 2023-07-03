@@ -19,6 +19,8 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/pages/cart/data-access/cart.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductComparePriceModalComponent } from '../product-compare-price-modal/product-compare-price-modal.component';
 @Component({
   selector: 'app-product-detail-page',
   templateUrl: './product-detail-page.component.html',
@@ -42,6 +44,8 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
   optionResult!: any;
   isChooseSameOption!: boolean;
   isChooseSameType!: boolean;
+  getPriceLow!: number;
+  listComparePrice!: any;
   config: SwiperOptions = {
     slidesPerView: this.slidesPerView,
     spaceBetween: 15,
@@ -148,6 +152,13 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
       }
     });
   }
+  openModalComparePrice(name: string) {
+    this.dialog.open(ProductComparePriceModalComponent, {
+      data: {
+        name: name,
+      },
+    });
+  }
   onCountPlus(num: number) {
     this.valueCounter = num + 1;
   }
@@ -161,7 +172,8 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
     private productService: ProductService,
     private readonly route: ActivatedRoute,
     private toastrService: ToastrService,
-    private cartService: CartService
+    private cartService: CartService,
+    public dialog: MatDialog
   ) {}
   ngOnInit(): void {
     this.authService.dataUser$.subscribe((data: IUser) => {
@@ -178,6 +190,26 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
       )
       .subscribe((data) => {
         this.dataProduct = data.DT;
+        const nameProduct = this.dataProduct.Product_Detail.name;
+        this.productService
+          .searchSameProduct({ name: nameProduct })
+          .subscribe((data) => {
+            this.listComparePrice = data.DT;
+            console.log(
+              '🚀 ~ file: product-detail-page.component.ts:194 ~ ProductDetailPageComponent ~ this.productService.searchSameProduct ~ data:',
+              data
+            );
+          });
+        this.dataProduct.Product_Price_Options.forEach(
+          (item: IProductPriceOption, index) => {
+            if (index == 0) {
+              this.getPriceLow = item.price;
+            }
+            if (this.getPriceLow > item.price) {
+              this.getPriceLow = item.price;
+            }
+          }
+        );
       });
   }
   ngAfterViewInit(): void {

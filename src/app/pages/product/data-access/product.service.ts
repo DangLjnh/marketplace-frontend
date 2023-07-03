@@ -13,5 +13,11 @@ export class ProductService {
       `${environment.backendUrl}/product/read-single/${productID}`
     );
   }
+  searchSameProduct(name: any): Observable<IResponse> {
+    return this.http.post<IResponse>(
+      `${environment.backendCrawlUrl}/product/search`,
+      name
+    );
+  }
   constructor(private http: HttpClient) {}
 }
