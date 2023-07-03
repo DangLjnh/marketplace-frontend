@@ -9,12 +9,16 @@ import { CheckoutPackageComponent } from './feature/checkout-package/checkout-pa
 import { CheckoutPaymentComponent } from './feature/checkout-payment/checkout-payment.component';
 import { CheckoutOrderComponent } from './feature/checkout-order/checkout-order.component';
 import { IconModule } from 'src/app/shared/UI/icon/icon.module';
+import { CheckoutPayMomoOrderComponent } from './feature/checkout-pay-momo-order/checkout-pay-momo-order.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { QrCodeModule } from 'ng-qrcode';
 @NgModule({
   declarations: [
     CheckoutPageComponent,
     CheckoutPackageComponent,
     CheckoutPaymentComponent,
     CheckoutOrderComponent,
+    CheckoutPayMomoOrderComponent,
   ],
   imports: [
     CommonModule,
@@ -22,6 +26,8 @@ import { IconModule } from 'src/app/shared/UI/icon/icon.module';
     SharedModule,
     MatRadioModule,
     IconModule,
+    MatDialogModule,
+    QrCodeModule,
   ],
 })
 export class CheckoutModule {}

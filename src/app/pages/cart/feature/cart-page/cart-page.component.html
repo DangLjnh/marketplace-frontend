@@ -32,7 +32,7 @@
 
     <div class="sticky flex flex-col gap-5 pt-5 top-0 bg-content z-[5]">
       <app-cart-total-price [totalPrice]="totalPrice"></app-cart-total-price>
-      <app-button [routerLink]="'/checkout'">Buy now!</app-button>
+      <app-button [routerLink]="'/checkout'" [disable]="this.totalPrice === 0">Mua ngay</app-button>
     </div>
   </div>
 

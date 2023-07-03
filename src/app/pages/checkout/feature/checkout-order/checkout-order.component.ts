@@ -27,17 +27,20 @@ export class CheckoutOrderComponent {
       });
     }
     if (this.checkoutService.choosePayment === 'momo') {
-      this.checkoutService.createPayMomo('a').subscribe((data) => {
-        if (data) {
-          window.open(data.DT, '_blank');
-          // this.router.navigate([data.DT]);
-          this.dialog.open(CheckoutPayMomoOrderComponent, {
-            data: {
-              type: 'create',
-            },
-          });
-        }
-      });
+      this.checkoutService
+        .createPayMomo({ totalPrice: this.totalPrice })
+        .subscribe((data) => {
+          if (data) {
+            // window.open(data.DT, '_blank');
+            // this.router.navigate([data.DT]);
+            this.checkoutService.urlPayMomo = data.DT;
+            this.dialog.open(CheckoutPayMomoOrderComponent, {
+              data: {
+                type: 'create',
+              },
+            });
+          }
+        });
     }
   }
   constructor(

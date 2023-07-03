@@ -1,12 +1,34 @@
-<h1 mat-dialog-title>Thanh toán momo</h1>
+<h1 mat-dialog-title class="!flex items-center !p-5 !pr-10 gap-x-5">
+  <img class="w-8 h-8 object-cover"
+    src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/checkout/icon-payment-method-momo.svg" alt="">
+  <p>
+    Thanh toán bằng ví momo
+  </p>
+</h1>
 <div mat-dialog-content>
-  <div class="content max-h-[390px]">
-    <!-- <iframe [src]="urlPayMomo" frameborder="0" width="900" height="390" id="paymentIframe"></iframe> -->
-    <qr-code
-      value="momo://app?action=payWithApp&isScanQR=true&serviceType=qr&sid=TU9NT3xNT01PMTY4Nzg4NDMxMDA2NDEyMw&v=2.3"
-      size="300" errorCorrectionLevel="M"></qr-code>
-  </div>
-  <div mat-dialog-actions class="flex items-center !justify-end">
+  <!-- <qr-code
+    value="momo://app?action=payWithApp&isScanQR=true&serviceType=qr&sid=TU9NT3xNT01PMTY4Nzg4NDMxMDA2NDEyMw&v=2.3"
+    size="300" errorCorrectionLevel="M"></qr-code> -->
+  <ng-container *ngIf="!successPay; else success">
+    <div class="content max-h-[390px]">
+      <iframe [src]="urlPayMomo" frameborder="0" width="900" height="390" id="paymentIframe"></iframe>
+    </div>
+  </ng-container>
+  <ng-template #success>
+    <div class="text-center">
+      <div class="success-checkmark">
+        <div class="check-icon">
+          <span class="icon-line line-tip"></span>
+          <span class="icon-line line-long"></span>
+          <div class="icon-circle"></div>
+          <div class="icon-fix"></div>
+        </div>
+      </div>
+      <p>Thanh toán thành công!</p>
+      <!-- <app-button [routerLink]="'/customer/account/purchase'" theme="blue">Kiểm tra đơn hàng</app-button> -->
+    </div>
+  </ng-template>
+  <div *ngIf="!successPay" mat-dialog-actions class="flex items-center !justify-end">
     <div class="flex items-center gap-x-2">
       <app-button mat-dialog-close className="bg-white !text-black hover:bg-slate-100">Close</app-button>
     </div>

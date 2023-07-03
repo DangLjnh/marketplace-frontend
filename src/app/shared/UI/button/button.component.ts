@@ -8,6 +8,7 @@ type Theme = 'blue';
 export class ButtonComponent {
   @Input() className!: string;
   @Input() loading: boolean = false;
+  @Input() disable: boolean = false;
   @Input() theme!: Theme;
   @Input() types: string = 'button';
 }

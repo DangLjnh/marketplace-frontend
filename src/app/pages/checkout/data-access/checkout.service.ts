@@ -10,6 +10,14 @@ import { environment } from 'src/environments/environment.prod';
 export class CheckoutService {
   private _listDataOrder = new BehaviorSubject<any>([]);
   choosePayment: string = '';
+  urlPayMomo!: {
+    payUrl: string;
+    partnerCode: string;
+    requestId: string;
+    orderId: string;
+    signature: string;
+    accessKey: string;
+  };
 
   set listDataOrder(values: any[]) {
     this._listDataOrder.next(values);
@@ -25,6 +33,12 @@ export class CheckoutService {
       rawOrderData
     );
   }
+  createOrderAlreadyPay(rawOrderData: any): Observable<IResponse> {
+    return this.http.post<IResponse>(
+      `${environment.backendUrl}/order-already-pay/create`,
+      rawOrderData
+    );
+  }
 
   readAllOrderOfUser(userID: number): Observable<IResponse> {
     return this.http.get<IResponse>(
@@ -35,6 +49,13 @@ export class CheckoutService {
   createPayMomo(rawOrderData: any): Observable<IResponse> {
     return this.http.post<IResponse>(
       `${environment.backendUrl}/pay/create/momo`,
+      rawOrderData
+    );
+  }
+
+  checkPayMomo(rawOrderData: any): Observable<IResponse> {
+    return this.http.post<IResponse>(
+      `${environment.backendUrl}/pay/check/momo`,
       rawOrderData
     );
   }
