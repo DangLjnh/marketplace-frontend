@@ -11,6 +11,8 @@ import { IUser } from 'src/app/shared/model/interface';
 })
 export class CheckoutPageComponent {
   dataCarts!: any;
+  subtotal: number = 0;
+  totalDiscount: number = 0;
   constructor(
     private authService: AuthService,
     private cartService: CartService,
