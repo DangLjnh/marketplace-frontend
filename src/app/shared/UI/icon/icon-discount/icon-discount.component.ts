@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./icon-discount.component.scss'],
 })
 export class IconDiscountComponent {
-  @Input() percent!: string;
+  @Input() percent!: string | null | undefined;
 }

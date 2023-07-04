@@ -1,17 +1,33 @@
 <div class="flex flex-col w-full h-full overflow-hidden transition-all bg-white rounded hover:shadow-2xl">
-  <img src="https://cdn.shopify.com/s/files/1/0685/2237/7522/products/Polomanor_ao-polo_Blaro_050123_1.jpg?v=1673001524"
-    class="h-[190px] w-full object-cover" alt="">
+  <img [src]="productItem.Image_Products[0].Image_Product_Detail.photo_url" class="h-[190px] w-full object-cover"
+    alt="">
   <div class="flex flex-col flex-1 p-2">
     <div class="flex-1 text-xs">
-      <p>Áo Polo nam có cổ UGO-BLACK vải cá sấu cotton UNI
+      <p>{{productItem.Product_Detail.name}}
       </p>
     </div>
     <div class="my-2">
-      <app-icon-discount [percent]="'42%'"></app-icon-discount>
+      <ng-container *ngIf="productItem.Discount_Percent">
+        <app-icon-discount [percent]="productItem.Discount_Percent.percent+'%'"></app-icon-discount>
+      </ng-container>
     </div>
     <div class="flex items-center justify-between mt-auto">
-      <span class="font-medium text-hotRed">139.000</span>
-      <span class="text-xs text-gray-400">387 sold</span>
+      <ng-container *ngIf="productItem.Product_Price_Options.length > 0; else noOption">
+        <span
+          class="font-medium text-hotRed">{{getLowPrice(productItem.Product_Price_Options).toLocaleString('en-US')}}</span>
+        <span class="text-xs text-gray-400">387 sold</span>
+      </ng-container>
+      <ng-template #noOption>
+        <ng-container *ngIf="productItem.Product_Detail.price_discount;else noDiscount">
+          <span
+            class="font-medium text-hotRed">{{productItem.Product_Detail.price_discount.toLocaleString('en-US')}}</span>
+        </ng-container>
+        <ng-template #noDiscount>
+          <span
+            class="font-medium text-hotRed">{{productItem.Product_Detail.price_original.toLocaleString('en-US')}}</span>
+        </ng-template>
+        <span class="text-xs text-gray-400">387 sold</span>
+      </ng-template>
     </div>
   </div>
 </div>

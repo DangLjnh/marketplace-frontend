@@ -24,7 +24,7 @@ import { LoadingSkeletonComponent } from './UI/loading/loading-skeleton/loading-
 import { InputFileComponent } from './UI/input-file/input-file.component';
 import { FormProductRowComponent } from './UI/form/form-product-row/form-product-row.component';
 import { TableSellerComponent } from './UI/table/table-seller/table-seller.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule({
   declarations: [
     HeaderComponent,

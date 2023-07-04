@@ -8,6 +8,7 @@ import { HomeFlashSaleComponent } from './feature/home-flash-sale/home-flash-sal
 import { HomeAdsComponent } from './feature/home-ads/home-ads.component';
 import { HomeDailyDiscoverComponent } from './feature/home-daily-discover/home-daily-discover.component';
 import { HomePageComponent } from './feature/home-page/home-page.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,6 @@ import { HomePageComponent } from './feature/home-page/home-page.component';
     HomeAdsComponent,
     HomeDailyDiscoverComponent,
   ],
-  imports: [CommonModule, HomeRoutingModule, SharedModule],
+  imports: [CommonModule, HomeRoutingModule, SharedModule, MatPaginatorModule],
 })
 export class HomeModule {}

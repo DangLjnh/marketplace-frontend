@@ -6,7 +6,7 @@
           <img *ngIf="dataProduct" [src]="dataProduct.Image_Products[0].Image_Product_Detail.photo_url"
             class="object-cover rounded mb-3 w-full h-[450px]"><img>
           <div class="flex items-center justify-between w-full">
-            <ng-container *ngFor="let image of dataProduct.Image_Products; let i = index">
+            <ng-container *ngFor="let image of dataProduct?.Image_Products; let i = index">
               <ng-container *ngIf="i > 0">
                 <img [src]="image.Image_Product_Detail.photo_url" alt="" class="h-[82px] object-contain rounded">
               </ng-container>
@@ -309,12 +309,12 @@
     </div>
   </div>
 
-  <div class="container">
+  <!-- <div class="container">
     <p class="my-5 text-xl text-darkGray">FROM THE SAME SHOP</p>
     <app-swiper-list></app-swiper-list>
-  </div>
+  </div> -->
 
-  <div class="container">
+  <!-- <div class="container">
     <p class="my-5 text-xl text-darkGray">YOU MAY ALSO LIKE</p>
     <div class="grid grid-cols-6 gap-5">
       <app-product-item></app-product-item>
@@ -330,6 +330,6 @@
       <app-product-item></app-product-item>
       <app-product-item></app-product-item>
     </div>
-  </div>
+  </div> -->
 
 </div>

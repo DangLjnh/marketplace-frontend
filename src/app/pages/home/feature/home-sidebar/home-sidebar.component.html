@@ -2,9 +2,13 @@
   <div class="p-3 bg-white rounded-lg sidebar">
     <p class="mb-2">Category</p>
     <ul>
-      <li class="px-4 py-2 transition-all rounded-md hover:bg-slate-100">Bear</li>
-      <li class="px-4 py-2 transition-all rounded-md hover:bg-slate-100">Red</li>
-      <li class="px-4 py-2 transition-all rounded-md hover:bg-slate-100">Blue</li>
+      <ng-container *ngFor="let category of listCategory$ | async">
+        <li class="px-4 py-3 transition-all cursor-pointer rounded-md hover:bg-slate-100 flex items-center gap-x-4"
+          [routerLink]="'/category/'+category.id">
+          <img [src]="category.photo_url" alt="" class="w-8 h-8 object-cover">
+          <p>{{category.name_category}}</p>
+        </li>
+      </ng-container>
     </ul>
   </div>
 

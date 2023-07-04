@@ -13,6 +13,16 @@ export class ProductService {
       `${environment.backendUrl}/product/read-single/${productID}`
     );
   }
+
+  readAllProduct(paginate: {
+    offset: number;
+    limit: number;
+  }): Observable<IResponse> {
+    return this.http.get<IResponse>(
+      `${environment.backendUrl}/product/read-all?offset=${paginate.offset}&limit=${paginate.limit}`
+    );
+  }
+
   searchSameProduct(name: any): Observable<IResponse> {
     return this.http.post<IResponse>(
       `${environment.backendCrawlUrl}/product/search`,
