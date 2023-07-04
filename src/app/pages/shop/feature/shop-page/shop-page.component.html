@@ -60,6 +60,8 @@
   </div>
 
   <div class="container">
-    <app-product-section></app-product-section>
+    <ng-container *ngIf="shop?.id">
+      <app-product-section [listCategoryFilter$]="listCategoryFilter$" [shopID]="shop.id"></app-product-section>
+    </ng-container>
   </div>
 </div>

@@ -13,5 +13,10 @@ export class ShopService {
       `${environment.backendUrl}/shop/read-single/${slug}`
     );
   }
+  readAllCategoryFilterOfShop(id: number): Observable<IResponse> {
+    return this.http.get<IResponse>(
+      `${environment.backendUrl}/category-filter/shop/${id}}`
+    );
+  }
   constructor(private http: HttpClient) {}
 }

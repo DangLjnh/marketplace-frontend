@@ -2,7 +2,11 @@ import { Observable, filter, of, pluck, switchMap } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ShopService } from '../../data-access/shop.service';
 import { ActivatedRoute } from '@angular/router';
-import { IShop } from 'src/app/shared/model/interface';
+import {
+  ICategoryFilter,
+  IResponse,
+  IShop,
+} from 'src/app/shared/model/interface';
 import { timeSince } from 'src/app/shared/utils/function';
 
 @Component({
@@ -12,6 +16,7 @@ import { timeSince } from 'src/app/shared/utils/function';
 })
 export class ShopPageComponent implements OnInit {
   shop$!: Observable<IShop | unknown>;
+  listCategoryFilter$!: Observable<ICategoryFilter[]>;
   shop!: IShop;
   constructor(
     private shopService: ShopService,
@@ -28,11 +33,19 @@ export class ShopPageComponent implements OnInit {
       }),
       filter((shop) => !!shop)
     );
+    this.listCategoryFilter$ = this.route.params.pipe(
+      pluck('slug'),
+      switchMap((slug) => this.shopService.readAllCategoryFilterOfShop(slug)),
+      switchMap((post) => {
+        const shop = post.DT;
+        return of(shop);
+      }),
+      filter((shop) => !!shop)
+    );
+
     this.shop$.subscribe((data: any) => {
       this.shop = data;
       this.shop.createdAt = timeSince(new Date(data.createdAt));
     });
-    // var str = '/var/www/site/Brand new document.docx';
-    // console.log(str.replace(/\s/g, ''));
   }
 }

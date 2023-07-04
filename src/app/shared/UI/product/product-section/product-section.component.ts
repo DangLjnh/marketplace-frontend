@@ -10,6 +10,7 @@ import { ICategoryFilter, IProduct } from 'src/app/shared/model/interface';
 })
 export class ProductSectionComponent implements OnInit, AfterViewInit {
   @Input() listCategoryFilter$!: Observable<ICategoryFilter[]>;
+  @Input() shopID!: number | undefined;
   listCategoryFilter!: ICategoryFilter[];
   listProduct!: IProduct[];
   activeOption: string = '';
@@ -52,6 +53,7 @@ export class ProductSectionComponent implements OnInit, AfterViewInit {
       this.activeOption = '';
     }
   }
+
   setFirstCategoryChoose(): void {
     if (this.listCategoryFilter.length > 0) {
       this.listCategoryFilter.forEach((item, index) => {
