@@ -27,5 +27,6 @@ import { IconModule } from 'src/app/shared/UI/icon/icon.module';
     MatPaginatorModule,
     IconModule,
   ],
+  exports: [HomeDailyDiscoverComponent],
 })
 export class HomeModule {}
