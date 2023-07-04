@@ -28,6 +28,17 @@ export class CustomerService {
     );
   }
 
+  changePassword(rawPasswordData: {
+    username: string;
+    new_password: string | null | undefined;
+    current_password: string | null | undefined;
+  }): Observable<IResponse> {
+    return this.http.put<IResponse>(
+      `${environment.backendUrl}/auth/change-password`,
+      rawPasswordData
+    );
+  }
+
   // API of address page
   readAllCity(): Observable<any> {
     return this.http.get<any>(`${environment.addressUrl}/?depth=1`);
