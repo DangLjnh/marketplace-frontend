@@ -9,6 +9,7 @@ import { HomeAdsComponent } from './feature/home-ads/home-ads.component';
 import { HomeDailyDiscoverComponent } from './feature/home-daily-discover/home-daily-discover.component';
 import { HomePageComponent } from './feature/home-page/home-page.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { IconModule } from 'src/app/shared/UI/icon/icon.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     HomeAdsComponent,
     HomeDailyDiscoverComponent,
   ],
-  imports: [CommonModule, HomeRoutingModule, SharedModule, MatPaginatorModule],
+  imports: [
+    CommonModule,
+    HomeRoutingModule,
+    SharedModule,
+    MatPaginatorModule,
+    IconModule,
+  ],
 })
 export class HomeModule {}

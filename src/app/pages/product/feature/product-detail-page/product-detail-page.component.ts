@@ -211,6 +211,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
           }
         );
       });
+    window.scrollTo(0, 0);
   }
   ngAfterViewInit(): void {
     if (this.swiper?.swiperRef.activeIndex !== undefined) {

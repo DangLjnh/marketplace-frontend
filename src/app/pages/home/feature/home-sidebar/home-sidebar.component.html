@@ -3,7 +3,7 @@
     <p class="mb-2">Category</p>
     <ul>
       <ng-container *ngFor="let category of listCategory$ | async">
-        <li class="px-4 py-3 transition-all cursor-pointer rounded-md hover:bg-slate-100 flex items-center gap-x-4"
+        <li class="px-2 py-4 transition-all cursor-pointer rounded-md hover:bg-slate-100 flex items-center gap-x-4"
           [routerLink]="'/category/'+category.id">
           <img [src]="category.photo_url" alt="" class="w-8 h-8 object-cover">
           <p>{{category.name_category}}</p>

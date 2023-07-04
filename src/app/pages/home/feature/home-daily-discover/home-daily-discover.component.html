@@ -5,8 +5,7 @@
   </div>
   <div class="grid grid-cols-6 gap-3">
     <ng-container *ngFor="let product of listProduct">
-      <app-product-item [productItem]="product" [routerLink]="'/product/'+product.id"
-        class="cursor-pointer"></app-product-item>
+      <app-product-item [productItem]="product" class="cursor-pointer"></app-product-item>
     </ng-container>
   </div>
   <div class="mt-5">

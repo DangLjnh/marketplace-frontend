@@ -169,6 +169,7 @@ export interface ICategoryFilter {
   categoryID: number;
   createdAt: any;
   Category: ICategory;
+  isChoose: boolean;
 }
 
 export interface IProductPriceOption {
