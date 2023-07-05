@@ -59,10 +59,7 @@
                       <p>{{option.secondFilter.name_filter}}</p>
                       <p>{{option.price.toLocaleString('en-US')}}₫</p>
                       <p>{{option.quantity_stock}}</p>
-                      <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
-                      <!-- <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
-                        <p>{{product.Stock.quantity}}</p>
-                        <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p> -->
+                      <p>khong</p>
                     </div>
                   </ng-container>
                   <ng-template #noHasSecondOption>
@@ -71,19 +68,21 @@
                       <p>Không có</p>
                       <p>{{option.price.toLocaleString('en-US')}}₫</p>
                       <p>{{option.quantity_stock}}</p>
-                      <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
+                      <p>khong</p>
                     </div>
                   </ng-template>
                 </ng-container>
               </ng-container>
               <ng-template #noOption>
-                <div class="grid grid-cols-5">
-                  <p>Không có</p>
-                  <p>Không có</p>
-                  <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
-                  <p>{{product.Stock.quantity}}</p>
-                  <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
-                </div>
+                <ng-container *ngIf="product.Product_Detail.price_original !== null">
+                  <div class="grid grid-cols-5">
+                    <p>Không có</p>
+                    <p>Không có</p>
+                    <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
+                    <p>{{product.Stock.quantity}}</p>
+                    <p>khong</p>
+                  </div>
+                </ng-container>
               </ng-template>
             </th>
             <th scope="col" class="px-6 py-5 w-[180px]">

@@ -13,6 +13,7 @@ import { IUser } from 'src/app/shared/model/interface';
 import { toBase64 } from 'src/app/shared/utils/function';
 import { SellerService } from '../../../data-access/seller.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-seller-portal-form',
@@ -60,7 +61,7 @@ export class SellerPortalFormComponent implements OnInit {
         this.authService.dataUser$.subscribe((data: IUser) => {
           this.loading = false;
           this.dataUser = data;
-          this.router.navigate(['/seller']);
+          window.location.href = `${environment.frontendUrl}/seller`;
         });
       });
     }
