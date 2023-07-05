@@ -1,35 +1,10 @@
 <div class="relative swiper-wrapper" (mouseover)="isActiveArrow = true" (mouseout)="isActiveArrow = false">
-  <swiper #swiper [config]="config">
-    <ng-template swiperSlide>
-      <app-product-item></app-product-item>
-    </ng-template>
-    <ng-template swiperSlide>
-      <app-product-item></app-product-item>
-    </ng-template>
-    <ng-template swiperSlide>
-      <app-product-item></app-product-item>
-    </ng-template>
-    <ng-template swiperSlide>
-      <app-product-item></app-product-item>
-    </ng-template>
-    <ng-template swiperSlide>
-      <app-product-item></app-product-item>
-    </ng-template>
-    <ng-template swiperSlide>
-      <app-product-item></app-product-item>
-    </ng-template>
-    <ng-template swiperSlide>
-      <app-product-item></app-product-item>
-    </ng-template>
-    <ng-template swiperSlide>
-      <app-product-item></app-product-item>
-    </ng-template>
-    <ng-template swiperSlide>
-      <app-product-item></app-product-item>
-    </ng-template>
-    <ng-template swiperSlide>
-      <app-product-item></app-product-item>
-    </ng-template>
+  <swiper #swiper [config]="config" class="w-full">
+    <ng-container *ngFor="let product of listProduct$ | async">
+      <ng-template swiperSlide>
+        <app-product-item [productItem]="product"></app-product-item>
+      </ng-template>
+    </ng-container>
   </swiper>
   <button *ngIf="isStart === false" (click)="slidePrev()"
     class="absolute left-0 -translate-x-1/2 top-1/2 -translate-y-1/2 z-10 w-[30px] h-[30px] shadow-2xl text-xl bg-white rounded-full flex items-center justify-center transition-all"

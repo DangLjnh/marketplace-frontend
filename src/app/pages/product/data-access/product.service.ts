@@ -29,5 +29,11 @@ export class ProductService {
       name
     );
   }
+
+  readAllProductOfShop(shopID: number): Observable<IResponse> {
+    return this.http.get<IResponse>(
+      `${environment.backendUrl}/product/read-all/${shopID}`
+    );
+  }
   constructor(private http: HttpClient) {}
 }

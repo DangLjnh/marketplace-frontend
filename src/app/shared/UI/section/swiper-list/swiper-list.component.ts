@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ViewChild,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { Observable } from 'rxjs';
+import { IProduct } from 'src/app/shared/model/interface';
 import SwiperCore, { Swiper, SwiperOptions, Virtual } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
 
@@ -9,7 +17,8 @@ SwiperCore.use([Virtual]);
   templateUrl: './swiper-list.component.html',
   styleUrls: ['./swiper-list.component.scss'],
 })
-export class SwiperListComponent implements AfterViewInit {
+export class SwiperListComponent implements AfterViewInit, OnInit {
+  @Input() listProduct$!: Observable<IProduct[]>;
   valueCounter: number = 1;
   slidesPerView: number = 6;
   isStart!: boolean;
@@ -36,6 +45,7 @@ export class SwiperListComponent implements AfterViewInit {
     }
   }
 
+  ngOnInit(): void {}
   ngAfterViewInit(): void {
     if (this.swiper?.swiperRef.activeIndex !== undefined) {
       this.isStart = this.swiper.swiperRef.isBeginning;

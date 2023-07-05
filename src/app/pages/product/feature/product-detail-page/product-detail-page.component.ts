@@ -1,4 +1,5 @@
-import { pluck, tap, switchMap, filter } from 'rxjs';
+import { ShopService } from './../../../shop/data-access/shop.service';
+import { pluck, tap, switchMap, filter, Observable, map } from 'rxjs';
 import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
 // import Swiper core and required modules
@@ -21,6 +22,7 @@ import { CartService } from 'src/app/pages/cart/data-access/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductComparePriceModalComponent } from '../product-compare-price-modal/product-compare-price-modal.component';
+import { timeSince } from 'src/app/shared/utils/function';
 @Component({
   selector: 'app-product-detail-page',
   templateUrl: './product-detail-page.component.html',
@@ -46,6 +48,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
   isChooseSameType!: boolean;
   getPriceLow!: number;
   listComparePrice!: any;
+  listProductSameShop$!: Observable<IProduct[]>;
   config: SwiperOptions = {
     slidesPerView: this.slidesPerView,
     spaceBetween: 15,
@@ -176,11 +179,15 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
     public dialog: MatDialog
   ) {}
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.authService.dataUser$.subscribe((data: IUser) => {
       this.dataUser = data;
       data?.Carts.filter((data) => {
         if (data.isGroupCart === false) this.cartDefault = data;
       });
+      this.listProductSameShop$ = this.productService
+        .readAllProductOfShop(data.Shop.id)
+        .pipe(map((data) => data.DT));
     });
     this.route.params
       .pipe(
@@ -190,15 +197,16 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
       )
       .subscribe((data) => {
         this.dataProduct = data.DT;
+        if (this.dataProduct.Shop) {
+          this.dataProduct.Shop.createdAt = timeSince(
+            new Date(data.DT.Shop.createdAt)
+          );
+        }
         const nameProduct = this.dataProduct.Product_Detail.name;
         this.productService
           .searchSameProduct({ name: nameProduct })
           .subscribe((data) => {
             this.listComparePrice = data.DT;
-            console.log(
-              '🚀 ~ file: product-detail-page.component.ts:194 ~ ProductDetailPageComponent ~ this.productService.searchSameProduct ~ data:',
-              data
-            );
           });
         this.dataProduct.Product_Price_Options.forEach(
           (item: IProductPriceOption, index) => {
@@ -211,7 +219,6 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
           }
         );
       });
-    window.scrollTo(0, 0);
   }
   ngAfterViewInit(): void {
     if (this.swiper?.swiperRef.activeIndex !== undefined) {

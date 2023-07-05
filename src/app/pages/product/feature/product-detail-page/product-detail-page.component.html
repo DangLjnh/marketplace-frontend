@@ -153,16 +153,16 @@
 
   <div class="container bg-white rounded">
 
-    <div class="flex items-center p-3">
+    <div *ngIf="dataProduct?.Shop" class="flex items-center p-3">
       <div class="flex items-start gap-x-5 max-w-[27.5rem] min-w-[250px] pr-5 mr-5 border-r">
-        <img src="https://down-vn.img.susercontent.com/file/02cc55b581a1da07745c4e19070c0f16_tn" alt=""
-          class="w-[75px] h-[75px] rounded-full border-2 border-gray-200">
+        <img [src]="dataProduct.Shop.Shop_Detail.photo_url" alt=""
+          class="w-[75px] h-[75px] rounded-full border-2 object-cover border-gray-200">
         <div class="flex flex-col gap-1 overflow-hidden">
-          <span class="line-clamp-1">coolmate.vn</span>
+          <span class="line-clamp-1">{{dataProduct.Shop.slug}}</span>
           <div class="w-[200px]">
             <app-button theme="blue" className="flex items-center gap-x-2 !text-black !w-auto">
               <app-icon-store stroke="#0A68FF" color="#0A68FF" fill="#0A68FF"></app-icon-store>
-              <span class="text-sm text-primary">View shop</span>
+              <span [routerLink]="'/shop/'+dataProduct.Shop.id" class="text-sm text-primary">View shop</span>
             </app-button>
           </div>
 
@@ -187,7 +187,7 @@
           </div>
           <div class="flex items-center justify-between">
             <span>Joined</span>
-            <span class="text-hotRed">6 years ago</span>
+            <span class="text-hotRed">{{dataProduct.Shop.createdAt}}</span>
           </div>
         </div>
 
@@ -239,29 +239,9 @@
         <p class="text-lg font-medium tracking-wide uppercase">Product Description</p>
       </div>
 
-      <p class="leading-7">Bạn có bất ngờ nếu Coolmate nói rằng chiếc áo Polo này được làm từ nguyên liệu tái chế, bền
-        vững và thân thiện
-        với môi
-        trường. Coolmate tin chiếc Áo Polo nam Cafe này chính là chiếc áo thực sự xứng đáng có trong tủ đồ của bạn với
-        công nghệ
-        xử lý và may vượt trội đem lại trải nghiệm tốt nhất đến bạn.
-        <br>
-        Chất liệu: 50% S.Café + 50% Recycled PET, đem đến sự mềm mại và khử mùi hiệu quả
-        <br>
-        Ứng dụng công nghệ Hydroponic tăng khả năng bốc hơi nước khỏi vải, giúp nhanh khô
-        <br>
-        Chỉ số chống tia UV tự nhiên lên đến >95%
-        <br>
-        Điều hoà và làm mát cơ thể, giảm 1-2*C so với vải thường
-        <br>
-        Phần bo cổ sản xuất tại nhà máy chất lượng cao, sử dụng sợi Hightwisted 45D/75D tạo co giãn và bền form
-        <br>
-        Nguyên liệu bền vững, thân thiện với môi trường
-        <br>
-        Người mẫu:
-        <br>
-        1m86 - [72px]kg; mặc áo size XL
-      </p>
+      <ng-container *ngIf="dataProduct?.Product_Detail?.desc">
+        <p class="leading-7">{{dataProduct.Product_Detail.desc}}</p>
+      </ng-container>
     </div>
   </div>
 
@@ -309,14 +289,15 @@
     </div>
   </div>
 
-  <!-- <div class="container">
-    <p class="my-5 text-xl text-darkGray">FROM THE SAME SHOP</p>
-    <app-swiper-list></app-swiper-list>
-  </div> -->
+  <div class="container">
+    <p class="my-5 text-xl text-darkGray uppercase">Các sản phẩm khác của shop</p>
+    <app-swiper-list [listProduct$]="listProductSameShop$"></app-swiper-list>
+  </div>
 
-  <!-- <div class="container">
-    <p class="my-5 text-xl text-darkGray">YOU MAY ALSO LIKE</p>
+  <div class="container">
+    <p class="my-5 text-xl text-darkGray uppercase">Có thể bạn sẽ thích</p>
     <div class="grid grid-cols-6 gap-5">
+      <!-- <app-product-item></app-product-item>
       <app-product-item></app-product-item>
       <app-product-item></app-product-item>
       <app-product-item></app-product-item>
@@ -327,9 +308,8 @@
       <app-product-item></app-product-item>
       <app-product-item></app-product-item>
       <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
+      <app-product-item></app-product-item> -->
     </div>
-  </div> -->
+  </div>
 
 </div>

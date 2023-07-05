@@ -45,11 +45,7 @@
                 <p>{{order.payment_method}}</p>
                 <p>{{order.total_price.toLocaleString('en-US')}}₫</p>
                 <p>{{order.note === "" ? "Trống": order.note}}</p>
-                <p>{{order.statusID === 1 ? "Chưa thanh toán": "Đã thanh toán"}}</p>
-                <!-- DELIVERING: 1,
-                DELIVERED: 2,
-                ALREADY_PAY: 3,
-                CANCELLED: 4, -->
+                <p>{{order.statusID === 1 ? "Chưa thanh toán" : order.statusID === 3 ? "Đã thanh toán" : ""}}</p>
                 <p>{{formatDate(order.createdAt)}}</p>
               </div>
             </th>

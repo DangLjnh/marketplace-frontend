@@ -112,6 +112,7 @@ export interface IShop {
   feedback_rating: number;
   score_rating: number;
   id_status: number;
+  slug: string;
   createdAt: any;
   Shop_Detail: TShopDetail;
   Warehouse: TWarehouse;
@@ -205,6 +206,7 @@ export interface IProduct {
   Stock: TStock;
   Product_Detail: TProductDetail;
   Image_Products: IImageProducts[];
+  Shop: IShop;
   checked?: boolean;
   Discount_Percent: IDiscountPercent;
   Category_Filter: ICategoryFilter;
