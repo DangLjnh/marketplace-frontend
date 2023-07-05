@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-material": {
+    "marketplace_frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
