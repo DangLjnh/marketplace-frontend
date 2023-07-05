@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Chi tiết hóa đơn, mã hóa đơn: {{data.orderID}}</h1>
+<div mat-dialog-content>
+  <div class="content max-w-[930px]">
+    <div class="bg-white rounded grid grid-cols-[420px_190px_190px_120px_30px] p-3 font-medium">
+      <span class="flex items-center">Tên sản phẩm</span>
+      <span class="flex items-center">Đơn giá</span>
+      <span class="flex items-center">Số lượng</span>
+      <span class="flex items-center">Tổng</span>
+    </div>
+    <div class="flex flex-col gap-7">
+      <div *ngFor="let cart of orderList" class="grid grid-cols-[420px_190px_190px_120px_30px]">
+        <div class="flex items-center gap-x-2">
+          <img class="object-cover w-20 h-28" [src]="cart.Product.Image_Products[0].Image_Product_Detail.photo_url"
+            alt="">
+          <div class="flex flex-col gap-1">
+            <span class="line-clamp-2">{{cart.Product.Product_Detail.name}}{{cart?.Product_Price_Option?' - '+
+              cart?.Product_Price_Option?.firstFilter?.name_filter:''}}{{cart?.Product_Price_Option?.secondFilter&&'
+              - '+cart?.Product_Price_Option?.secondFilter?.name_filter}}</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-x-2 text-fs13">
+          <span class="font-medium">{{(cart.price_discount ? cart.price_discount :
+            cart.price_original).toLocaleString('en-US')}}₫</span>
+        </div>
+        <div class="flex items-center">
+          {{cart.quantity}}
+        </div>
+        <span class="flex items-center font-medium text-hotRed">{{((cart.price_discount ? cart.price_discount:
+          cart.price_original) *
+          cart.quantity).toLocaleString('en-US')}}₫</span>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="flex items-center !justify-end">
+    <div class="flex items-center gap-x-2">
+      <app-button mat-dialog-close className="bg-white !text-black hover:bg-slate-100">Close</app-button>
+    </div>
+  </div>
+</div>

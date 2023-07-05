@@ -18,5 +18,13 @@ export class ShopService {
       `${environment.backendUrl}/category-filter/shop/${id}}`
     );
   }
+  readAllProductByCategoryFilterOfShop(rawData: {
+    shopID: number;
+    categoryFilterID: number;
+  }): Observable<IResponse> {
+    return this.http.get<IResponse>(
+      `${environment.backendUrl}/category-filter/shop?shopID=${rawData.shopID}&categoryFilterID=${rawData.categoryFilterID}`
+    );
+  }
   constructor(private http: HttpClient) {}
 }

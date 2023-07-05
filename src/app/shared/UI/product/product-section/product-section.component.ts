@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { CategoryService } from 'src/app/pages/category/data-access/category.service';
 import { ICategoryFilter, IProduct } from 'src/app/shared/model/interface';
+import { ShopService } from 'src/app/pages/shop/data-access/shop.service';
 
 @Component({
   selector: 'app-product-section',
@@ -39,11 +40,24 @@ export class ProductSectionComponent implements OnInit, AfterViewInit {
     this.listCategoryFilter.forEach((category) => {
       category.isChoose = category.id === categoryFilterID;
     });
-    this.categoryService
-      .readAllProductByCategoryFilter(categoryFilterID)
-      .subscribe((data) => {
-        this.listProduct = data.DT;
-      });
+    if (!this.shopID) {
+      this.categoryService
+        .readAllProductByCategoryFilter(categoryFilterID)
+        .subscribe((data) => {
+          this.listProduct = data.DT;
+        });
+    }
+    if (this.shopID) {
+      const rawData = {
+        shopID: this.shopID,
+        categoryFilterID,
+      };
+      this.shopService
+        .readAllProductByCategoryFilterOfShop(rawData)
+        .subscribe((data) => {
+          this.listProduct = data.DT[0];
+        });
+    }
   }
 
   onChecked(selected: string, nameOption: string) {
@@ -65,17 +79,32 @@ export class ProductSectionComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private shopService: ShopService
+  ) {}
   ngAfterViewInit(): void {}
   ngOnInit(): void {
     this.listCategoryFilter$.subscribe((data) => {
       this.listCategoryFilter = data;
       this.setFirstCategoryChoose();
-      this.categoryService
-        .readAllProductByCategoryFilter(data[0].id)
-        .subscribe((data) => {
-          this.listProduct = data.DT;
-        });
+      if (!this.shopID) {
+        this.categoryService
+          .readAllProductByCategoryFilter(data[0].id)
+          .subscribe((data) => {
+            this.listProduct = data.DT;
+          });
+      } else {
+        const rawData = {
+          shopID: this.shopID,
+          categoryFilterID: data[0].id,
+        };
+        this.shopService
+          .readAllProductByCategoryFilterOfShop(rawData)
+          .subscribe((data) => {
+            this.listProduct = data.DT[0];
+          });
+      }
     });
   }
 }

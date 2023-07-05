@@ -108,7 +108,7 @@ export interface ICartItem {
 }
 
 export interface IShop {
-  id?: number;
+  id: number;
   feedback_rating: number;
   score_rating: number;
   id_status: number;

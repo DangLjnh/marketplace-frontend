@@ -38,6 +38,9 @@ import {
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 import { SellerProductCategoryModalComponent } from './feaure/product/seller-product-category-modal/seller-product-category-modal.component';
+import { SellerOrderListComponent } from './feaure/order/seller-order-list/seller-order-list.component';
+import { SellerOrderListCancelComponent } from './feaure/order/seller-order-list-cancel/seller-order-list-cancel.component';
+import { SellerOrderDetailModalComponent } from './feaure/order/seller-order-detail-modal/seller-order-detail-modal.component';
 @NgModule({
   declarations: [
     SellerComponent,
@@ -56,6 +59,9 @@ import { SellerProductCategoryModalComponent } from './feaure/product/seller-pro
     SellerDiscountNewComponent,
     SellerDiscountProductModalComponent,
     SellerProductCategoryModalComponent,
+    SellerOrderListComponent,
+    SellerOrderListCancelComponent,
+    SellerOrderDetailModalComponent,
   ],
   imports: [
     CommonModule,

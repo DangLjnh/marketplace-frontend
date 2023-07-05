@@ -11,6 +11,7 @@ import { SellerProductListComponent } from './feaure/product/seller-product-list
 import { SellerGuard } from './data-access/seller/seller.guard';
 import { SellerDiscountListComponent } from './feaure/discount/seller-discount-list/seller-discount-list.component';
 import { SellerDiscountNewComponent } from './feaure/discount/seller-discount-new/seller-discount-new.component';
+import { SellerOrderListComponent } from './feaure/order/seller-order-list/seller-order-list.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,18 @@ const routes: Routes = [
             path: 'product/list',
             component: SellerProductListComponent,
           },
+          {
+            path: 'order/list',
+            component: SellerOrderListComponent,
+          },
+          {
+            path: 'discount/list',
+            component: SellerDiscountListComponent,
+          },
+          {
+            path: 'discount/new',
+            component: SellerDiscountNewComponent,
+          },
         ],
       },
       {
@@ -39,14 +52,6 @@ const routes: Routes = [
       {
         path: 'portal/product/:id',
         component: SellerProductComponent,
-      },
-      {
-        path: 'portal/discount/list',
-        component: SellerDiscountListComponent,
-      },
-      {
-        path: 'portal/discount/new',
-        component: SellerDiscountNewComponent,
       },
       {
         path: 'portal/onboarding',

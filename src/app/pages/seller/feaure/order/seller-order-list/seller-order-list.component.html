@@ -1,0 +1,77 @@
+<div>
+  <p class="mb-5 text-2xl font-medium">Đơn hàng của shop</p>
+  <div class="p-3 bg-white rounded">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <p class="text-2xl">Danh sách đơn hàng</p>
+        <p class="my-2 text-darkGray">Quản lý đơn hàng
+        </p>
+      </div>
+    </div>
+
+    <ul class="flex items-center border-b-2 tab-navs">
+      <li *ngFor="let nav of navTabs" class="p-4 transition-all cursor-pointer hover:text-primary">{{nav.name}}</li>
+    </ul>
+    <div class="relative p-3 overflow-x-auto">
+      <table class="w-full text-sm text-left">
+        <thead class="bg-gray-100">
+          <tr class="">
+            <td class="w-[50px]"></td>
+            <th scope="col" class="px-6 py-4 ">
+              Mã đơn hàng
+            </th>
+            <th scope="col" class="px-6 py-4">
+              <div class="grid grid-cols-5">
+                <p>Phương thức thanh toán</p>
+                <p>Tổng giá tiền</p>
+                <p>Ghi chú</p>
+                <p>Trạng thái</p>
+                <p>Ngày tạo đơn</p>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-4 w-[180px]">
+              Thao tác
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of listOrderActive$ | async " class="bg-white border-b-2">
+            <td class="w-[50px]"></td>
+            <th scope="col" class="px-6 py-5">
+              <p class="font-medium">{{order.id}}</p>
+            </th>
+            <th scope="col" class="px-6 py-5 ">
+              <div class="grid grid-cols-5">
+                <p>{{order.payment_method}}</p>
+                <p>{{order.total_price.toLocaleString('en-US')}}₫</p>
+                <p>{{order.note === "" ? "Trống": order.note}}</p>
+                <p>{{order.statusID === 1 ? "Chưa thanh toán": "Đã thanh toán"}}</p>
+                <!-- DELIVERING: 1,
+                DELIVERED: 2,
+                ALREADY_PAY: 3,
+                CANCELLED: 4, -->
+                <p>{{formatDate(order.createdAt)}}</p>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-5 w-[180px]">
+              <div class="flex items-center text-xs gap-x-3">
+                <a (click)="openModalOrderDetail(order.id)"
+                  class="px-4 py-2 bg-cyan-100 rounded whitespace-nowrap cursor-pointer">Xem chi tiết</a>
+                <a (click)="updateStatusDone(order.id)"
+                  class="px-4 py-2 bg-green-100 rounded whitespace-nowrap cursor-pointer">Hoàn tất</a>
+              </div>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+      <div class="flex items-center justify-end px-4 pt-4 text-base gap-x-5">
+        <p class="text-lightGray">
+          < </p>
+            <p>1</p>
+            <p>/</p>
+            <p>1</p>
+            <p class="text-lightGray">></p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,13 @@ export const statusUser = {
   BAN: 3,
 };
 
+export const statusOrder = {
+  DELIVERING: 1,
+  DELIVERED: 2,
+  ALREADY_PAY: 3,
+  CANCELLED: 4,
+};
+
 export const statusProduct = {
   ACTIVE: 1,
   PENDING: 2,
