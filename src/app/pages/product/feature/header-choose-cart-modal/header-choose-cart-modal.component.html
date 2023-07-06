@@ -1,0 +1,49 @@
+<h1 mat-dialog-title class="text-4xl">Chọn giỏ hàng</h1>
+<form mat-dialog-content>
+  <div class="content">
+    <ng-container *ngIf="!isGroupCart; else groupCart">
+      <div class="flex items-center gap-10 my-5">
+        <app-button theme="blue" className="flex items-center gap-x-2" (click)="handleChooseDefaultCart()">
+          <app-icon-plus-cart color="#0A68FF" stroke="#0A68FF"></app-icon-plus-cart>
+          <p>Giỏ hàng mặc định</p>
+        </app-button>
+        <app-button theme="blue" className="flex items-center gap-x-2" (click)="handleChooseGroupCart()">
+          <app-icon-plus-cart color="#0A68FF" stroke="#0A68FF"></app-icon-plus-cart>
+          <p>Giỏ hàng chung</p>
+        </app-button>
+      </div>
+    </ng-container>
+    <ng-template #groupCart>
+      <ng-container *ngIf="!isChooseAddCart; else addCart">
+        <div class="flex items-center justify-between mb-5">
+          <p class="hover:font-bold transition-all cursor-pointer" (click)="returnChooseCart()">Quay lại</p>
+          <app-button (click)="handleChooseAddCart()">Thêm</app-button>
+        </div>
+        <div class="grid grid-cols-2">
+          <ng-container *ngFor="let cart of listGroupCart$ | async; let idx = index">
+            <div (click)="handleChooseCart(cart.Cart.id)"
+              class="px-6 py-4 hover:bg-slate-100 transition-all cursor-pointer border"
+              [class]="idx % 2===0 || idx === 0?'border-r-0':''">
+              <p>{{cart.Cart.name}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-template #addCart>
+        <p class="hover:font-bold transition-all cursor-pointer" (click)="returnAddCart()">Quay lại</p>
+        <form [formGroup]="cartForm" (ngSubmit)="submitForm()" class="mt-5">
+          <mat-form-field class="w-full example-full-width">
+            <mat-label>Nhập tên giỏ hàng chung</mat-label>
+            <input type="text" matInput formControlName="name">
+          </mat-form-field>
+          <app-button types="submit">Tạo</app-button>
+        </form>
+      </ng-template>
+    </ng-template>
+  </div>
+  <div mat-dialog-actions class="flex items-center !justify-end">
+    <div class="flex items-center gap-x-2">
+      <app-button mat-dialog-close className="bg-white !text-black hover:bg-slate-100">Đóng</app-button>
+    </div>
+  </div>
+</form>

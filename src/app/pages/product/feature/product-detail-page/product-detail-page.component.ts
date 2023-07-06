@@ -24,6 +24,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProductComparePriceModalComponent } from '../product-compare-price-modal/product-compare-price-modal.component';
 import { timeSince } from 'src/app/shared/utils/function';
 import { CategoryService } from 'src/app/pages/category/data-access/category.service';
+import { ProductDetailChooseCartModalComponent } from '../product-detail-choose-cart-modal/product-detail-choose-cart-modal.component';
 @Component({
   selector: 'app-product-detail-page',
   templateUrl: './product-detail-page.component.html',
@@ -162,6 +163,19 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
       data: {
         name: name,
       },
+    });
+  }
+  openModalChooseCart() {
+    const rawCartData = {
+      quantity: this.valueCounter,
+      productID: this.dataProduct.id,
+      productPriceOptionID: this.optionResult?.id ?? null,
+      shopID: this.dataProduct.shopID,
+      userID: this.dataUser.id,
+      cartID: this.cartDefault.id,
+    };
+    this.dialog.open(ProductDetailChooseCartModalComponent, {
+      data: rawCartData,
     });
   }
   onCountPlus(num: number) {

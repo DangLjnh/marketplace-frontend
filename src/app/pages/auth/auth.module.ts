@@ -19,9 +19,9 @@ import { LoginPageComponent } from './feature/login-page/login-page.component';
     SharedModule,
     MatInputModule,
     MatFormFieldModule,
+    ReactiveFormsModule,
     MatIconModule,
     IconModule,
-    ReactiveFormsModule,
   ],
 })
 export class AuthModule {}

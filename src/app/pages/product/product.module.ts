@@ -8,16 +8,31 @@ import { IconModule } from 'src/app/shared/UI/icon/icon.module';
 import { ProductCategoryOptionComponent } from './feature/product-category-option/product-category-option.component';
 import { ProductComparePriceModalComponent } from './feature/product-compare-price-modal/product-compare-price-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ProductDetailChooseCartModalComponent } from './feature/product-detail-choose-cart-modal/product-detail-choose-cart-modal.component';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { HeaderChooseCartModalComponent } from './feature/header-choose-cart-modal/header-choose-cart-modal.component';
 
 @NgModule({
-  declarations: [ProductDetailPageComponent, ProductCategoryOptionComponent, ProductComparePriceModalComponent],
+  declarations: [
+    ProductDetailPageComponent,
+    ProductCategoryOptionComponent,
+    ProductComparePriceModalComponent,
+    ProductDetailChooseCartModalComponent,
+    HeaderChooseCartModalComponent,
+  ],
   imports: [
     CommonModule,
     ProductRoutingModule,
     SwiperModule,
     SharedModule,
     IconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
   ],
+  exports: [HeaderChooseCartModalComponent],
 })
 export class ProductModule {}

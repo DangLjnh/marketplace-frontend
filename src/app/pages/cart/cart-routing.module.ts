@@ -7,7 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutSharedComponent,
-    children: [{ path: '', component: CartPageComponent }],
+    children: [
+      { path: '', component: CartPageComponent },
+      { path: ':cartID', component: CartPageComponent },
+    ],
   },
 ];
 

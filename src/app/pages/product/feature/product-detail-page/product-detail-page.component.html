@@ -131,17 +131,17 @@
             <div class="flex items-center gap-x-5">
               <app-button theme="blue" className="flex items-center gap-x-2">
                 <app-icon-plus-cart color="#0A68FF" stroke="#0A68FF"></app-icon-plus-cart>
-                <p (click)="handleAddToCart()">Add To Cart</p>
+                <p (click)="openModalChooseCart()">Thêm vào giỏ hàng</p>
               </app-button>
               <app-button>
-                Buy Now
+                Mua ngay
               </app-button>
             </div>
             <div class="flex items-center p-3 border rounded gap-x-5">
-              <span class="font-medium">28 other shops</span>
+              <span class="font-medium">Các cửa hàng trên web khác</span>
               <app-button theme="blue" className=" flex items-center gap-x-2"
                 (click)="openModalComparePrice(dataProduct.Product_Detail.name)">
-                <span>Compare price</span>
+                <span>So sánh giá</span>
               </app-button>
             </div>
           </div>

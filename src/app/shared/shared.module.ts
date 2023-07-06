@@ -26,6 +26,7 @@ import { FormProductRowComponent } from './UI/form/form-product-row/form-product
 import { TableSellerComponent } from './UI/table/table-seller/table-seller.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -57,6 +58,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SharedRoutingModule,
     SwiperModule,
     ReactiveFormsModule,
+    MatDialogModule,
   ],
   exports: [
     HeaderComponent,

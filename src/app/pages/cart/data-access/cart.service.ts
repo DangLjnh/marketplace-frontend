@@ -45,9 +45,61 @@ export class CartService {
     );
   }
 
-  createCartItem(rawCartData: any) {
+  createCartItem(rawCartData: any): Observable<IResponse> {
     return this.http.post<any>(
       `${environment.backendUrl}/cart-item/create`,
+      rawCartData
+    );
+  }
+
+  // group cart
+  createGroupCart(rawCartData: {
+    cartID: number;
+    userID: number;
+    quantity: number;
+    name: string | null | undefined;
+    productID: number;
+    productPriceOptionID: number | null;
+    shopID: number;
+  }): Observable<IResponse> {
+    return this.http.post<any>(
+      `${environment.backendUrl}/group-cart/create`,
+      rawCartData
+    );
+  }
+
+  readAllGroupCartOfUser(userID: number): Observable<IResponse> {
+    return this.http.get<any>(
+      `${environment.backendUrl}/group-cart/read-all-group-cart/${userID}`
+    );
+  }
+
+  readAllItemOfGroupCart(cartID: number): Observable<IResponse> {
+    return this.http.get<any>(
+      `${environment.backendUrl}/group-cart/read-all-item-group-cart/${cartID}`
+    );
+  }
+
+  addUserToGroupCart(rawCartData: {
+    cartID: number;
+    userID: number;
+  }): Observable<IResponse> {
+    return this.http.post<any>(
+      `${environment.backendUrl}/group-cart/add-user-to-group-cart`,
+      rawCartData
+    );
+  }
+
+  addItemToGroupCart(rawCartData: {
+    cartID: number;
+    userID: number;
+    quantity: number;
+    productID: number;
+    productPriceOptionID: number | null;
+    shopID: number;
+  }): Observable<IResponse> {
+    return this.http.post<any>(
+      `${environment.backendUrl}/group-cart/add-item-to-cart-existed`,
       rawCartData
     );
   }
