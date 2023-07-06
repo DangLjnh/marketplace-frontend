@@ -297,18 +297,9 @@
   <div class="container">
     <p class="my-5 text-xl text-darkGray uppercase">Có thể bạn sẽ thích</p>
     <div class="grid grid-cols-6 gap-5">
-      <!-- <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item> -->
+      <ng-container *ngFor="let product of listProductSameCategoryFilter$ | async">
+        <app-product-item (click)="scrollTop()" [productItem]="product"></app-product-item>
+      </ng-container>
     </div>
   </div>
 

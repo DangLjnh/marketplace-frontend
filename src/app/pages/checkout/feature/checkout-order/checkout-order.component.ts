@@ -20,10 +20,6 @@ export class CheckoutOrderComponent implements OnInit, OnDestroy {
   dataOrders: any;
   // subtotal: number = 0;
   submitOrder() {
-    console.log(
-      '🚀 ~ file: checkout-order.component.ts:25 ~ CheckoutOrderComponent ~ this.checkoutService.createOrder ~ this.dataOrders:',
-      this.dataOrders
-    );
     if (this.checkoutService.choosePayment === 'cash') {
       this.checkoutService.createOrder(this.dataOrders).subscribe((data) => {
         if (+data.EC === errorCode.SUCCESS) {

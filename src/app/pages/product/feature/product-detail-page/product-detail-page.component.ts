@@ -23,6 +23,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductComparePriceModalComponent } from '../product-compare-price-modal/product-compare-price-modal.component';
 import { timeSince } from 'src/app/shared/utils/function';
+import { CategoryService } from 'src/app/pages/category/data-access/category.service';
 @Component({
   selector: 'app-product-detail-page',
   templateUrl: './product-detail-page.component.html',
@@ -49,6 +50,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
   getPriceLow!: number;
   listComparePrice!: any;
   listProductSameShop$!: Observable<IProduct[]>;
+  listProductSameCategoryFilter$!: Observable<IProduct[]>;
   config: SwiperOptions = {
     slidesPerView: this.slidesPerView,
     spaceBetween: 15,
@@ -170,11 +172,15 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
       this.valueCounter = num - 1;
     }
   }
+  scrollTop() {
+    window.scrollTo(0, 0);
+  }
   constructor(
     private authService: AuthService,
     private productService: ProductService,
     private readonly route: ActivatedRoute,
     private toastrService: ToastrService,
+    private categoryService: CategoryService,
     private cartService: CartService,
     public dialog: MatDialog
   ) {}
@@ -189,6 +195,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
         .readAllProductOfShop(data.Shop.id)
         .pipe(map((data) => data.DT));
     });
+    const productID = this.route.snapshot.paramMap.get('id');
     this.route.params
       .pipe(
         pluck('id'),
@@ -208,6 +215,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
           .subscribe((data) => {
             this.listComparePrice = data.DT;
           });
+
         this.dataProduct.Product_Price_Options.forEach(
           (item: IProductPriceOption, index) => {
             if (index == 0) {
@@ -218,6 +226,15 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
             }
           }
         );
+
+        this.listProductSameCategoryFilter$ = this.categoryService
+          .readAllProductByCategoryFilter(data.DT.categoryFilterID)
+          .pipe(
+            map((product) => product.DT),
+            filter((product) =>
+              product.filter((item: IProduct) => item.id !== Number(productID))
+            )
+          );
       });
   }
   ngAfterViewInit(): void {
