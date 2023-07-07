@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ProductService } from '../../data-access/product.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from 'src/app/pages/cart/data-access/cart.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { errorCode } from 'src/app/shared/model/model';
+import { Observable, filter, map, switchMap } from 'rxjs';
+import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
 
 @Component({
   selector: 'app-product-detail-choose-cart-modal',
@@ -14,6 +15,8 @@ import { errorCode } from 'src/app/shared/model/model';
 })
 export class ProductDetailChooseCartModalComponent implements OnInit {
   isGroupCart: boolean = false;
+  isChooseAddCart: boolean = false;
+  listGroupCart$!: Observable<any[]>;
   handleAddToCart() {
     this.cartService.createCartItem(this.data).subscribe((data) => {
       if (+data.EC === 1 || +data.EC === -1) {
@@ -25,8 +28,35 @@ export class ProductDetailChooseCartModalComponent implements OnInit {
       }
     });
   }
+  handleChooseCart(cartID: number) {
+    const rawDataCart = {
+      cartID: cartID,
+      userID: this.data.userID,
+      quantity: this.data.quantity,
+      productID: this.data.productID,
+      productPriceOptionID: this.data.productPriceOptionID,
+      shopID: this.data.shopID,
+    };
+    this.cartService.addItemToGroupCart(rawDataCart).subscribe((data) => {
+      if (+data.EC === 0) {
+        this.toastrService.success(data.EM);
+      } else {
+        this.toastrService.error(data.EM);
+      }
+    });
+    this.dialogRef.close();
+  }
   handleChooseGroupCart() {
     this.isGroupCart = true;
+  }
+  handleChooseAddCart() {
+    this.isChooseAddCart = true;
+  }
+  returnChooseCart() {
+    this.isGroupCart = false;
+  }
+  returnAddCart() {
+    this.isChooseAddCart = false;
   }
   submitForm() {
     const rawDataCart = {
@@ -51,7 +81,8 @@ export class ProductDetailChooseCartModalComponent implements OnInit {
     name: ['', Validators.compose([Validators.required])],
   });
   constructor(
-    private readonly route: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router,
     private toastrService: ToastrService,
     private cartService: CartService,
     public dialogRef: MatDialogRef<ProductDetailChooseCartModalComponent>,
@@ -66,5 +97,11 @@ export class ProductDetailChooseCartModalComponent implements OnInit {
     },
     private fb: FormBuilder
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.listGroupCart$ = this.authService.dataUser$.pipe(
+      switchMap((data) => this.cartService.readAllGroupCartOfUser(data?.id)),
+      filter((cart) => !!cart),
+      map((cart) => cart.DT)
+    );
+  }
 }

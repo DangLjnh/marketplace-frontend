@@ -46,6 +46,10 @@ export class CheckoutPackageComponent implements OnInit {
       return carts.filter((item) => item.checked === true);
     });
     const cloneDataCarts = JSON.stringify(this.dataCarts);
+    console.log(
+      '🚀 ~ file: checkout-package.component.ts:49 ~ CheckoutPackageComponent ~ ngOnInit ~ this.dataCarts:',
+      this.dataCarts
+    );
     this.dataOrder = JSON.parse(cloneDataCarts)?.map(
       (carts: ICartItem[], index: number) => {
         let totalPriceShop = 0;
@@ -81,6 +85,7 @@ export class CheckoutPackageComponent implements OnInit {
             price_discount:
               cart.Product_Price_Option?.price_discount ??
               cart.Product.Product_Detail?.price_discount,
+            userID: cart?.User?.id || null,
           };
           listDataOrder.push(dataOrder);
         });

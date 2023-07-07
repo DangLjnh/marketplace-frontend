@@ -105,6 +105,7 @@ export interface ICartItem {
   Product_Price_Option: IProductPriceOption;
   Product: IProduct;
   checked: boolean;
+  User: IUser;
 }
 
 export interface IShop {

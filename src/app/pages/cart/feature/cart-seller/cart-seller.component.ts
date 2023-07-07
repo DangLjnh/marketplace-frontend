@@ -86,8 +86,6 @@ export class CartSellerComponent implements OnInit {
 
   constructor(private cartService: CartService) {}
   ngOnInit(): void {
-    console.log(this.cartItems);
-
     this.cartItems.forEach((product: any) => (product.checked = false));
   }
 }

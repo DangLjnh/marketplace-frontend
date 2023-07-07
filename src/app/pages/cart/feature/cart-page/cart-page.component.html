@@ -1,4 +1,10 @@
-<p class="container my-5 text-xl font-medium">Shopping Cart</p>
+<div class="flex items-center justify-between container">
+  <p class="my-5 text-xl font-medium">{{cartID ? "Giỏ hàng chung": "Giỏ hàng"}}</p>
+  <div *ngIf="cartID" class="flex items-center gap-x-2">
+    <p class="hover:text-hotRed cursor-pointer">Rời giỏ hàng chung</p>
+  </div>
+
+</div>
 <div class="container grid grid-cols-12 mt-5 gap-x-5">
   <div class="col-span-9">
     <div class="flex flex-col gap-5">
@@ -28,6 +34,21 @@
   </div>
 
   <div class="col-span-3">
+    <ng-container *ngIf="cartID">
+      <div class="p-3 pb-0 bg-white rounded mb-5">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-lg font-medium">Thêm thành viên khác vào giỏ hàng chung</span>
+        </div>
+        <form class="flex items-center gap-x-5" [formGroup]="cartForm" (ngSubmit)="submitForm()">
+          <mat-form-field class="w-full example-full-width">
+            <mat-label>Nhập ID của người dùng</mat-label>
+            <input type="text" matInput formControlName="userID">
+          </mat-form-field>
+          <app-button types="submit" theme="blue">Thêm</app-button>
+        </form>
+      </div>
+    </ng-container>
+
     <app-cart-address></app-cart-address>
 
     <div class="sticky flex flex-col gap-5 pt-5 top-0 bg-content z-[5]">

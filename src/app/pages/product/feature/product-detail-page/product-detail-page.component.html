@@ -129,9 +129,10 @@
 
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-x-5">
-              <app-button theme="blue" className="flex items-center gap-x-2">
+              <app-button theme="blue" className="flex items-center gap-x-2" (click)="openModalChooseCart()"
+                [disable]="notChooseOption">
                 <app-icon-plus-cart color="#0A68FF" stroke="#0A68FF"></app-icon-plus-cart>
-                <p (click)="openModalChooseCart()">Thêm vào giỏ hàng</p>
+                <p>Thêm vào giỏ hàng</p>
               </app-button>
               <app-button>
                 Mua ngay

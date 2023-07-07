@@ -8,80 +8,94 @@
   </div>
   <div class="flex flex-col gap-7">
     <div *ngFor="let cart of cartItems">
-      <h2>{{cart.User.User_Detail.full_name || cart.User.User_Detail.email}}</h2>
-      <div class="grid grid-cols-[420px_190px_190px_120px_30px]">
-        <div class="flex items-center gap-x-2">
-          <mat-checkbox [checked]="cart.checked" (change)="toggleProductOptionCheck($event, cart)"
-            class="example-margin"></mat-checkbox>
-          <img class="object-cover w-20 h-28" [src]="cart.Product.Image_Products[0].Image_Product_Detail.photo_url"
-            alt="">
-          <div class="flex flex-col gap-1">
-            <span class="line-clamp-2">{{cart.Product.Product_Detail.name}}{{cart?.Product_Price_Option?' - '+
-              cart?.Product_Price_Option?.firstFilter?.name_filter:''}}{{cart?.Product_Price_Option?.secondFilter&&'
-              - '+cart?.Product_Price_Option?.secondFilter?.name_filter}}</span>
-            <div class="flex items-center gap-x-1">
-              <app-icon-fast></app-icon-fast>
-              <span class="text-xs font-semibold uppercase text-lightGreen">save delivery</span>
+      <div>
+        <button *ngIf="cart.statusID === 1" class="mb-2 text-white bg-gray-500 px-2 py-1 rounded-full text-[10px]">Hết
+          hàng</button>
+        <div [class]="cart.statusID === 1 ? 'opacity-50':''">
+          <ng-container *ngIf="cart.User">
+            <h2 class="mb-3">Được thêm vào giỏ hàng bởi <span
+                class="font-medium text-hotRed">{{cart.User.User_Detail.full_name ||
+                cart.User.User_Detail.email}}</span></h2>
+          </ng-container>
+          <div class="grid grid-cols-[420px_190px_190px_120px_30px]">
+            <div class="flex items-center gap-x-2">
+              <mat-checkbox [checked]="cart.checked" (change)="toggleProductOptionCheck($event, cart)"
+                class="example-margin"></mat-checkbox>
+              <img class="object-cover w-20 h-28" [src]="cart.Product.Image_Products[0].Image_Product_Detail.photo_url"
+                alt="">
+              <div class="flex flex-col gap-1">
+                <span class="line-clamp-2">{{cart.Product.Product_Detail.name}}{{cart?.Product_Price_Option?' - '+
+                  cart?.Product_Price_Option?.firstFilter?.name_filter:''}}{{cart?.Product_Price_Option?.secondFilter&&'
+                  - '+cart?.Product_Price_Option?.secondFilter?.name_filter}}</span>
+                <div class="flex items-center gap-x-1">
+                  <app-icon-fast></app-icon-fast>
+                  <span class="text-xs font-semibold uppercase text-lightGreen">save delivery</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="flex items-center gap-x-2 text-fs13">
-          <ng-container *ngIf="cart?.Product_Price_Option; else noOptionDiscount">
-            <ng-container *ngIf="cart?.Product_Price_Option?.price_discount; else noDiscount">
-              <ng-container *ngIf="cart?.Product_Price_Option; else noOption">
-                <span class="font-medium">{{cart.Product_Price_Option.price_discount.toLocaleString('en-US')}}₫</span>
-                <span
-                  class="line-through text-darkGray">{{cart.Product_Price_Option.price.toLocaleString('en-US')}}₫</span>
+            <div class="flex items-center gap-x-2 text-fs13">
+              <ng-container *ngIf="cart?.Product_Price_Option; else noOptionDiscount">
+                <ng-container *ngIf="cart?.Product_Price_Option?.price_discount; else noDiscount">
+                  <ng-container *ngIf="cart?.Product_Price_Option; else noOption">
+                    <span
+                      class="font-medium">{{cart.Product_Price_Option.price_discount.toLocaleString('en-US')}}₫</span>
+                    <span
+                      class="line-through text-darkGray">{{cart.Product_Price_Option.price.toLocaleString('en-US')}}₫</span>
+                  </ng-container>
+                  <ng-template #noOption>
+                    <span
+                      class="font-medium">{{cart.Product.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
+                    <span
+                      class="line-through text-darkGray">{{cart.Product.Product_Detail?.price_discount?.toLocaleString('en-US')}}₫</span>
+                  </ng-template>
+                </ng-container>
+                <ng-template #noDiscount>
+                  <span class="font-medium">{{cart?.Product_Price_Option?.price.toLocaleString('en-US')}}₫</span>
+                </ng-template>
               </ng-container>
-              <ng-template #noOption>
-                <span class="font-medium">{{cart.Product.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
-                <span
-                  class="line-through text-darkGray">{{cart.Product.Product_Detail?.price_discount?.toLocaleString('en-US')}}₫</span>
+              <ng-template #noOptionDiscount>
+                <ng-container *ngIf="cart?.Product?.Product_Detail.price_discount; else noDiscount">
+                  <span
+                    class="font-medium">{{cart.Product.Product_Detail.price_discount.toLocaleString('en-US')}}₫</span>
+                  <span
+                    class="line-through text-darkGray">{{cart.Product.Product_Detail?.price_original?.toLocaleString('en-US')}}₫</span>
+                </ng-container>
+                <ng-template #noDiscount>
+                  <span
+                    class="font-medium">{{cart?.Product?.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
+                </ng-template>
+              </ng-template>
+            </div>
+            <div class="flex items-center">
+              <app-input-counter [valueCounter]="cart.quantity" (checkedPlus)="checkedPlus.emit($event)"
+                (checkedMinus)="checkedMinus.emit($event)" (click)="handleClickCounter.emit(cart)"
+                (handleInputChange)="handleInputChange.emit($event)"></app-input-counter>
+            </div>
+            <ng-container *ngIf="cart.Product_Price_Option; else noOptionTotal">
+              <ng-container *ngIf="cart.Product_Price_Option.price_discount; else noOptionDiscount">
+                <span class="flex items-center font-medium text-hotRed">{{(cart.Product_Price_Option.price_discount *
+                  cart.quantity).toLocaleString('en-US')}}₫</span>
+              </ng-container>
+              <ng-template #noOptionDiscount>
+                <span class="flex items-center font-medium text-hotRed">{{(cart.Product_Price_Option.price *
+                  cart.quantity).toLocaleString('en-US')}}₫</span>
               </ng-template>
             </ng-container>
-            <ng-template #noDiscount>
-              <span class="font-medium">{{cart?.Product_Price_Option?.price.toLocaleString('en-US')}}₫</span>
+            <ng-template #noOptionTotal>
+              <ng-container *ngIf="cart.Product.Product_Detail?.price_discount; else noDiscountProduct">
+                <span class="flex items-center font-medium text-hotRed">{{(cart.Product.Product_Detail.price_discount *
+                  cart.quantity).toLocaleString('en-US')}}₫</span>
+              </ng-container>
+              <ng-template #noDiscountProduct>
+                <span class="flex items-center font-medium text-hotRed">{{(cart.Product.Product_Detail.price_original *
+                  cart.quantity).toLocaleString('en-US')}}₫</span>
+              </ng-template>
             </ng-template>
-          </ng-container>
-          <ng-template #noOptionDiscount>
-            <ng-container *ngIf="cart?.Product?.Product_Detail.price_discount; else noDiscount">
-              <span class="font-medium">{{cart.Product.Product_Detail.price_discount.toLocaleString('en-US')}}₫</span>
-              <span
-                class="line-through text-darkGray">{{cart.Product.Product_Detail?.price_original?.toLocaleString('en-US')}}₫</span>
-            </ng-container>
-            <ng-template #noDiscount>
-              <span class="font-medium">{{cart?.Product?.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
-            </ng-template>
-          </ng-template>
-        </div>
-        <div class="flex items-center">
-          <app-input-counter [valueCounter]="cart.quantity" (checkedPlus)="checkedPlus.emit($event)"
-            (checkedMinus)="checkedMinus.emit($event)" (click)="handleClickCounter.emit(cart)"
-            (handleInputChange)="handleInputChange.emit($event)"></app-input-counter>
-        </div>
-        <ng-container *ngIf="cart.Product_Price_Option; else noOptionTotal">
-          <ng-container *ngIf="cart.Product_Price_Option.price_discount; else noOptionDiscount">
-            <span class="flex items-center font-medium text-hotRed">{{(cart.Product_Price_Option.price_discount *
-              cart.quantity).toLocaleString('en-US')}}₫</span>
-          </ng-container>
-          <ng-template #noOptionDiscount>
-            <span class="flex items-center font-medium text-hotRed">{{(cart.Product_Price_Option.price *
-              cart.quantity).toLocaleString('en-US')}}₫</span>
-          </ng-template>
-        </ng-container>
-        <ng-template #noOptionTotal>
-          <ng-container *ngIf="cart.Product.Product_Detail?.price_discount; else noDiscountProduct">
-            <span class="flex items-center font-medium text-hotRed">{{(cart.Product.Product_Detail.price_discount *
-              cart.quantity).toLocaleString('en-US')}}₫</span>
-          </ng-container>
-          <ng-template #noDiscountProduct>
-            <span class="flex items-center font-medium text-hotRed">{{(cart.Product.Product_Detail.price_original *
-              cart.quantity).toLocaleString('en-US')}}₫</span>
-          </ng-template>
-        </ng-template>
-        <div class="flex items-center">
-          <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt=""
-            class="w-[18px] h-[18px]">
+            <div class="flex items-center">
+              <img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/trash.svg" alt=""
+                class="w-[18px] h-[18px]">
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <h1 mat-dialog-title class="text-4xl">Thêm vào giỏ hàng</h1>
-<form mat-dialog-content>
-  <div class="content max-w-[550px]">
+<form mat-dialog-content class="min-w-[550px]">
+  <div class="content">
     <ng-container *ngIf="!isGroupCart; else groupCart">
       <div class="flex items-center gap-10 my-5">
         <app-button theme="blue" className="flex items-center gap-x-2" (click)="handleAddToCart()">
@@ -14,13 +14,31 @@
       </div>
     </ng-container>
     <ng-template #groupCart>
-      <form [formGroup]="cartForm" (ngSubmit)="submitForm()" class="mt-5">
-        <mat-form-field class="w-full example-full-width">
-          <mat-label>Nhập tên giỏ hàng chung</mat-label>
-          <input type="text" matInput formControlName="name">
-        </mat-form-field>
-        <app-button types="submit">Tạo</app-button>
-      </form>
+      <ng-container *ngIf="!isChooseAddCart; else addCart">
+        <div class="flex items-center justify-between mb-5">
+          <p class="hover:font-bold transition-all cursor-pointer text-base" (click)="returnChooseCart()">Quay lại</p>
+          <app-button (click)="handleChooseAddCart()">Thêm</app-button>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <ng-container *ngFor="let cart of listGroupCart$ | async; let idx = index">
+            <div (click)="handleChooseCart(cart.Cart.id)"
+              class="px-6 py-4 hover:bg-slate-100 flex items-center gap-x-2 transition-all cursor-pointer border rounded-lg">
+              <app-icon-plus-cart [stroke]="'#676767'" color="#676767"></app-icon-plus-cart>
+              <p>{{cart.Cart.name}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-template #addCart>
+        <p class="hover:font-bold transition-all cursor-pointer" (click)="returnAddCart()">Quay lại</p>
+        <form [formGroup]="cartForm" (ngSubmit)="submitForm()" class="mt-5">
+          <mat-form-field class="w-full example-full-width">
+            <mat-label>Nhập tên giỏ hàng chung</mat-label>
+            <input type="text" matInput formControlName="name">
+          </mat-form-field>
+          <app-button types="submit">Tạo</app-button>
+        </form>
+      </ng-template>
     </ng-template>
   </div>
   <div mat-dialog-actions class="flex items-center !justify-end">

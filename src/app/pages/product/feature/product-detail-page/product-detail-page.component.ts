@@ -40,6 +40,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
   isStart!: boolean;
   isActiveArrow!: boolean;
   isEnd!: any;
+  notChooseOption: boolean = true;
   chooseFirstOption?: TProductFilter;
   chooseSecondOption?: TProductFilter;
   listFilterAfterChoose: TProductFilter[] = [];
@@ -67,6 +68,8 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
     index: number;
     type: IProductType;
   }) {
+    this.notChooseOption = false;
+
     this.isChooseSameType = this.currentChooseOptions.some(
       (item) => item.idType === type.id
     );
@@ -166,17 +169,24 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
     });
   }
   openModalChooseCart() {
-    const rawCartData = {
-      quantity: this.valueCounter,
-      productID: this.dataProduct.id,
-      productPriceOptionID: this.optionResult?.id ?? null,
-      shopID: this.dataProduct.shopID,
-      userID: this.dataUser.id,
-      cartID: this.cartDefault.id,
-    };
-    this.dialog.open(ProductDetailChooseCartModalComponent, {
-      data: rawCartData,
-    });
+    if (
+      this.notChooseOption &&
+      this.dataProduct.Product_Price_Options.length > 0
+    ) {
+      this.toastrService.error('Bạn phải chọn phân loại hàng trước');
+    } else {
+      const rawCartData = {
+        quantity: this.valueCounter,
+        productID: this.dataProduct.id,
+        productPriceOptionID: this.optionResult?.id ?? null,
+        shopID: this.dataProduct.shopID,
+        userID: this.dataUser.id,
+        cartID: this.cartDefault.id,
+      };
+      this.dialog.open(ProductDetailChooseCartModalComponent, {
+        data: rawCartData,
+      });
+    }
   }
   onCountPlus(num: number) {
     this.valueCounter = num + 1;
@@ -205,9 +215,6 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
       data?.Carts.filter((data) => {
         if (data.isGroupCart === false) this.cartDefault = data;
       });
-      this.listProductSameShop$ = this.productService
-        .readAllProductOfShop(data.Shop.id)
-        .pipe(map((data) => data.DT));
     });
     const productID = this.route.snapshot.paramMap.get('id');
     this.route.params
@@ -249,6 +256,16 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
               product.filter((item: IProduct) => item.id !== Number(productID))
             )
           );
+
+        this.listProductSameShop$ = this.productService
+          .readAllProductOfShop(data.DT.Shop.id)
+          .pipe(map((data) => data.DT));
+
+        if (data.DT.Product_Price_Options.length > 0) {
+          this.notChooseOption = true;
+        } else {
+          this.notChooseOption = false;
+        }
       });
   }
   ngAfterViewInit(): void {

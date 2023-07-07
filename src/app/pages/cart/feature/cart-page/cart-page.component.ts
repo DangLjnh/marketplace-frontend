@@ -1,5 +1,11 @@
 import { pluck, switchMap, filter, map } from 'rxjs';
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ViewEncapsulation,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
 import { CartService } from '../../data-access/cart.service';
 import {
@@ -9,7 +15,9 @@ import {
   IUser,
 } from 'src/app/shared/model/interface';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
+import { errorCode } from 'src/app/shared/model/model';
 
 @Component({
   selector: 'app-cart-page',
@@ -27,7 +35,24 @@ export class CartPageComponent implements OnInit, OnDestroy {
   totalPrice: number = 0;
   arrAllCart: any = [];
   listCheckCart: any = [];
-  cartID!: string | null;
+  cartID!: string | null | number;
+  svgHover: boolean = false;
+
+  updateListCart() {
+    if (this.cartID) {
+      this.cartService
+        .readAllItemOfGroupCart(Number(this.cartID))
+        .subscribe((data) => {
+          this.dataCarts = data.DT;
+        });
+    } else {
+      this.cartService
+        .readCartDefault(this.dataUser.id)
+        .subscribe((data: IResponse) => {
+          this.dataCarts = data.DT;
+        });
+    }
+  }
   handleClickCartItem(product: any) {
     this.productItem = product;
   }
@@ -44,11 +69,7 @@ export class CartPageComponent implements OnInit, OnDestroy {
             if (+dataUpdateCart.EC === 1) {
               this.toastService.error(dataUpdateCart.EM);
             }
-            this.cartService
-              .readCartDefault(this.dataUser.id)
-              .subscribe((data: IResponse) => {
-                this.dataCarts = data.DT;
-              });
+            this.updateListCart();
           });
       } else {
         this.cartService
@@ -57,11 +78,7 @@ export class CartPageComponent implements OnInit, OnDestroy {
             if (+dataUpdateCart.EC === 1) {
               this.toastService.error(dataUpdateCart.EM);
             }
-            this.cartService
-              .readCartDefault(this.dataUser.id)
-              .subscribe((data: IResponse) => {
-                this.dataCarts = data.DT;
-              });
+            this.updateListCart();
           });
       }
     }, 1);
@@ -79,19 +96,11 @@ export class CartPageComponent implements OnInit, OnDestroy {
         this.cartService
           .updateQuantityCartItemOption(rawData)
           .subscribe((data) => {
-            this.cartService
-              .readCartDefault(this.dataUser.id)
-              .subscribe((data: IResponse) => {
-                this.dataCarts = data.DT;
-              });
+            this.updateListCart();
           });
       } else {
         this.cartService.updateQuantityCartItem(rawData).subscribe((data) => {
-          this.cartService
-            .readCartDefault(this.dataUser.id)
-            .subscribe((data: IResponse) => {
-              this.dataCarts = data.DT;
-            });
+          this.updateListCart();
         });
       }
     }, 1);
@@ -136,27 +145,48 @@ export class CartPageComponent implements OnInit, OnDestroy {
         });
     }
   }
+  cartForm = this.fb.group({
+    userID: ['', Validators.compose([Validators.required])],
+  });
+  submitForm() {
+    const rawCartData = {
+      userID: Number(this.cartForm.value.userID),
+      cartID: Number(this.cartID),
+    };
+    this.cartService.addUserToGroupCart(rawCartData).subscribe((data) => {
+      if (+data.EC === errorCode.SUCCESS) {
+        this.toastService.success(data.EM);
+        this.cartForm.reset();
+      } else {
+        this.toastService.error(data.EM);
+      }
+    });
+  }
+
+  private handleCartIDChange(): void {
+    // Perform any additional logic or fetch data based on the new parameter value
+    // This is where you can trigger the re-render of the component
+
+    // Example: Call a method to update the component based on the new cartID
+    this.updateListCart();
+
+    // Trigger change detection to re-render the component
+    this.cdr.detectChanges();
+  }
 
   constructor(
     private authService: AuthService,
     private cartService: CartService,
     private toastService: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {}
   ngOnInit(): void {
-    this.cartID = this.route.snapshot.paramMap.get('cartID');
-    // this.listCategoryFilter$ =
-    // this.cartService
-    //   .readAllItemOfGroupCart(Number(this.cartID))
-    //   .subscribe((data) => {
-    //     console.log(
-    //       '🚀 ~ file: cart-page.component.ts:156 ~ CartPageComponent ~ .subscribe ~ data:',
-    //       data
-    //     );
-    //   });
-    // if (this.cartID) {
-    // } else {
-    // }
+    this.route.params.subscribe((params: Params) => {
+      this.cartID = +params['cartID'];
+      this.handleCartIDChange();
+    });
     this.cartService.listCheckCart$.subscribe((cartItems) => {
       this.totalPrice = 0;
       cartItems.forEach((carts: ICartItem[]) => {

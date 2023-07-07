@@ -9,7 +9,9 @@ import { CartPageComponent } from './feature/cart-page/cart-page.component';
 import { CartFreeShipComponent } from './feature/cart-free-ship/cart-free-ship.component';
 import { CartSellerComponent } from './feature/cart-seller/cart-seller.component';
 import { CartTotalPriceComponent } from './feature/cart-total-price/cart-total-price.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     CartPageComponent,
@@ -25,6 +27,9 @@ import { FormsModule } from '@angular/forms';
     MatCheckboxModule,
     IconModule,
     FormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
   ],
 })
 export class CartModule {}
