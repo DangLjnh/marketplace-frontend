@@ -2,13 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { ICartItem, IResponse } from 'src/app/shared/model/interface';
+import {
+  IAddressResponse,
+  ICartItem,
+  IResponse,
+} from 'src/app/shared/model/interface';
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
   private _listCheckCart = new BehaviorSubject<any>([]);
   private _totalPrice = new BehaviorSubject<number>(0);
+  private _chooseAddress = new BehaviorSubject<any>({});
   cartItem!: ICartItem;
 
   set listCheckCart(values: any[]) {
@@ -17,12 +22,18 @@ export class CartService {
   set totalPrice(values: number) {
     this._totalPrice.next(values);
   }
+  set chooseAddress(values: IAddressResponse) {
+    this._chooseAddress.next(values);
+  }
 
   get listCheckCart$(): Observable<any[]> {
     return this._listCheckCart.asObservable();
   }
   get totalPrice$(): Observable<number> {
     return this._totalPrice.asObservable();
+  }
+  get chooseAddress$(): Observable<any> {
+    return this._chooseAddress.asObservable();
   }
 
   updateQuantityCartItem(rawDataCartItem: any): Observable<IResponse> {

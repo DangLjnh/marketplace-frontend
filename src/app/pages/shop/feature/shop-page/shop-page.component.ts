@@ -42,6 +42,22 @@ export class ShopPageComponent implements OnInit {
       }),
       filter((shop) => !!shop)
     );
+    this.route.params
+      .pipe(
+        pluck('slug'),
+        switchMap((slug) => this.shopService.readAllCategoryFilterOfShop(slug)),
+        switchMap((post) => {
+          const shop = post.DT;
+          return of(shop);
+        }),
+        filter((shop) => !!shop)
+      )
+      .subscribe((data) => {
+        console.log(
+          '🚀 ~ file: shop-page.component.ts:54 ~ ShopPageComponent ~ ).subscribe ~ data:',
+          data
+        );
+      });
 
     this.shop$.subscribe((data: any) => {
       this.shop = data;

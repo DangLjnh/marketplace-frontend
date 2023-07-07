@@ -13,6 +13,7 @@ export class ProductSectionComponent implements OnInit, AfterViewInit {
   @Input() listCategoryFilter$!: Observable<ICategoryFilter[]>;
   @Input() shopID!: number | undefined;
   listCategoryFilter!: ICategoryFilter[];
+  listCategory!: any[];
   listProduct!: IProduct[];
   activeOption: string = '';
   isActive!: boolean;
@@ -87,6 +88,18 @@ export class ProductSectionComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.listCategoryFilter$.subscribe((data) => {
       this.listCategoryFilter = data;
+      let listClone: ICategoryFilter[] = [];
+      this.listCategoryFilter.forEach((item) => {
+        const checkExist = listClone.some(
+          (category) =>
+            category.name_category_filter === item.name_category_filter
+        );
+        if (!checkExist) {
+          listClone.push(item);
+        }
+      });
+      this.listCategoryFilter = listClone;
+
       this.setFirstCategoryChoose();
       if (!this.shopID) {
         this.categoryService

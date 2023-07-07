@@ -1,7 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
-import { ICartItem, IUser } from 'src/app/shared/model/interface';
+import {
+  IAddressResponse,
+  ICartItem,
+  IUser,
+} from 'src/app/shared/model/interface';
 import { CheckoutService } from '../../data-access/checkout.service';
+import { CartService } from 'src/app/pages/cart/data-access/cart.service';
 
 @Component({
   selector: 'app-checkout-package',
@@ -13,6 +18,7 @@ export class CheckoutPackageComponent implements OnInit {
   totalPrices!: number[];
   dataOrder!: any;
   dataUser!: IUser;
+  addressCurrent!: IAddressResponse;
 
   updateTotalPrice(idx: number): number {
     const cart = this.dataCarts[idx];
@@ -34,10 +40,15 @@ export class CheckoutPackageComponent implements OnInit {
   }
   constructor(
     private authService: AuthService,
-    private checkoutService: CheckoutService
+    private checkoutService: CheckoutService,
+    private cartService: CartService
   ) {}
   ngOnInit(): void {
     this.totalPrices = this.dataCarts?.map(() => 0);
+
+    this.cartService.chooseAddress$.subscribe((data) => {
+      this.addressCurrent = data;
+    });
 
     this.authService.dataUser$.subscribe((data: IUser) => {
       this.dataUser = data;
@@ -46,10 +57,6 @@ export class CheckoutPackageComponent implements OnInit {
       return carts.filter((item) => item.checked === true);
     });
     const cloneDataCarts = JSON.stringify(this.dataCarts);
-    console.log(
-      '🚀 ~ file: checkout-package.component.ts:49 ~ CheckoutPackageComponent ~ ngOnInit ~ this.dataCarts:',
-      this.dataCarts
-    );
     this.dataOrder = JSON.parse(cloneDataCarts)?.map(
       (carts: ICartItem[], index: number) => {
         let totalPriceShop = 0;
@@ -96,6 +103,7 @@ export class CheckoutPackageComponent implements OnInit {
           dataOrders: JSON.stringify(listDataOrder),
           shopID: carts[0]?.Shop.id,
           userID: this.dataUser.id,
+          addressID: this.addressCurrent.id,
         });
         return dataToPersistArray;
       }

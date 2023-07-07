@@ -21,6 +21,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
 import { CustomerAddressModalComponent } from './feature/customer-address-modal/customer-address-modal.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CheckoutAddressModalComponent } from './feature/checkout-address-modal/checkout-address-modal.component';
 @NgModule({
   declarations: [
     CustomerEditPageComponent,
@@ -30,6 +31,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CustomerAddressComponent,
     CustomerPurchaseComponent,
     CustomerAddressModalComponent,
+    CheckoutAddressModalComponent,
   ],
   imports: [
     CommonModule,

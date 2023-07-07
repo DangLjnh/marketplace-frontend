@@ -45,7 +45,7 @@ export interface IGroup {
 }
 
 export interface IAddress {
-  id?: number | null | undefined;
+  id: number | null | undefined;
   userID: number;
   full_name: string | null | undefined;
   phone: string | null | undefined;
@@ -130,6 +130,7 @@ export interface IUser {
   Group: IGroup;
   Shop: IShop;
   Carts: ICart[];
+  Addresses: IAddressResponse[];
 }
 
 type TStock = {

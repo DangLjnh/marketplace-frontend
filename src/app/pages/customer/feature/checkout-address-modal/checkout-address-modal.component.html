@@ -1,0 +1,39 @@
+<h1 mat-dialog-title class="text-4xl">Chọn địa chỉ</h1>
+<form mat-dialog-content class="min-w-[400px] w-[700px]">
+  <div class="content">
+    <div class="flex flex-col gap-5">
+      <ng-container *ngIf="listAddress">
+        <div *ngFor="let address of listAddress; index as idx" class="flex flex-col gap-2"
+          [class.border-bottom]="idx !== listAddress.length-1">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-x-2">
+              <span class="pr-2 text-lg border-r text-black">{{address.Address_Detail.full_name}}</span>
+              <span class="text-darkGray text-base">{{address.Address_Detail.phone}}</span>
+              <div class="flex items-center gap-x-1" *ngIf="address.isDefault">
+                <div class="flex items-center justify-center w-4 h-4 border rounded-full border-lightGreen">
+                  <app-icon-check [color]="'#00AB56'"></app-icon-check>
+                </div>
+                <p class="text-xs text-lightGreen">Địa chỉ mặc định</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-darkGray">
+            <div class="text-fs14">
+              <p class="mb-1">{{address.Address_Detail.address}}</p>
+              <p class="tracking-wide">{{address.Address_Detail.ward}}, {{address.Address_Detail.district}},
+                {{address.Address_Detail.city}}</p>
+            </div>
+            <p (click)="handleChooseAddress(address)" *ngIf="addressCurrent.id !== address.id"
+              class="px-2 py-1 text-black transition-all border rounded hover:bg-gray-50 cursor-pointer">Chọn địa chỉ
+            </p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div mat-dialog-actions class="flex items-center !justify-end">
+    <div class="flex items-center gap-x-2">
+      <app-button mat-dialog-close className="bg-white !text-black hover:bg-slate-100">Đóng</app-button>
+    </div>
+  </div>
+</form>
