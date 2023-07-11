@@ -138,11 +138,11 @@ export class SellerProductComponent implements OnInit {
     this.valueOptionStock = this.optionStock
       .toArray()
       .map((input) => input.nativeElement.value);
-    if (this.productForm.value.second_type) {
-      this.resultType.push(this.productForm.value.second_type);
-    }
     if (this.productForm.value.first_type) {
       this.resultType.push(this.productForm.value.first_type);
+    }
+    if (this.productForm.value.second_type) {
+      this.resultType.push(this.productForm.value.second_type);
     }
 
     const result: ProductType[] = [];
@@ -223,34 +223,7 @@ export class SellerProductComponent implements OnInit {
         formData.append('length', String(formValue.length));
         formData.append('weight', String(formValue.weight));
         formData.append('warehouseID', String(this.dataUser.Shop.Warehouse.id));
-        // formData.append(
-        //   'productTypes',
-        //   JSON.stringify([
-        //     {
-        //       name_product_type: 'Màu Sắc',
-        //       options: [
-        //         {
-        //           option: 'Xanh',
-        //           prices: [
-        //             {
-        //               stock: 10,
-        //               price: 100,
-        //             },
-        //           ],
-        //         },
-        //         {
-        //           option: 'Đỏ',
-        //           prices: [
-        //             {
-        //               stock: 20,
-        //               price: 900,
-        //             },
-        //           ],
-        //         },
-        //       ],
-        //     },
-        //   ])
-        // );
+
         formData.append('productTypes', JSON.stringify(result));
 
         this.productService.createProduct(formData).subscribe((data) => {
