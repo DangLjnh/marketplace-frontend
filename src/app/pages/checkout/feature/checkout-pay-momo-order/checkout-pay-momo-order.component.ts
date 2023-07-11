@@ -46,11 +46,12 @@ export class CheckoutPayMomoOrderComponent implements OnInit, OnDestroy {
             this.successPay = true;
             this.checkoutService
               .createOrderAlreadyPay(this.dataOrders)
-              .subscribe(() => {
-                setTimeout(() => {
+              .subscribe((data) => {
+                if (+data.EC === 0) {
                   window.location.href = `${environment.frontendUrl}/customer/account/purchase`;
                   // 'http://localhost:4200/customer/account/purchase';
-                }, 3000);
+                } else {
+                }
               });
           }
         });

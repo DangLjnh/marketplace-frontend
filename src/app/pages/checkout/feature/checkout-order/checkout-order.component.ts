@@ -37,9 +37,7 @@ export class CheckoutOrderComponent implements OnInit, OnDestroy {
           if (data) {
             this.checkoutService.urlPayMomo = data.DT;
             this.dialog.open(CheckoutPayMomoOrderComponent, {
-              data: {
-                type: 'create',
-              },
+              data: this.dataOrders,
             });
           }
         });
