@@ -33,8 +33,10 @@
       <ng-container *ngFor="let orderDetail of order.Order_Details">
         <div class="flex items-center justify-between pb-3 mb-3 border-b">
           <div class="flex items-start gap-x-5">
-            <img [src]="orderDetail.Product.Image_Products[0]?.Image_Product_Detail?.photo_url" alt=""
-              class="object-contain w-20 h-20">
+            <ng-container *ngIf="orderDetail.Product.Image_Products.length > 0">
+              <img [src]="orderDetail.Product.Image_Products[0]?.Image_Product_Detail?.photo_url" alt=""
+                class="object-contain w-20 h-20">
+            </ng-container>
             <div class="flex flex-col gap-[2px]">
               <p class="line-clamp-2">{{orderDetail.Product.Product_Detail.name}}
               </p>

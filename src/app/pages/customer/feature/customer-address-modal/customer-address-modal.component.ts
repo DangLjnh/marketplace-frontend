@@ -91,6 +91,7 @@ export class CustomerAddressModalComponent {
               .subscribe((data) => {
                 this.customerService.listAddress = data.DT;
               });
+            this.dialogRef.close();
           }
         });
       }

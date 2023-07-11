@@ -31,13 +31,27 @@ export class HeaderChooseCartModalComponent implements OnInit {
     this.isChooseAddCart = true;
   }
   handleChooseGroupCart() {
-    this.isGroupCart = true;
+    this.listGroupCart$.subscribe((data) => {
+      if (data.length > 0) {
+        this.isGroupCart = true;
+      } else {
+        this.isGroupCart = true;
+        this.isChooseAddCart = true;
+      }
+    });
   }
   returnChooseCart() {
     this.isGroupCart = false;
   }
   returnAddCart() {
-    this.isChooseAddCart = false;
+    this.listGroupCart$.subscribe((data) => {
+      if (data.length > 0) {
+        this.isGroupCart = false;
+      } else {
+        this.isGroupCart = false;
+        this.isChooseAddCart = false;
+      }
+    });
   }
   submitForm() {
     const rawDataCart = {

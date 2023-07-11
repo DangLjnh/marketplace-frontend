@@ -13,7 +13,7 @@ export class SellerSidebarComponent {
       submenus: [
         {
           name: 'Tất cả đơn hàng',
-          url: '',
+          url: '/seller/portal/order/list',
         },
         {
           name: 'Đơn hủy',
@@ -74,6 +74,10 @@ export class SellerSidebarComponent {
         {
           name: 'Danh sách giảm giá',
           url: '/seller/portal/discount/list',
+        },
+        {
+          name: 'Thêm giảm giá sản phẩm',
+          url: '/seller/portal/discount/new',
         },
       ],
     },

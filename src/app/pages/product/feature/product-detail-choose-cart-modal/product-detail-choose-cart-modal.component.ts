@@ -47,7 +47,14 @@ export class ProductDetailChooseCartModalComponent implements OnInit {
     this.dialogRef.close();
   }
   handleChooseGroupCart() {
-    this.isGroupCart = true;
+    this.listGroupCart$.subscribe((data) => {
+      if (data.length > 0) {
+        this.isGroupCart = true;
+      } else {
+        this.isGroupCart = true;
+        this.isChooseAddCart = true;
+      }
+    });
   }
   handleChooseAddCart() {
     this.isChooseAddCart = true;
@@ -56,7 +63,14 @@ export class ProductDetailChooseCartModalComponent implements OnInit {
     this.isGroupCart = false;
   }
   returnAddCart() {
-    this.isChooseAddCart = false;
+    this.listGroupCart$.subscribe((data) => {
+      if (data.length > 0) {
+        this.isGroupCart = false;
+      } else {
+        this.isGroupCart = false;
+        this.isChooseAddCart = false;
+      }
+    });
   }
   submitForm() {
     const rawDataCart = {

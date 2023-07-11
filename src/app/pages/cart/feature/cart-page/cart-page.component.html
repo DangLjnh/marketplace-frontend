@@ -1,5 +1,8 @@
 <div class="flex items-center justify-between container">
-  <p class="my-5 text-xl font-medium">{{cartID ? "Giỏ hàng chung": "Giỏ hàng"}}</p>
+  <div>
+    <p *ngIf="cartID">ID giỏ hàng chung: {{cartID}}</p>
+    <p class="my-5 text-2xl font-medium">{{cartID ? "Giỏ hàng chung": "Giỏ hàng"}}</p>
+  </div>
   <div *ngIf="cartID" class="flex items-center gap-x-2">
     <p class="hover:text-hotRed cursor-pointer">Rời giỏ hàng chung</p>
   </div>

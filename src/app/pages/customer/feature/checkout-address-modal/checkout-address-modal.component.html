@@ -1,6 +1,9 @@
 <h1 mat-dialog-title class="text-4xl">Chọn địa chỉ</h1>
 <form mat-dialog-content class="min-w-[400px] w-[700px]">
   <div class="content">
+    <div class="flex justify-end">
+      <app-button className="mb-5" (click)="openModalCreateAddress()">Thêm địa chỉ</app-button>
+    </div>
     <div class="flex flex-col gap-5">
       <ng-container *ngIf="listAddress">
         <div *ngFor="let address of listAddress; index as idx" class="flex flex-col gap-2"

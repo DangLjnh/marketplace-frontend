@@ -12,6 +12,7 @@ import { CartTotalPriceComponent } from './feature/cart-total-price/cart-total-p
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [
     CartPageComponent,
@@ -30,6 +31,7 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatSelectModule,
   ],
 })
 export class CartModule {}

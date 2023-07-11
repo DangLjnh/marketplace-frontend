@@ -57,12 +57,13 @@ export class SellerPortalFormComponent implements OnInit {
       this.sellerService.createShop(formData).subscribe((data) => {
         if (+data.EC === 1 || +data.EC === -1) {
           this.toastrService.error(data.EM);
+        } else {
+          this.authService.dataUser$.subscribe((data: IUser) => {
+            this.loading = false;
+            this.dataUser = data;
+            window.location.href = `${environment.frontendUrl}/seller`;
+          });
         }
-        this.authService.dataUser$.subscribe((data: IUser) => {
-          this.loading = false;
-          this.dataUser = data;
-          window.location.href = `${environment.frontendUrl}/seller`;
-        });
       });
     }
   }

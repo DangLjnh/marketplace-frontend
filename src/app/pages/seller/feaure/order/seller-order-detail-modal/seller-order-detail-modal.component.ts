@@ -10,6 +10,7 @@ import { OrderService } from '../../../data-access/order.service';
 export class SellerOrderDetailModalComponent implements OnInit {
   orderList!: any[];
   orderID!: number;
+  dataAddress: any;
   constructor(
     public dialogRef: MatDialogRef<SellerOrderDetailModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -19,11 +20,12 @@ export class SellerOrderDetailModalComponent implements OnInit {
     const orderID = this.data.orderID;
     this.orderID = orderID;
     this.orderService.readSingleOrderDetail(orderID).subscribe((data) => {
+      this.dataAddress = data.DT?.Address?.Address_Detail;
       console.log(
         '🚀 ~ file: seller-order-detail-modal.component.ts:20 ~ SellerOrderDetailModalComponent ~ this.orderService.readSingleOrderDetail ~ data:',
         data.DT
       );
-      this.orderList = data.DT;
+      this.orderList = data.DT.Order_Details;
     });
   }
 }

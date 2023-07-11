@@ -47,7 +47,7 @@ export class CartPageComponent implements OnInit, OnDestroy {
         });
     } else {
       this.cartService
-        .readCartDefault(this.dataUser.id)
+        .readCartDefault(this?.dataUser?.id)
         .subscribe((data: IResponse) => {
           this.dataCarts = data.DT;
         });

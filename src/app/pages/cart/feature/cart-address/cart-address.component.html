@@ -1,7 +1,7 @@
-<div class="p-3 bg-white rounded text-darkGray">
+<div *ngIf="addressDefault.Address_Detail" class="p-3 bg-white rounded text-darkGray">
   <div class="flex items-center justify-between mb-1">
-    <span class="text-base font-medium">Delivery at</span>
-    <span class="text-primary cursor-pointer" (click)="openModalChangeAddress()">Change</span>
+    <span class="text-base font-medium">Giao hàng tại</span>
+    <span class="text-primary cursor-pointer" (click)="openModalChangeAddress()">Thay đổi</span>
   </div>
   <span class="pr-2 mr-2 font-bold text-black border-r">{{addressDefault.Address_Detail.full_name}}</span>
   <span class="font-bold text-black">{{addressDefault.Address_Detail.phone}}</span>

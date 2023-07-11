@@ -62,7 +62,6 @@ export class CheckoutPackageComponent implements OnInit {
         let totalPriceShop = 0;
         let dataOrder = {};
         let listDataOrder: any = [];
-        const dataToPersistArray = []; // Array to store dataToPersist objects
 
         carts.forEach((cart: ICartItem) => {
           if (!cart.Product_Price_Option) {
@@ -84,19 +83,18 @@ export class CheckoutPackageComponent implements OnInit {
 
           dataOrder = {
             quantity: cart.quantity,
-            productID: cart.Product.id,
             productPriceOptionID: cart.Product_Price_Option?.id,
+            cartItemID: cart.id,
             price_original:
               cart.Product_Price_Option?.price ??
               cart.Product.Product_Detail?.price_original,
             price_discount:
               cart.Product_Price_Option?.price_discount ??
               cart.Product.Product_Detail?.price_discount,
-            userID: cart?.User?.id || null,
           };
           listDataOrder.push(dataOrder);
         });
-        dataToPersistArray.push({
+        return {
           total_price: totalPriceShop,
           payment_method: 'Thanh toán khi nhận hàng',
           note: '',
@@ -104,8 +102,7 @@ export class CheckoutPackageComponent implements OnInit {
           shopID: carts[0]?.Shop.id,
           userID: this.dataUser.id,
           addressID: this.addressCurrent.id,
-        });
-        return dataToPersistArray;
+        };
       }
     );
     this.checkoutService.listDataOrder = this.dataOrder;
