@@ -1,7 +1,10 @@
 <div class="p-3 bg-white rounded">
   <div class="pb-3 mb-3 border-b ">
     <p class="text-lg font-medium">Thông tin cá nhân</p>
-    <p class="text-darkGray">Quản lý và bảo vệ tài khoản của bạn. Mã tài khoản của bạn: {{dataUser.id}} </p>
+    <ng-container *ngIf="dataUser?.id">
+      <p class="text-darkGray">Quản lý và bảo vệ tài khoản của bạn.</p>
+      <p class="text-darkGray">Mã tài khoản của bạn: <span class="text-black font-medium">{{dataUser.id}}</span></p>
+    </ng-container>
   </div>
   <form class="grid grid-cols-3 gap-x-5" [formGroup]="editUserForm" (ngSubmit)="submitForm()">
     <div class="flex flex-col col-span-2 gap-5 px-10 py-5 border-r">
