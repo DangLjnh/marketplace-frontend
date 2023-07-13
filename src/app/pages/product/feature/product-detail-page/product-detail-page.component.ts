@@ -258,7 +258,11 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
           );
 
         this.listProductSameShop$ = this.productService
-          .readAllProductOfShop(data.DT.Shop.id)
+          .readAllProductOfShop({
+            shopID: data.DT.Shop.id,
+            offset: 0,
+            limit: 10,
+          })
           .pipe(map((data) => data.DT));
 
         if (data.DT.Product_Price_Options.length > 0) {

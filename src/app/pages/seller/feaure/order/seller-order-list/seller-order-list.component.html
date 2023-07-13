@@ -10,7 +10,8 @@
     </div>
 
     <ul class="flex items-center border-b-2 tab-navs">
-      <li *ngFor="let nav of navTabs" class="p-4 transition-all cursor-pointer hover:text-primary">{{nav.name}}</li>
+      <li *ngFor="let nav of navTabs" (click)="handleChooseOption(nav.name)" [class]="nav.isActive ? 'text-primary': ''"
+        class="p-4 transition-all cursor-pointer hover:text-primary">{{nav.name}}</li>
     </ul>
     <div class="relative p-3 overflow-x-auto">
       <table class="w-full text-sm text-left">
@@ -42,10 +43,25 @@
             </th>
             <th scope="col" class="px-6 py-5 ">
               <div class="grid grid-cols-5">
-                <p>{{order.payment_method}}</p>
+                <p class="mr-5">{{order.payment_method}}</p>
                 <p>{{order.total_price.toLocaleString('en-US')}}₫</p>
                 <p>{{order.note === "" ? "Trống": order.note}}</p>
-                <p>{{order.statusID === 1 ? "Chưa thanh toán" : order.statusID === 3 ? "Đã thanh toán" : ""}}</p>
+                <div>
+                  <ng-container *ngIf="order.statusID">
+                    <ng-container *ngIf="order.statusID === 1">
+                      <span class="px-4 py-2 bg-blue-300 rounded whitespace-nowrap">Đang giao hàng</span>
+                    </ng-container>
+                    <ng-container *ngIf="order.statusID === 4">
+                      <span class="px-4 py-2 bg-yellow-300 rounded whitespace-nowrap">Chờ duyệt</span>
+                    </ng-container>
+                    <ng-container *ngIf="order.statusID === 3">
+                      <span class="px-4 py-2 bg-red-300 rounded whitespace-nowrap">Đơn hủy</span>
+                    </ng-container>
+                    <ng-container *ngIf="order.statusID === 2">
+                      <span class="px-4 py-2 bg-green-300 rounded whitespace-nowrap">Hoàn tất</span>
+                    </ng-container>
+                  </ng-container>
+                </div>
                 <p>{{formatDate(order.createdAt)}}</p>
               </div>
             </th>
@@ -53,8 +69,16 @@
               <div class="flex items-center text-xs gap-x-3">
                 <a (click)="openModalOrderDetail(order.id)"
                   class="px-4 py-2 bg-cyan-100 rounded whitespace-nowrap cursor-pointer">Xem chi tiết</a>
-                <a (click)="updateStatusDone(order.id)"
-                  class="px-4 py-2 bg-green-100 rounded whitespace-nowrap cursor-pointer">Hoàn tất</a>
+                <ng-container *ngIf="order.statusID === 4">
+                  <a class="px-4 py-2 bg-yellow-100 rounded whitespace-nowrap cursor-pointer"
+                    (click)="handleChooseConfirm(order.id)">Duyệt đơn</a>
+                  <a class="px-4 py-2 bg-red-100 rounded whitespace-nowrap cursor-pointer"
+                    (click)="handleChooseCancel(order.id)">Hủy đơn</a>
+                </ng-container>
+                <ng-container *ngIf="order.statusID !== 2 && order.statusID !== 4">
+                  <a (click)="updateStatusDone(order.id)"
+                    class="px-4 py-2 bg-green-100 rounded whitespace-nowrap cursor-pointer">Hoàn tất</a>
+                </ng-container>
               </div>
             </th>
           </tr>

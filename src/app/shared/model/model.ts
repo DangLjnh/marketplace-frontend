@@ -7,8 +7,8 @@ export const statusUser = {
 export const statusOrder = {
   DELIVERING: 1,
   DELIVERED: 2,
-  ALREADY_PAY: 3,
-  CANCELLED: 4,
+  CANCELLED: 3,
+  PENDING: 4,
 };
 
 export const statusProduct = {

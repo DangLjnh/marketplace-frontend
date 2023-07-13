@@ -9,7 +9,9 @@
       </ul>
       <ul class="flex flex-col gap-2 pl-7">
         <li *ngFor="let sub of sidebar.submenus" [routerLink]="sub.url"
-          class="text-[13px] transition-all cursor-pointer text-light hover:text-primary">
+          [queryParams]="getQueryParamsObject(sub.queryKey, sub.queryParams)"
+          class="text-[13px] transition-all cursor-pointer text-light hover:text-primary"
+          [class.text-primary]="sub.isActive" (click)="handleChoose(sub)">
           {{sub.name}}</li>
       </ul>
     </div>

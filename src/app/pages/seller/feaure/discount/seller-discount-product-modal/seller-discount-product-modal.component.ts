@@ -50,7 +50,7 @@ export class SellerDiscountProductModalComponent implements OnInit {
     this.authService.dataUser$.subscribe((data) => {
       if (this.data.type === 'create') {
         this.productService
-          .readAllProductOfShop(data.Shop.id)
+          .readAllProductOfShop({ shopID: data.Shop.id, offset: 0, limit: 10 })
           .pipe(
             map((data) =>
               data.DT.filter(

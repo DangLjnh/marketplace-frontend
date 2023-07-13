@@ -6,6 +6,7 @@ import {
   ViewChild,
   QueryList,
   ViewChildren,
+  AfterViewInit,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -49,7 +50,7 @@ interface ProductType {
   templateUrl: './seller-product.component.html',
   styleUrls: ['./seller-product.component.scss'],
 })
-export class SellerProductComponent implements OnInit {
+export class SellerProductComponent implements OnInit, AfterViewInit {
   @ViewChild('formContainer') formContainer!: ElementRef;
   @ViewChildren('first_option') firstOptionControls!: QueryList<any>;
   @ViewChildren('second_option') secondOptionControls!: QueryList<any>;
@@ -71,8 +72,8 @@ export class SellerProductComponent implements OnInit {
   productID!: number;
   isChooseOption: boolean = false;
   isChooseSecondOption: boolean = false;
-  formControlFirstOptions: number[] = [-1];
-  formControlSecondOptions: number[] = [-1];
+  formControlFirstOptions: any[] = [-1];
+  formControlSecondOptions: any[] = [-1];
   totalOptions: any[] = [];
   resultType: string[] = [];
   valueOptionPrice: string[] = [];
@@ -123,7 +124,6 @@ export class SellerProductComponent implements OnInit {
         });
       });
     }
-
     this.totalOptions = result;
   }
 
@@ -527,6 +527,7 @@ export class SellerProductComponent implements OnInit {
       sectionElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
+  addValueToFirstOption(index: number, value: string) {}
   constructor(
     private authService: AuthService,
     public dialog: MatDialog,
@@ -537,10 +538,7 @@ export class SellerProductComponent implements OnInit {
     private router: Router,
     private categoryService: CategoryService
   ) {}
-  ngOnInit(): void {
-    this.authService.dataUser$.subscribe((data: any) => {
-      this.dataUser = data;
-    });
+  ngAfterViewInit(): void {
     this.route.params
       .pipe(
         pluck('id'),
@@ -553,6 +551,51 @@ export class SellerProductComponent implements OnInit {
           this.router.navigate(['seller/portal/product/new']);
         }
         if (data.DT !== '') {
+          console.log(
+            '🚀 ~ file: seller-product.component.ts:554 ~ SellerProductComponent ~ .subscribe ~ data.DT:',
+            data.DT
+          );
+          if (data.DT?.Product_Price_Options) {
+            this.formControlFirstOptions = [];
+            this.formControlSecondOptions = [];
+            data.DT.Product_Types.forEach((item: any, index: number) => {
+              if (index === 0) {
+                this.isChooseOption = true;
+                this.productForm.patchValue({
+                  first_type: item.name_product_type,
+                });
+                item.Product_Filters.forEach((data: any, index: number) => {
+                  this.formControlFirstOptions.push(data.name_filter);
+                });
+              } else {
+                this.isChooseSecondOption = true;
+                this.productForm.patchValue({
+                  second_type: item.name_product_type,
+                });
+                item.Product_Filters.forEach((data: any, index: number) => {
+                  this.formControlSecondOptions.push(data.name_filter);
+                });
+              }
+            });
+            setTimeout(() => {
+              this.handleChangeInput();
+            }, 100);
+            setTimeout(() => {
+              const optionPriceElements = document.querySelectorAll(
+                '.option_price'
+              ) as NodeListOf<HTMLInputElement>;
+              const optionStockElements = document.querySelectorAll(
+                '.option_stock'
+              ) as NodeListOf<HTMLInputElement>;
+              const priceOptions = data.DT?.Product_Price_Options;
+              optionPriceElements.forEach((item, index) => {
+                item.value = priceOptions[index].price;
+              });
+              optionStockElements.forEach((item, index) => {
+                item.value = priceOptions[index].quantity_stock;
+              });
+            }, 1000);
+          }
           this.listImage = data.DT.Image_Products;
           this.productForm.patchValue({
             name: data.DT.Product_Detail?.name,
@@ -568,6 +611,11 @@ export class SellerProductComponent implements OnInit {
           this.isEdit = true;
         }
       });
+  }
+  ngOnInit(): void {
+    this.authService.dataUser$.subscribe((data: any) => {
+      this.dataUser = data;
+    });
     this.categoryService.categoryFilter$.subscribe(
       (categoryFilterID: number) => {
         this.categoryFilterID = categoryFilterID;

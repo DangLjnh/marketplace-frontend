@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-seller-sidebar',
@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./seller-sidebar.component.scss'],
 })
 export class SellerSidebarComponent {
-  sidebars = [
+  sidebars: any = [
     {
       title: 'Quản lý đơn hàng',
       img: '',
@@ -14,14 +14,21 @@ export class SellerSidebarComponent {
         {
           name: 'Tất cả đơn hàng',
           url: '/seller/portal/order/list',
+          isActive: false,
+        },
+        {
+          name: 'Chờ xác nhận',
+          url: '/seller/portal/order/list',
+          queryKey: 'type',
+          queryParams: 'pending',
+          isActive: false,
         },
         {
           name: 'Đơn hủy',
-          url: '',
-        },
-        {
-          name: 'Trả hàng/Hoàn tiền',
-          url: '',
+          url: '/seller/portal/order/list',
+          queryKey: 'type',
+          queryParams: 'cancelled',
+          isActive: false,
         },
       ],
     },
@@ -31,14 +38,19 @@ export class SellerSidebarComponent {
         {
           name: 'Tất cả sản phẩm',
           url: '/seller/portal/product/list',
+          isActive: false,
         },
         {
           name: 'Thêm sản phẩm',
           url: '/seller/portal/product/new',
+          isActive: false,
         },
         {
           name: 'Sản phẩm chờ duyệt',
-          url: '',
+          url: '/seller/portal/product/list',
+          queryKey: 'type',
+          queryParams: 'pending',
+          isActive: false,
         },
       ],
     },
@@ -48,6 +60,7 @@ export class SellerSidebarComponent {
         {
           name: 'Doanh thu',
           url: '',
+          isActive: false,
         },
       ],
     },
@@ -57,14 +70,17 @@ export class SellerSidebarComponent {
         {
           name: 'Đánh giá Shop',
           url: '',
+          isActive: false,
         },
         {
           name: 'Hồ sơ Shop',
           url: '',
+          isActive: false,
         },
         {
           name: 'Tài khoản',
           url: '',
+          isActive: false,
         },
       ],
     },
@@ -74,12 +90,29 @@ export class SellerSidebarComponent {
         {
           name: 'Danh sách giảm giá',
           url: '/seller/portal/discount/list',
+          isActive: false,
         },
         {
           name: 'Thêm giảm giá sản phẩm',
           url: '/seller/portal/discount/new',
+          isActive: false,
         },
       ],
     },
   ];
+  handleChoose(sub: any) {
+    this.sidebars.forEach((item: any) => {
+      item.submenus.forEach((item: any) => {
+        item.isActive = false;
+        if (item.name === sub.name) {
+          item.isActive = true;
+        }
+      });
+    });
+  }
+  getQueryParamsObject(queryKey: string, queryParams: string): any {
+    const paramsObject: any = {};
+    paramsObject[queryKey] = queryParams;
+    return paramsObject;
+  }
 }

@@ -14,6 +14,22 @@ export class OrderService {
     );
   }
 
+  readAllOrderWithStatusOfShop({
+    shopID,
+    offset,
+    limit,
+    statusID,
+  }: {
+    shopID: number | undefined;
+    statusID: number;
+    offset: number;
+    limit: number;
+  }): Observable<IResponse> {
+    return this.http.get<IResponse>(
+      `${environment.backendUrl}/order-shop/read-all-status?shopID=${shopID}&statusID=${statusID}&offset=${offset}&limit=${limit}`
+    );
+  }
+
   readSingleOrderDetail(orderID: number): Observable<IResponse> {
     return this.http.get<IResponse>(
       `${environment.backendUrl}/order/read-single/${orderID}`

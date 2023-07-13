@@ -21,10 +21,6 @@ export class SellerOrderDetailModalComponent implements OnInit {
     this.orderID = orderID;
     this.orderService.readSingleOrderDetail(orderID).subscribe((data) => {
       this.dataAddress = data.DT?.Address?.Address_Detail;
-      console.log(
-        '🚀 ~ file: seller-order-detail-modal.component.ts:20 ~ SellerOrderDetailModalComponent ~ this.orderService.readSingleOrderDetail ~ data:',
-        data.DT
-      );
       this.orderList = data.DT.Order_Details;
     });
   }

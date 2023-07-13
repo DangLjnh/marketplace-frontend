@@ -146,8 +146,8 @@
                         <div class="flex items-center gap-x-2">
                           <mat-form-field class="w-full">
                             <mat-label>ví dụ: trắng, đỏ v.v</mat-label>
-                            <input type="text" #first_option matInput name="first_option"
-                              (change)="handleChangeInput()">
+                            <input type="text" #first_option matInput name="first_option" (change)="handleChangeInput()"
+                              [value]="option.length ? option: ''">
                           </mat-form-field>
                           <app-icon-plus (click)="addFirstOption(i)"></app-icon-plus>
                           <app-icon-trash (click)="deleteFirstOption(i)"></app-icon-trash>
@@ -173,7 +173,7 @@
                             <mat-form-field class="w-full">
                               <mat-label>ví dụ: S, M v.v</mat-label>
                               <input type="text" #second_option matInput name="second_option"
-                                (change)="handleChangeInput()">
+                                (change)="handleChangeInput()" [value]="option.length ? option: ''">
                             </mat-form-field>
                             <app-icon-plus (click)="addSecondOption(i)"></app-icon-plus>
                             <app-icon-trash (click)="deleteSecondOption(i)"></app-icon-trash>
@@ -232,14 +232,14 @@
                           <mat-form-field class="w-full">
                             <mat-label>Nhập vào</mat-label>
                             <input type="number" matInput #option_price name="option_price"
-                              (focus)="handleFocus('price_original')">
+                              (focus)="handleFocus('price_original')" class="option_price ">
                           </mat-form-field>
                         </td>
                         <td class="px-6 py-4">
                           <mat-form-field class="w-full">
                             <mat-label>Nhập vào</mat-label>
                             <input type="number" matInput #option_stock name="option_stock"
-                              (focus)="handleFocus('quantity')">
+                              (focus)="handleFocus('quantity')" class="option_stock">
                           </mat-form-field>
                         </td>
                       </tr>

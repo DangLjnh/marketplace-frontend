@@ -1,10 +1,16 @@
 <div class="bg-white rounded">
   <ul class="flex items-center border-b-2 tab-navs">
-    <li *ngFor="let nav of navTabs" class="p-4 transition-all cursor-pointer hover:text-primary">{{nav.name}}</li>
+    <li *ngFor="let nav of navTabs" class="p-4 transition-all cursor-pointer hover:text-primary"
+      [class]="nav.isActive ? 'text-primary': ''" (click)="handleChooseOption(nav.name)">{{nav.name}}</li>
   </ul>
   <div class="flex items-center justify-between p-4">
-    <span class="text-lg font-bold">1 Sản Phẩm</span>
-    <app-button>
+    <ng-container *ngIf="productList; else noProduct">
+      <span class="text-lg font-bold">{{productList.length}} Sản Phẩm</span>
+    </ng-container>
+    <ng-template #noProduct>
+      <span class="text-lg font-bold">0 Sản Phẩm</span>
+    </ng-template>
+    <app-button [routerLink]="'/seller/portal/product/list'">
       <div class="flex items-center gap-x-3">
         <app-icon-plus></app-icon-plus>
         <span>Thêm 1 sản phẩm mới</span>
@@ -22,14 +28,17 @@
           <th scope="col" class="px-6 py-4 w-[150px]">
             Thể loại
           </th>
-          <th scope="col" class="px-6 py-4">
+          <th scope="col" class=" py-4">
             <div class="grid grid-cols-5">
-              <p>Phân Loại hàng 1</p>
-              <p>Phân Loại hàng 2</p>
+              <p class="whitespace-nowrap">Phân loại 1</p>
+              <p class="whitespace-nowrap">Phân loại 2</p>
               <p>Giá</p>
               <p>Kho hàng</p>
               <p>Doanh số</p>
             </div>
+          </th>
+          <th scope="col" class="px-6 py-4 w-[130px]">
+            Trạng thái
           </th>
           <th scope="col" class="px-6 py-4 w-[180px]">
             Thao tác
@@ -44,13 +53,15 @@
               <div class="flex items-center gap-x-2">
                 <img [src]="product.Image_Products[0].Image_Product_Detail.photo_url" alt=""
                   class="w-[56px] h-[70px] object-cover rounded-sm ">
-                <p class="font-medium line-clamp-2">{{product.Product_Detail.name}}</p>
+                <div>
+                  <p class="font-medium line-clamp-2">{{product.Product_Detail.name}}</p>
+                </div>
               </div>
             </th>
             <th scope="col" class="px-6 py-5 w-[150px]">
               <p>{{product.Category_Filter.name_category_filter}}</p>
             </th>
-            <th scope="col" class="px-6 py-5 ">
+            <th scope="col" class=" py-5 ">
               <ng-container *ngIf="product.Product_Price_Options.length > 0; else noOption">
                 <ng-container *ngFor="let option of product.Product_Price_Options">
                   <ng-container *ngIf="option?.secondFilter;else noHasSecondOption">
@@ -83,11 +94,21 @@
                 </div>
               </ng-template>
             </th>
+            <th scope="col" class="px-6 py-4 w-[130px]">
+              <ng-container *ngIf="product.status === 1">
+                <span class="px-4 py-2 bg-green-300 rounded whitespace-nowrap">Đang hoạt động</span>
+              </ng-container>
+              <ng-container *ngIf="product.status === 2">
+                <span class="px-4 py-2 bg-yellow-300 rounded whitespace-nowrap">Chờ duyệt</span>
+              </ng-container>
+              <ng-container *ngIf="product.status === 3">
+                <span class="px-4 py-2 bg-red-300 rounded whitespace-nowrap">Vi phạm</span>
+              </ng-container>
+            </th>
             <th scope="col" class="px-6 py-5 w-[180px]">
               <div class="flex items-center text-xs gap-x-3">
-                <a class="px-4 py-2 bg-red-100 rounded">Xóa</a>
+                <a class="px-4 py-2 bg-red-100 rounded cursor-pointer">Xóa</a>
                 <a [routerLink]="'/seller/portal/product/'+product.id" class="px-4 py-2 bg-yellow-100 rounded">Sửa</a>
-                <a class="px-4 py-2 bg-green-100 rounded whitespace-nowrap">Sao chép</a>
               </div>
             </th>
           </tr>

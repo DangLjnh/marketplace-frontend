@@ -27,18 +27,19 @@ export class CustomerAddressComponent implements OnInit {
 
   handleDeleteAddress(addressID: number | undefined) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Bạn chắc chứ?',
+      text: 'Địa chỉ này sẽ không thể hoàn tác!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#0A68FF',
       cancelButtonColor: '#FF424E',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: 'Chắc! Xóa nó đi',
+      cancelButtonText: 'Hủy',
     }).then(async (result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Deleted!',
-          text: 'Your address has been deleted.',
+          title: 'Đã xóa!',
+          text: 'Địa chỉ của bạn đã được xóa.',
           icon: 'success',
           confirmButtonColor: '#0A68FF', // Update the button color
         });

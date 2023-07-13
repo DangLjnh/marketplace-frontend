@@ -39,9 +39,33 @@ export class ProductService {
     );
   }
 
-  readAllProductOfShop(shopID: number | undefined): Observable<IResponse> {
+  readAllProductOfShop({
+    shopID,
+    offset,
+    limit,
+  }: {
+    shopID: number | undefined;
+    offset: number;
+    limit: number;
+  }): Observable<IResponse> {
     return this.http.get<IResponse>(
-      `${environment.backendUrl}/product/read-all/${shopID}`
+      `${environment.backendUrl}/product/read-all-shop?shopID=${shopID}&offset=${offset}&limit=${limit}`
+    );
+  }
+
+  readAllProductWithStatusOfShop({
+    shopID,
+    statusID,
+    offset,
+    limit,
+  }: {
+    shopID: number;
+    statusID: number;
+    offset: number;
+    limit: number;
+  }) {
+    return this.http.get<IResponse>(
+      `${environment.backendUrl}/product/read-all-status?shopID=${shopID}&statusID=${statusID}&offset=${offset}&limit=${limit}`
     );
   }
 
