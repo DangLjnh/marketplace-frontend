@@ -43,6 +43,10 @@ const routes: Routes = [
             path: 'discount/new',
             component: SellerDiscountNewComponent,
           },
+          {
+            path: 'discount/edit/:id',
+            component: SellerDiscountNewComponent,
+          },
         ],
       },
       {
