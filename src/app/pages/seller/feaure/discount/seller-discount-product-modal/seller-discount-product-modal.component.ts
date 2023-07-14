@@ -53,17 +53,13 @@ export class SellerDiscountProductModalComponent implements OnInit {
           .readAllProductOfShop({ shopID: data.Shop.id, offset: 0, limit: 10 })
           .pipe(
             map((data) =>
-              data.DT.filter(
+              data.DT.data.filter(
                 (data: IProduct) => data.status === statusProduct.ACTIVE
               )
             )
           )
           .subscribe((data) => {
             this.productList = data;
-            console.log(
-              '🚀 ~ file: seller-discount-product-modal.component.ts:63 ~ SellerDiscountProductModalComponent ~ .subscribe ~ data:',
-              data
-            );
             this.productList.forEach((product) => (product.checked = false));
             this.productList.forEach((item) => {
               item.Product_Price_Options.forEach((option: any) => {

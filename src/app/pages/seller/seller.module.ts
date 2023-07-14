@@ -41,6 +41,7 @@ import { SellerProductCategoryModalComponent } from './feaure/product/seller-pro
 import { SellerOrderListComponent } from './feaure/order/seller-order-list/seller-order-list.component';
 import { SellerOrderListCancelComponent } from './feaure/order/seller-order-list-cancel/seller-order-list-cancel.component';
 import { SellerOrderDetailModalComponent } from './feaure/order/seller-order-detail-modal/seller-order-detail-modal.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule({
   declarations: [
     SellerComponent,
@@ -83,6 +84,7 @@ import { SellerOrderDetailModalComponent } from './feaure/order/seller-order-det
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
     FormsModule,
+    MatPaginatorModule,
   ],
 })
 export class SellerModule {}

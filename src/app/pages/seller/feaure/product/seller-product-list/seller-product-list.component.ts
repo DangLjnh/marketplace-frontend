@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { IProduct, IUser } from 'src/app/shared/model/interface';
 import { statusProduct } from 'src/app/shared/model/model';
 import { ActivatedRoute } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-seller-product-list',
@@ -17,6 +18,12 @@ export class SellerProductListComponent implements OnInit {
   productList!: any[];
   productOptions!: any[];
   currentOption: string = 'Tất cả';
+  length: number = 0;
+  pageSize: number = 0;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 25];
+  showFirstLastButtons = true;
+  pageEvent!: PageEvent;
   navTabs = [
     {
       name: 'Tất cả',
@@ -39,6 +46,73 @@ export class SellerProductListComponent implements OnInit {
       isActive: false,
     },
   ];
+
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageIndex = e.pageIndex;
+
+    this.handlePageWithOption(
+      e.pageIndex * e.pageSize,
+      e.pageSize,
+      this.currentOption
+    );
+  }
+
+  handlePageWithOption(offset: number, limit: number, current: string) {
+    if (current === 'Tất cả') {
+      this.productService
+        .readAllProductOfShop({
+          shopID: this.dataUser?.Shop?.id,
+          offset,
+          limit,
+        })
+        .subscribe((data) => {
+          this.length = data.DT.totalItems;
+          this.productList = data.DT.data;
+        });
+    }
+    if (current === 'Đang hoạt động') {
+      this.productService
+        .readAllProductWithStatusOfShop({
+          shopID: this.dataUser?.Shop?.id,
+          statusID: statusProduct.ACTIVE,
+          offset,
+          limit,
+        })
+        .subscribe((data) => {
+          this.length = data.DT.totalItems;
+          this.productList = data.DT.data;
+        });
+    }
+    if (current === 'Chờ duyệt') {
+      this.productService
+        .readAllProductWithStatusOfShop({
+          shopID: this.dataUser?.Shop?.id,
+          statusID: statusProduct.PENDING,
+          offset,
+          limit,
+        })
+        .subscribe((data) => {
+          this.length = data.DT.totalItems;
+          this.productList = data.DT.data;
+        });
+    }
+    if (current === 'Vi phạm') {
+      this.productService
+        .readAllProductWithStatusOfShop({
+          shopID: this.dataUser?.Shop?.id,
+          statusID: statusProduct.BAN,
+          offset,
+          limit,
+        })
+        .subscribe((data) => {
+          this.length = data.DT.totalItems;
+          this.productList = data.DT.data;
+        });
+    }
+  }
+
   handleChooseOption(current: string) {
     this.navTabs.forEach((item) => {
       item.isActive = false;
@@ -46,53 +120,9 @@ export class SellerProductListComponent implements OnInit {
         item.isActive = true;
       }
     });
-    if (current === 'Tất cả') {
-      this.productService
-        .readAllProductOfShop({
-          shopID: this.dataUser.Shop?.id,
-          offset: 0,
-          limit: 10,
-        })
-        .subscribe((data) => {
-          this.productList = data.DT;
-        });
-    }
-    if (current === 'Đang hoạt động') {
-      this.productService
-        .readAllProductWithStatusOfShop({
-          shopID: this.dataUser.Shop.id,
-          statusID: statusProduct.ACTIVE,
-          offset: 0,
-          limit: 10,
-        })
-        .subscribe((data) => {
-          this.productList = data.DT;
-        });
-    }
-    if (current === 'Chờ duyệt') {
-      this.productService
-        .readAllProductWithStatusOfShop({
-          shopID: this.dataUser.Shop.id,
-          statusID: statusProduct.PENDING,
-          offset: 0,
-          limit: 10,
-        })
-        .subscribe((data) => {
-          this.productList = data.DT;
-        });
-    }
-    if (current === 'Vi phạm') {
-      this.productService
-        .readAllProductWithStatusOfShop({
-          shopID: this.dataUser.Shop.id,
-          statusID: statusProduct.BAN,
-          offset: 0,
-          limit: 10,
-        })
-        .subscribe((data) => {
-          this.productList = data.DT;
-        });
-    }
+    this.currentOption = current;
+    this.handlePageWithOption(0, 5, current);
+    this.pageIndex = 0;
   }
 
   constructor(
@@ -101,35 +131,39 @@ export class SellerProductListComponent implements OnInit {
     private toastrService: ToastrService,
     private route: ActivatedRoute
   ) {}
+
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       const type = params.get('type');
-      if (type === 'pending') {
-        this.handleChooseOption('Chờ duyệt');
-        this.productService
-          .readAllProductWithStatusOfShop({
-            shopID: this.dataUser.Shop.id,
-            statusID: statusProduct.PENDING,
-            offset: 0,
-            limit: 10,
-          })
-          .subscribe((data) => {
-            this.productList = data.DT;
-          });
-      } else {
-        this.authService.dataUser$.subscribe((data) => {
-          this.dataUser = data;
+      this.authService.dataUser$.subscribe((data) => {
+        this.dataUser = data;
+        if (type === 'pending') {
+          this.handleChooseOption('Chờ duyệt');
+          this.productService
+            .readAllProductWithStatusOfShop({
+              shopID: data?.Shop?.id,
+              statusID: statusProduct.PENDING,
+              offset: 0,
+              limit: 5,
+            })
+            .subscribe((data) => {
+              this.length = data.DT.totalItems;
+              this.productList = data.DT.data;
+            });
+        } else {
+          this.handleChooseOption('Tất cả');
           this.productService
             .readAllProductOfShop({
               shopID: data?.Shop?.id,
               offset: 0,
-              limit: 10,
+              limit: 5,
             })
             .subscribe((data) => {
-              this.productList = data.DT;
+              this.length = data.DT.totalItems;
+              this.productList = data.DT.data;
             });
-        });
-      }
+        }
+      });
     });
   }
 }

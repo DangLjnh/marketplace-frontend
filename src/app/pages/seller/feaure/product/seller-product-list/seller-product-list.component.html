@@ -5,7 +5,7 @@
   </ul>
   <div class="flex items-center justify-between p-4">
     <ng-container *ngIf="productList; else noProduct">
-      <span class="text-lg font-bold">{{productList.length}} Sản Phẩm</span>
+      <span class="text-lg font-bold">{{length}} Sản Phẩm</span>
     </ng-container>
     <ng-template #noProduct>
       <span class="text-lg font-bold">0 Sản Phẩm</span>
@@ -115,14 +115,14 @@
         </ng-container>
       </tbody>
     </table>
-    <div class="flex items-center justify-end px-4 pt-4 text-base gap-x-5">
-      <p class="text-lightGray">
-        < </p>
-          <p>1</p>
-          <p>/</p>
-          <p>1</p>
-          <p class="text-lightGray">></p>
+
+    <div class="mt-5">
+      <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+        [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex" aria-label="Select page">
+      </mat-paginator>
     </div>
+
   </div>
 
 </div>

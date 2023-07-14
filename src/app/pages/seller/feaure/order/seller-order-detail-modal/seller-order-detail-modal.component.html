@@ -31,9 +31,21 @@
       </div>
     </div>
     <ng-container *ngIf="dataAddress">
-      <p class="mt-5 mb-1 text-black font-medium">Địa chỉ giao hàng: </p>
-      <span>{{dataAddress.address}}, {{dataAddress.ward}},
-        {{dataAddress.district}}, {{dataAddress.city}}</span>
+      <div class="my-5 flex items-center gap-x-10">
+        <div class="">
+          <p class="mb-1 text-black font-medium">Tên người nhận: </p>
+          <span>{{dataAddress.full_name}}</span>
+        </div>
+        <div>
+          <p class="mb-1 text-black font-medium">Số điện thoại: </p>
+          <span>{{dataAddress.phone}}</span>
+        </div>
+        <div>
+          <p class="mb-1 text-black font-medium">Địa chỉ giao hàng: </p>
+          <span>{{dataAddress.address}}, {{dataAddress.ward}},
+            {{dataAddress.district}}, {{dataAddress.city}}</span>
+        </div>
+      </div>
     </ng-container>
   </div>
   <div mat-dialog-actions class="flex items-center !justify-end">

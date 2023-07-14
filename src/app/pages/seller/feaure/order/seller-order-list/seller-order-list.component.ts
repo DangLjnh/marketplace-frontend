@@ -1,4 +1,4 @@
-import { Observable, filter, map, switchMap, Subscription } from 'rxjs';
+import { Observable, filter, map, switchMap, Subscription, tap } from 'rxjs';
 import { AuthService } from './../../../../auth/data-access/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrderService } from '../../../data-access/order.service';
@@ -9,6 +9,7 @@ import { errorCode, statusOrder } from 'src/app/shared/model/model';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-seller-order-list',
   templateUrl: './seller-order-list.component.html',
@@ -18,6 +19,15 @@ export class SellerOrderListComponent implements OnInit {
   // dataUser!: IUser;
   type!: string | null;
   listOrderActive$!: Observable<any[]>;
+  currentOption: string = 'Tất cả';
+  totalItems!: number;
+  length: number = 0;
+  pageSize: number = 0;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 25];
+  showFirstLastButtons = true;
+  pageEvent!: PageEvent;
+
   navTabs = [
     {
       name: 'Tất cả',
@@ -40,20 +50,41 @@ export class SellerOrderListComponent implements OnInit {
       isActive: false,
     },
   ];
-  handleChooseOption(current: string) {
-    this.navTabs.forEach((item) => {
-      item.isActive = false;
-      if (item.name === current) {
-        item.isActive = true;
-      }
-    });
+
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageIndex = e.pageIndex;
+
+    this.handlePageWithOption(
+      e.pageIndex * e.pageSize,
+      e.pageSize,
+      this.currentOption
+    );
+
+    // this.handleChooseOption('Tất cả');
+    // this.handlePageWithOption(
+    //   e.pageIndex * e.pageSize,
+    //   e.pageSize,
+    //   this.currentOption
+    // );
+  }
+
+  handlePageWithOption(offset: number, limit: number, current: string) {
     if (current === 'Tất cả') {
       this.listOrderActive$ = this.authService.dataUser$.pipe(
         switchMap((data) =>
-          this.orderService.readAllOrderActiveOfShop(data?.Shop?.id)
+          this.orderService.readAllOrderActiveOfShop({
+            shopID: data?.Shop?.id,
+            offset,
+            limit,
+          })
         ),
         filter((order) => !!order),
-        map((order) => order.DT)
+        tap((order) => {
+          this.length = order.DT.totalItems;
+        }),
+        map((order) => order.DT.data)
       );
     }
     if (current === 'Đang giao hàng') {
@@ -61,13 +92,16 @@ export class SellerOrderListComponent implements OnInit {
         switchMap((data) =>
           this.orderService.readAllOrderWithStatusOfShop({
             shopID: data?.Shop?.id,
-            offset: 0,
-            limit: 10,
+            offset,
+            limit,
             statusID: statusOrder.DELIVERING,
           })
         ),
         filter((order) => !!order),
-        map((order) => order.DT)
+        tap((order) => {
+          this.length = order.DT.totalItems;
+        }),
+        map((order) => order.DT.data)
       );
     }
     if (current === 'Chờ xác nhận') {
@@ -75,13 +109,16 @@ export class SellerOrderListComponent implements OnInit {
         switchMap((data) =>
           this.orderService.readAllOrderWithStatusOfShop({
             shopID: data?.Shop?.id,
-            offset: 0,
-            limit: 10,
+            offset,
+            limit,
             statusID: statusOrder.PENDING,
           })
         ),
         filter((order) => !!order),
-        map((order) => order.DT)
+        tap((order) => {
+          this.length = order.DT.totalItems;
+        }),
+        map((order) => order.DT.data)
       );
     }
     if (current === 'Đơn hủy') {
@@ -89,13 +126,16 @@ export class SellerOrderListComponent implements OnInit {
         switchMap((data) =>
           this.orderService.readAllOrderWithStatusOfShop({
             shopID: data?.Shop?.id,
-            offset: 0,
-            limit: 10,
+            offset,
+            limit,
             statusID: statusOrder.CANCELLED,
           })
         ),
         filter((order) => !!order),
-        map((order) => order.DT)
+        tap((order) => {
+          this.length = order.DT.totalItems;
+        }),
+        map((order) => order.DT.data)
       );
     }
     if (current === 'Hoàn tất') {
@@ -103,15 +143,30 @@ export class SellerOrderListComponent implements OnInit {
         switchMap((data) =>
           this.orderService.readAllOrderWithStatusOfShop({
             shopID: data?.Shop?.id,
-            offset: 0,
-            limit: 10,
+            offset,
+            limit,
             statusID: statusOrder.DELIVERED,
           })
         ),
         filter((order) => !!order),
-        map((order) => order.DT)
+        tap((order) => {
+          this.length = order.DT.totalItems;
+        }),
+        map((order) => order.DT.data)
       );
     }
+  }
+
+  handleChooseOption(current: string) {
+    this.navTabs.forEach((item) => {
+      item.isActive = false;
+      if (item.name === current) {
+        item.isActive = true;
+      }
+    });
+    this.currentOption = current;
+    this.handlePageWithOption(0, 5, current);
+    this.pageIndex = 0;
   }
   updateStatusDone(orderID: number) {
     const rawData = {
@@ -124,10 +179,17 @@ export class SellerOrderListComponent implements OnInit {
         this.toastrService.success(data.EM);
         this.listOrderActive$ = this.authService.dataUser$.pipe(
           switchMap((data) =>
-            this.orderService.readAllOrderActiveOfShop(data?.Shop?.id)
+            this.orderService.readAllOrderActiveOfShop({
+              shopID: data?.Shop?.id,
+              offset: 0,
+              limit: 5,
+            })
           ),
           filter((order) => !!order),
-          map((order) => order.DT)
+          tap((order) => {
+            this.length = order.DT.totalItems;
+          }),
+          map((order) => order.DT.data)
         );
       } else {
         this.toastrService.error(data.EM);
@@ -167,10 +229,17 @@ export class SellerOrderListComponent implements OnInit {
             });
             this.listOrderActive$ = this.authService.dataUser$.pipe(
               switchMap((data) =>
-                this.orderService.readAllOrderActiveOfShop(data?.Shop?.id)
+                this.orderService.readAllOrderActiveOfShop({
+                  shopID: data?.Shop?.id,
+                  offset: 0,
+                  limit: 5,
+                })
               ),
               filter((order) => !!order),
-              map((order) => order.DT)
+              tap((order) => {
+                this.length = order.DT.totalItems;
+              }),
+              map((order) => order.DT.data)
             );
           } else {
             this.toastrService.error(data.EM);
@@ -189,10 +258,17 @@ export class SellerOrderListComponent implements OnInit {
         this.toastrService.success(data.EM);
         this.listOrderActive$ = this.authService.dataUser$.pipe(
           switchMap((data) =>
-            this.orderService.readAllOrderActiveOfShop(data?.Shop?.id)
+            this.orderService.readAllOrderActiveOfShop({
+              shopID: data?.Shop?.id,
+              offset: 0,
+              limit: 5,
+            })
           ),
           filter((order) => !!order),
-          map((order) => order.DT)
+          tap((order) => {
+            this.length = order.DT.totalItems;
+          }),
+          map((order) => order.DT.data)
         );
       } else {
         this.toastrService.error(data.EM);
@@ -213,23 +289,26 @@ export class SellerOrderListComponent implements OnInit {
   ngOnInit() {
     this.route.queryParamMap.subscribe((params) => {
       const type = params.get('type');
-      this.listOrderActive$ = this.getOrderActiveObservable(type);
+      this.listOrderActive$ = this.getOrderActiveObservable(type, 0, 5);
     });
   }
-  getOrderActiveObservable(type: string | null) {
+  getOrderActiveObservable(type: string | null, offset: number, limit: number) {
     if (type && type === 'cancelled') {
       this.handleChooseOption('Đơn hủy');
       return this.authService.dataUser$.pipe(
         switchMap((data) =>
           this.orderService.readAllOrderWithStatusOfShop({
             shopID: data?.Shop?.id,
-            offset: 0,
-            limit: 10,
+            offset,
+            limit,
             statusID: statusOrder.CANCELLED,
           })
         ),
         filter((order) => !!order),
-        map((order) => order.DT)
+        tap((order) => {
+          this.length = order.DT.totalItems;
+        }),
+        map((order) => order.DT.data)
       );
     } else if (type && type === 'pending') {
       this.handleChooseOption('Chờ xác nhận');
@@ -237,22 +316,32 @@ export class SellerOrderListComponent implements OnInit {
         switchMap((data) =>
           this.orderService.readAllOrderWithStatusOfShop({
             shopID: data?.Shop?.id,
-            offset: 0,
-            limit: 10,
+            offset,
+            limit,
             statusID: statusOrder.PENDING,
           })
         ),
         filter((order) => !!order),
-        map((order) => order.DT)
+        tap((order) => {
+          this.length = order.DT.totalItems;
+        }),
+        map((order) => order.DT.data)
       );
     } else {
       this.handleChooseOption('Tất cả');
       return this.authService.dataUser$.pipe(
         switchMap((data) =>
-          this.orderService.readAllOrderActiveOfShop(data?.Shop?.id)
+          this.orderService.readAllOrderActiveOfShop({
+            shopID: data?.Shop?.id,
+            offset,
+            limit,
+          })
         ),
         filter((order) => !!order),
-        map((order) => order.DT)
+        tap((order) => {
+          this.length = order.DT.totalItems;
+        }),
+        map((order) => order.DT.data)
       );
     }
   }

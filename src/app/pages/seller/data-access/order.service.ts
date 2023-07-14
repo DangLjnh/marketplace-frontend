@@ -8,9 +8,17 @@ import { environment } from 'src/environments/environment.prod';
   providedIn: 'root',
 })
 export class OrderService {
-  readAllOrderActiveOfShop(shopID: number): Observable<IResponse> {
+  readAllOrderActiveOfShop({
+    shopID,
+    limit,
+    offset,
+  }: {
+    shopID: number;
+    limit: number;
+    offset: number;
+  }): Observable<IResponse> {
     return this.http.get<IResponse>(
-      `${environment.backendUrl}/order-shop/read-all/${shopID}`
+      `${environment.backendUrl}/order-shop/read-all?shopID=${shopID}&limit=${limit}&offset=${offset}`
     );
   }
 

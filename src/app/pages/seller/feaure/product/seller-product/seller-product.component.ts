@@ -282,10 +282,6 @@ export class SellerProductComponent implements OnInit, AfterViewInit {
         formData.append('warehouseID', String(this.dataUser.Shop.Warehouse.id));
         formData.append('listImage', JSON.stringify(this.listImage));
         formData.append('productTypes', JSON.stringify(result));
-        console.log(
-          '🚀 ~ file: seller-product.component.ts:258 ~ SellerProductComponent ~ submitForm ~ result:',
-          result
-        );
         this.productService.updateProduct(formData).subscribe((data) => {
           this.loading = false;
           if (+data.EC === 1 || +data.EC === -1) {
@@ -559,7 +555,23 @@ export class SellerProductComponent implements OnInit, AfterViewInit {
       sectionElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
-  addValueToFirstOption(index: number, value: string) {}
+
+  showDataUpdate() {
+    const optionPriceElements = document.querySelectorAll(
+      '.option_price'
+    ) as NodeListOf<HTMLInputElement>;
+    const optionStockElements = document.querySelectorAll(
+      '.option_stock'
+    ) as NodeListOf<HTMLInputElement>;
+    const priceOptions = this.dataProduct?.Product_Price_Options;
+    optionPriceElements.forEach((item, index) => {
+      item.value = String(priceOptions[index].price);
+    });
+    optionStockElements.forEach((item, index) => {
+      item.value = String(priceOptions[index].quantity_stock);
+    });
+  }
+
   constructor(
     private authService: AuthService,
     public dialog: MatDialog,
@@ -584,10 +596,6 @@ export class SellerProductComponent implements OnInit, AfterViewInit {
         }
         if (data.DT !== '') {
           if (data.DT?.Product_Price_Options) {
-            console.log(
-              '🚀 ~ file: seller-product.component.ts:586 ~ SellerProductComponent ~ .subscribe ~ data.DT:',
-              data.DT
-            );
             const clone = JSON.stringify(data.DT);
             this.dataProduct = JSON.parse(clone);
             this.formControlFirstOptions = [];
@@ -615,19 +623,7 @@ export class SellerProductComponent implements OnInit, AfterViewInit {
               this.handleChangeInput();
             }, 100);
             setTimeout(() => {
-              const optionPriceElements = document.querySelectorAll(
-                '.option_price'
-              ) as NodeListOf<HTMLInputElement>;
-              const optionStockElements = document.querySelectorAll(
-                '.option_stock'
-              ) as NodeListOf<HTMLInputElement>;
-              const priceOptions = data.DT?.Product_Price_Options;
-              optionPriceElements.forEach((item, index) => {
-                item.value = priceOptions[index].price;
-              });
-              optionStockElements.forEach((item, index) => {
-                item.value = priceOptions[index].quantity_stock;
-              });
+              this.showDataUpdate();
             }, 1000);
           }
           this.listImage = data.DT.Image_Products;

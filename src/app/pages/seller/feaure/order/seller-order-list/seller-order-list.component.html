@@ -75,7 +75,7 @@
                   <a class="px-4 py-2 bg-red-100 rounded whitespace-nowrap cursor-pointer"
                     (click)="handleChooseCancel(order.id)">Hủy đơn</a>
                 </ng-container>
-                <ng-container *ngIf="order.statusID !== 2 && order.statusID !== 4">
+                <ng-container *ngIf="order.statusID === 1">
                   <a (click)="updateStatusDone(order.id)"
                     class="px-4 py-2 bg-green-100 rounded whitespace-nowrap cursor-pointer">Hoàn tất</a>
                 </ng-container>
@@ -84,14 +84,14 @@
           </tr>
         </tbody>
       </table>
-      <div class="flex items-center justify-end px-4 pt-4 text-base gap-x-5">
-        <p class="text-lightGray">
-          < </p>
-            <p>1</p>
-            <p>/</p>
-            <p>1</p>
-            <p class="text-lightGray">></p>
+
+      <div class="mt-5">
+        <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+          [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions"
+          [pageIndex]="pageIndex" aria-label="Select page">
+        </mat-paginator>
       </div>
+
     </div>
   </div>
 </div>

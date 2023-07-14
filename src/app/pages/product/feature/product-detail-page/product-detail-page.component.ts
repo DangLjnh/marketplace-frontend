@@ -263,7 +263,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
             offset: 0,
             limit: 10,
           })
-          .pipe(map((data) => data.DT));
+          .pipe(map((data) => data.DT.data));
 
         if (data.DT.Product_Price_Options.length > 0) {
           this.notChooseOption = true;
