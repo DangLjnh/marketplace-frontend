@@ -30,17 +30,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { CategoryService } from '../../../data-access/category/category.service';
 
 interface PriceInfo {
+  id: number | null | undefined;
   stock: number;
   option: string;
   price: number;
 }
 
 interface OptionInfo {
+  id: number | null | undefined;
   option: string;
   prices?: PriceInfo[];
 }
 
 interface ProductType {
+  id: number | null | undefined;
   name_product_type: string;
   options: OptionInfo[];
 }
@@ -63,6 +66,7 @@ export class SellerProductComponent implements OnInit, AfterViewInit {
   listFile: any[] = []; // when add file
   listBase64: any[] = []; // when add file
   listImage: IImageProducts[] = []; // list image get from api
+  dataProduct!: IProduct;
   dataUser!: IUser;
   valueCounter!: number;
   loading: boolean = false;
@@ -151,26 +155,48 @@ export class SellerProductComponent implements OnInit, AfterViewInit {
     // Convert type, stock, and price into a dictionary
     if (this.resultType) {
       this.resultType.forEach((typeName: string, index: number) => {
+        let count = 0;
         const options: OptionInfo[] = [];
-        this.totalOptions.forEach((opt) => {
+        this.totalOptions.forEach((opt, idx) => {
           if (!options.some((o) => o.option === opt.firstOption)) {
             if (index === 0) {
-              // if (options[index]?.option !== opt.firstOption)
+              let id;
+              this?.dataProduct?.Product_Types[0]?.Product_Filters?.forEach(
+                (item, idxx) => {
+                  if (idxx === count) {
+                    id = item.id;
+                  }
+                }
+              );
               options.push({
+                id,
                 option: opt.firstOption,
                 prices: [],
               });
+              count++;
             }
             if (index === 1) {
+              let id;
+              this?.dataProduct?.Product_Types[1]?.Product_Filters?.forEach(
+                (item, idxx) => {
+                  if (idxx === count) {
+                    id = item.id;
+                  }
+                }
+              );
               if (!optionSecond.includes(opt.secondOption))
                 options.push({
+                  id,
                   option: opt.secondOption,
                 });
               optionSecond.push(opt.secondOption);
+              count++;
             }
           }
         });
+
         const productType: ProductType = {
+          id: this?.dataProduct?.Product_Types[index]?.id,
           name_product_type: typeName,
           options,
         };
@@ -182,6 +208,7 @@ export class SellerProductComponent implements OnInit, AfterViewInit {
         const optionName = opt.firstOption;
         const optionValue = opt.secondOption;
         const priceInfo: PriceInfo = {
+          id: this?.dataProduct?.Product_Price_Options[index].id,
           stock: parseInt(this.valueOptionStock[index]),
           option: optionValue,
           price: parseInt(this.valueOptionPrice[index]),
@@ -254,6 +281,11 @@ export class SellerProductComponent implements OnInit, AfterViewInit {
         formData.append('weight', String(formValue.weight));
         formData.append('warehouseID', String(this.dataUser.Shop.Warehouse.id));
         formData.append('listImage', JSON.stringify(this.listImage));
+        formData.append('productTypes', JSON.stringify(result));
+        console.log(
+          '🚀 ~ file: seller-product.component.ts:258 ~ SellerProductComponent ~ submitForm ~ result:',
+          result
+        );
         this.productService.updateProduct(formData).subscribe((data) => {
           this.loading = false;
           if (+data.EC === 1 || +data.EC === -1) {
@@ -551,11 +583,13 @@ export class SellerProductComponent implements OnInit, AfterViewInit {
           this.router.navigate(['seller/portal/product/new']);
         }
         if (data.DT !== '') {
-          console.log(
-            '🚀 ~ file: seller-product.component.ts:554 ~ SellerProductComponent ~ .subscribe ~ data.DT:',
-            data.DT
-          );
           if (data.DT?.Product_Price_Options) {
+            console.log(
+              '🚀 ~ file: seller-product.component.ts:586 ~ SellerProductComponent ~ .subscribe ~ data.DT:',
+              data.DT
+            );
+            const clone = JSON.stringify(data.DT);
+            this.dataProduct = JSON.parse(clone);
             this.formControlFirstOptions = [];
             this.formControlSecondOptions = [];
             data.DT.Product_Types.forEach((item: any, index: number) => {
