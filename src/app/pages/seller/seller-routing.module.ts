@@ -12,6 +12,7 @@ import { SellerGuard } from './data-access/seller/seller.guard';
 import { SellerDiscountListComponent } from './feaure/discount/seller-discount-list/seller-discount-list.component';
 import { SellerDiscountNewComponent } from './feaure/discount/seller-discount-new/seller-discount-new.component';
 import { SellerOrderListComponent } from './feaure/order/seller-order-list/seller-order-list.component';
+import { SellerProfileComponent } from './feaure/profile/seller-profile/seller-profile.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
           {
             path: 'discount/edit/:id',
             component: SellerDiscountNewComponent,
+          },
+          {
+            path: 'profile',
+            component: SellerProfileComponent,
           },
         ],
       },

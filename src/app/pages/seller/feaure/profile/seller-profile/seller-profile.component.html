@@ -1,0 +1,61 @@
+<div class="w-full">
+  <form mat-dialog-content [formGroup]="shopForm" (ngSubmit)="submitForm()">
+    <div class="mb-5 text-center">
+      <p class="mb-2 text-darkGray">Avatar</p>
+      <app-input-file [base64Image]="base64Image" (handleChange)="handleChangeFile($event)"
+        [dataShop]="dataUser"></app-input-file>
+    </div>
+    <div class="grid grid-cols-2 mb-5 border-b gap-x-5">
+      <mat-form-field class="w-full">
+        <mat-label>Tên shop</mat-label>
+        <input type="text" matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Tên miền hoặc username</mat-label>
+        <input type="text" matInput formControlName="slug" placeholder="market.com, eva.vn,...">
+      </mat-form-field>
+      <mat-form-field class="w-full ">
+        <mat-label>Số điện thoại</mat-label>
+        <input type="text" matInput formControlName="phone">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>City</mat-label>
+        <mat-select formControlName="city">
+          <mat-option *ngFor="let city of cities$ | async" [value]="city.name"
+            (click)="handleChooseCity(city.code)">{{city.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>District</mat-label>
+        <mat-select formControlName="district">
+          <mat-option *ngFor="let district of districts$ | async" [value]="district.name"
+            (click)="handleChooseDistrict(district.name)">{{district.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Ward</mat-label>
+        <mat-select formControlName="ward">
+          <mat-option *ngFor="let ward of wards" [value]="ward.name">{{ward.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Số nhà</mat-label>
+        <input type="text" matInput formControlName="address">
+      </mat-form-field>
+    </div>
+    <p class="text-xs text-darkGray">Nếu muốn đổi số điện thoại, bạn vui lòng chỉnh sửa tại <a
+        [routerLink]="'/customer/account/edit'" class="text-primary">"Hồ sơ của tôi"</a> ở trang chủ sau khi hoàn tất
+      quá
+      trình
+      đăng ký</p>
+    <div class="flex items-center !justify-end">
+      <div class="">
+        <app-button types="submit" className="!w-[98.49px] h-[40px]" [loading]="loading">Tiếp theo</app-button>
+      </div>
+    </div>
+  </form>
+</div>

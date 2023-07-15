@@ -42,6 +42,7 @@ import { SellerOrderListComponent } from './feaure/order/seller-order-list/selle
 import { SellerOrderListCancelComponent } from './feaure/order/seller-order-list-cancel/seller-order-list-cancel.component';
 import { SellerOrderDetailModalComponent } from './feaure/order/seller-order-detail-modal/seller-order-detail-modal.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { SellerProfileComponent } from './feaure/profile/seller-profile/seller-profile.component';
 @NgModule({
   declarations: [
     SellerComponent,
@@ -63,6 +64,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     SellerOrderListComponent,
     SellerOrderListCancelComponent,
     SellerOrderDetailModalComponent,
+    SellerProfileComponent,
   ],
   imports: [
     CommonModule,

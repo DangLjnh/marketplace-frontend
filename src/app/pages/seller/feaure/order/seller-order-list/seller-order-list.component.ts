@@ -61,13 +61,6 @@ export class SellerOrderListComponent implements OnInit {
       e.pageSize,
       this.currentOption
     );
-
-    // this.handleChooseOption('Tất cả');
-    // this.handlePageWithOption(
-    //   e.pageIndex * e.pageSize,
-    //   e.pageSize,
-    //   this.currentOption
-    // );
   }
 
   handlePageWithOption(offset: number, limit: number, current: string) {

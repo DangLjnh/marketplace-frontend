@@ -29,51 +29,58 @@ export class SellerDiscountNewComponent implements OnInit, OnDestroy {
   now = new Date();
 
   submitForm() {
-    const discountFormValue = this.discountForm.value;
-    const listIdProduct: number[] = [];
-    const listIdProductOption: number[] = [];
-    this.listCheckProduct.forEach((product) => {
-      listIdProduct.push(product.id);
-    });
-    this.listCheckProductOption.forEach((product) => {
-      listIdProductOption.push(product.Product_Price_Options.id);
-    });
-    const rawDiscountData = {
-      date_start: discountFormValue.date_start,
-      date_end: discountFormValue.date_end,
-      percent: discountFormValue.percent,
-      name: discountFormValue.name,
-      discountID: this.dataUser.Shop.Discount.id,
-      list_product: listIdProduct,
-      list_product_option: listIdProductOption,
-      id: this.discountPercentID,
-    };
-    if (this.discountPercentID) {
-      this.discountService
-        .updateDiscountPercent(rawDiscountData)
-        .subscribe((data) => {
-          if (
-            +data.EC === errorCode.ERROR_PARAMS ||
-            +data.EC === errorCode.ERROR_SERVER
-          ) {
-            this.toastrService.error(data.EM);
-          }
-          if (+data.EC === errorCode.SUCCESS) {
-            this.toastrService.success(data.EM);
-          }
-        });
+    const percentControl = this.discountForm.get('percent');
+    if (percentControl?.errors) {
+      this.toastrService.error('Phần trăm phải là số và nhỏ hơn 100');
     } else {
-      this.discountService.createDiscount(rawDiscountData).subscribe((data) => {
-        if (
-          +data.EC === errorCode.ERROR_PARAMS ||
-          +data.EC === errorCode.ERROR_SERVER
-        ) {
-          this.toastrService.error(data.EM);
-        }
-        if (+data.EC === errorCode.SUCCESS) {
-          this.toastrService.success(data.EM);
-        }
+      const discountFormValue = this.discountForm.value;
+      const listIdProduct: number[] = [];
+      const listIdProductOption: number[] = [];
+      this.listCheckProduct.forEach((product) => {
+        listIdProduct.push(product.id);
       });
+      this.listCheckProductOption.forEach((product) => {
+        listIdProductOption.push(product.Product_Price_Options.id);
+      });
+      const rawDiscountData = {
+        date_start: discountFormValue.date_start,
+        date_end: discountFormValue.date_end,
+        percent: discountFormValue.percent,
+        name: discountFormValue.name,
+        discountID: this.dataUser.Shop.Discount.id,
+        list_product: listIdProduct,
+        list_product_option: listIdProductOption,
+        id: this.discountPercentID,
+      };
+      if (this.discountPercentID) {
+        this.discountService
+          .updateDiscountPercent(rawDiscountData)
+          .subscribe((data) => {
+            if (
+              +data.EC === errorCode.ERROR_PARAMS ||
+              +data.EC === errorCode.ERROR_SERVER
+            ) {
+              this.toastrService.error(data.EM);
+            }
+            if (+data.EC === errorCode.SUCCESS) {
+              this.toastrService.success(data.EM);
+            }
+          });
+      } else {
+        this.discountService
+          .createDiscount(rawDiscountData)
+          .subscribe((data) => {
+            if (
+              +data.EC === errorCode.ERROR_PARAMS ||
+              +data.EC === errorCode.ERROR_SERVER
+            ) {
+              this.toastrService.error(data.EM);
+            }
+            if (+data.EC === errorCode.SUCCESS) {
+              this.toastrService.success(data.EM);
+            }
+          });
+      }
     }
   }
 
@@ -94,7 +101,7 @@ export class SellerDiscountNewComponent implements OnInit, OnDestroy {
   }
   percentValidator(control: AbstractControl): { [key: string]: any } | null {
     const percent = Number(control.value);
-    if (isNaN(percent) || percent < 0 || percent > 100) {
+    if (percent < 0 || percent > 100) {
       return { invalidPercent: true };
     }
     return null;
@@ -103,40 +110,42 @@ export class SellerDiscountNewComponent implements OnInit, OnDestroy {
     name: [''],
     date_start: [new Date(this.now.getTime() + 10 * 60000)],
     date_end: [new Date(this.now.getTime() + 70 * 60000)],
-    percent: ['', [Validators.required, this.percentValidator]],
+    percent: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.pattern(/^[0-9]+$/),
+        this.percentValidator,
+      ],
+    ],
   });
   formatDate() {
-    const percentControl = this.discountForm.get('percent');
-
-    if (percentControl?.errors) {
-      this.toastrService.error('Phần trăm phải là số và nhỏ hơn 100');
-    } else {
-      const dateStartControl = this.discountForm.get('date_start');
-      const dateEndControl = this.discountForm.get('date_end');
-      dateStartControl?.valueChanges.subscribe((dateStartChange) => {
-        const dateEnd = dateEndControl?.value; // Corrected variable assignment
-        const dateStart = dateStartChange; // Corrected variable assignment
-        this.minDate = dateStart;
-        if (dateStart && dateEnd && dateEnd.getTime() < dateStart.getTime()) {
-          const endDate = new Date(dateStart);
-          endDate.setHours(dateEnd.getHours());
-          endDate.setMinutes(dateEnd.getMinutes());
-          endDate.setSeconds(dateEnd.getSeconds());
-          dateEndControl?.setValue(endDate);
+    const dateStartControl = this.discountForm.get('date_start');
+    const dateEndControl = this.discountForm.get('date_end');
+    dateStartControl?.valueChanges.subscribe((dateStartChange) => {
+      const dateEnd = dateEndControl?.value; // Corrected variable assignment
+      const dateStart = dateStartChange; // Corrected variable assignment
+      this.minDate = dateStart;
+      if (dateStart && dateEnd && dateEnd.getTime() < dateStart.getTime()) {
+        const endDate = new Date(dateStart);
+        endDate.setHours(dateEnd.getHours());
+        endDate.setMinutes(dateEnd.getMinutes());
+        endDate.setSeconds(dateEnd.getSeconds());
+        dateEndControl?.setValue(endDate);
+      }
+    });
+    dateEndControl?.valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe((dateEnd) => {
+        if (dateEnd && dateStartControl && dateStartControl.value) {
+          const dateStart = dateStartControl.value;
+          if (dateEnd.getTime() === dateStart.getTime()) {
+            const endDate = new Date(dateStart.getTime() + 60 * 60000);
+            dateEndControl.setValue(endDate);
+          }
         }
       });
-      dateEndControl?.valueChanges
-        .pipe(distinctUntilChanged())
-        .subscribe((dateEnd) => {
-          if (dateEnd && dateStartControl && dateStartControl.value) {
-            const dateStart = dateStartControl.value;
-            if (dateEnd.getTime() === dateStart.getTime()) {
-              const endDate = new Date(dateStart.getTime() + 60 * 60000);
-              dateEndControl.setValue(endDate);
-            }
-          }
-        });
-    }
   }
   constructor(
     public dialog: MatDialog,
@@ -160,40 +169,46 @@ export class SellerDiscountNewComponent implements OnInit, OnDestroy {
         filter((product) => !!product)
       )
       .subscribe((data) => {
-        this.dataDiscount = data.DT.data;
-        if (data.DT.dataProduct?.length > 0) {
-          data.DT.dataProduct.forEach((item: IProduct) => {
-            item.checked = true;
-          });
-          this.productService.listCheckProduct = data.DT.dataProduct;
-        }
-        if (data.DT.dataProductOption?.length > 0) {
-          const change: any = [];
-          data.DT.dataProductOption.forEach((item: any) => {
-            item.Product.Product_Price_Options.forEach((data: any) => {
-              const val = {
-                Image_Products: item.Product.Image_Products,
-                Product_Detail: item.Product.Product_Detail,
-                Product_Price_Options: data,
-                checked:
-                  +this.discountPercentID === data.discountPercentID
-                    ? true
-                    : false,
-              };
-              const checkExist = change.some(
-                (item: any) => item.Product_Price_Options.id === data.id
-              );
-              if (!checkExist) change.push(val);
+        if (data.DT.data !== null) {
+          console.log(
+            '🚀 ~ file: seller-discount-new.component.ts:173 ~ SellerDiscountNewComponent ~ .subscribe ~ data.DT:',
+            data.DT
+          );
+          this.dataDiscount = data.DT.data;
+          if (data.DT.dataProduct?.length > 0) {
+            data.DT.dataProduct.forEach((item: IProduct) => {
+              item.checked = true;
             });
-          });
-          this.productService.listCheckProductOption = change;
-        }
-        if (data) {
+            this.productService.listCheckProduct = data.DT.dataProduct;
+          }
+          if (data.DT.dataProductOption?.length > 0) {
+            const change: any = [];
+            data.DT.dataProductOption.forEach((item: any) => {
+              item.Product.Product_Price_Options.forEach((data: any) => {
+                const val = {
+                  Image_Products: item.Product.Image_Products,
+                  Product_Detail: item.Product.Product_Detail,
+                  Product_Price_Options: data,
+                  checked:
+                    +this.discountPercentID === data.discountPercentID
+                      ? true
+                      : false,
+                };
+                const checkExist = change.some(
+                  (item: any) => item.Product_Price_Options.id === data.id
+                );
+                if (!checkExist) change.push(val);
+              });
+            });
+            this.productService.listCheckProductOption = change;
+          }
+          console.log('cc');
+
           this.discountForm.patchValue({
             name: data.DT.data?.name,
-            date_start: data.DT.data.date_start,
-            date_end: data.DT.data.date_end,
-            percent: data.DT.data.percent,
+            date_start: data.DT.data?.date_start,
+            date_end: data.DT.data?.date_end,
+            percent: data.DT.data?.percent,
           });
         }
       });

@@ -14,5 +14,11 @@ export class SellerService {
       rawShopData
     );
   }
+  updateShop(rawShopData: any): Observable<IResponse> {
+    return this.http.put<IResponse>(
+      `${environment.backendUrl}/shop/update`,
+      rawShopData
+    );
+  }
   constructor(private http: HttpClient) {}
 }

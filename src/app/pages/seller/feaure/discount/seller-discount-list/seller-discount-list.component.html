@@ -16,9 +16,9 @@
       </app-button>
     </div>
 
-    <ul class="flex items-center border-b-2 tab-navs">
+    <!-- <ul class="flex items-center border-b-2 tab-navs">
       <li *ngFor="let nav of navTabs" class="p-4 transition-all cursor-pointer hover:text-primary">{{nav.name}}</li>
-    </ul>
+    </ul> -->
     <div class="relative p-3 overflow-x-auto">
       <table class="w-full text-sm text-left">
         <thead class="bg-gray-100">
@@ -54,7 +54,31 @@
                   <p>{{discount.percent}}%</p>
                   <p>{{formatDate(discount.date_start)}}</p>
                   <p>{{formatDate(discount.date_end)}}</p>
-                  <p>Đang diễn ra</p>
+                  <div>
+                    <ng-container *ngIf="calculateDate(discount.date_start,
+                      discount.date_end) === 'Đang diễn ra' ">
+                      <span
+                        class="px-4 py-2 bg-green-300 rounded whitespace-nowrap">{{calculateDate(discount.date_start,
+                        discount.date_end)}}</span>
+                    </ng-container>
+                    <ng-container *ngIf="calculateDate(discount.date_start,
+                      discount.date_end) === 'Sắp diễn ra' ">
+                      <span
+                        class="px-4 py-2 bg-yellow-300 rounded whitespace-nowrap">{{calculateDate(discount.date_start,
+                        discount.date_end)}}</span>
+                    </ng-container>
+                    <ng-container *ngIf="calculateDate(discount.date_start,
+                      discount.date_end) === 'Kết thúc' ">
+                      <span class="px-4 py-2 bg-red-300 rounded whitespace-nowrap">{{calculateDate(discount.date_start,
+                        discount.date_end)}}</span>
+                    </ng-container>
+                    <!-- <ng-container *ngIf="product.status === 2">
+                      <span class="px-4 py-2 bg-yellow-300 rounded whitespace-nowrap">Chờ duyệt</span>
+                    </ng-container>
+                    <ng-container *ngIf="product.status === 3">
+                      <span class="px-4 py-2 bg-red-300 rounded whitespace-nowrap">Vi phạm</span>
+                    </ng-container> -->
+                  </div>
                 </div>
               </th>
               <th scope="col" class="px-6 py-5 w-[180px]">
@@ -68,14 +92,15 @@
           </ng-container>
         </tbody>
       </table>
-      <div class="flex items-center justify-end px-4 pt-4 text-base gap-x-5">
-        <p class="text-lightGray">
-          < </p>
-            <p>1</p>
-            <p>/</p>
-            <p>1</p>
-            <p class="text-lightGray">></p>
+
+
+      <div class="mt-5">
+        <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+          [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions"
+          [pageIndex]="pageIndex" aria-label="Select page">
+        </mat-paginator>
       </div>
+
     </div>
   </div>
 </div>

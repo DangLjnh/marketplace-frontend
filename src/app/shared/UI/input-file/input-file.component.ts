@@ -9,5 +9,6 @@ import { IUser } from '../../model/interface';
 export class InputFileComponent {
   @Input() base64Image!: string;
   @Input() dataUser!: IUser;
+  @Input() dataShop!: IUser;
   @Output() handleChange = new EventEmitter<any>();
 }

@@ -1,26 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { Observable, filter, map, switchMap, tap } from 'rxjs';
-import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
+import { Observable, map, tap } from 'rxjs';
 import { CustomerService } from 'src/app/pages/customer/data-access/customer.service';
 import { IUser } from 'src/app/shared/model/interface';
 import { toBase64 } from 'src/app/shared/utils/function';
-import { SellerService } from '../../../data-access/seller.service';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
+import { SellerService } from '../../../data-access/seller.service';
+import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { ShopService } from 'src/app/pages/shop/data-access/shop.service';
+import { errorCode } from 'src/app/shared/model/model';
 
 @Component({
-  selector: 'app-seller-portal-form',
-  templateUrl: './seller-portal-form.component.html',
-  styleUrls: ['./seller-portal-form.component.scss'],
+  selector: 'app-seller-profile',
+  templateUrl: './seller-profile.component.html',
+  styleUrls: ['./seller-profile.component.scss'],
 })
-export class SellerPortalFormComponent implements OnInit {
+export class SellerProfileComponent {
   loading: boolean = false;
   cities$!: Observable<any>;
   districts$!: Observable<any>;
@@ -33,9 +34,19 @@ export class SellerPortalFormComponent implements OnInit {
   submitForm() {
     const formErrors = this.getFormErrors(this.shopForm);
     const formValue = this.shopForm.value;
-    if (!this.fileImage) {
-      this.toastrService.error('Bạn phải chọn ảnh đại diện!');
-    } else if (formErrors.length > 0) {
+    this.loading = true;
+    const formData = new FormData();
+    const rawData = {
+      ...formValue,
+      id: this.dataUser.Shop.id,
+      email: this.dataUser.User_Detail.email,
+      phone: this.dataUser.phone,
+      userID: this.dataUser.id,
+      city_code: this.cityCode,
+    };
+    formData.append('file', this.fileImage);
+    formData.append('data', JSON.stringify(rawData));
+    if (formErrors.length > 0 && formValue.email !== '') {
       for (let i = 0; i < formErrors.length; i++) {
         const item: any = formErrors[i];
         this.toastrService.error(item.error);
@@ -44,25 +55,24 @@ export class SellerPortalFormComponent implements OnInit {
         }
       }
     } else {
-      this.loading = true;
-      const formData = new FormData();
-      const rawData = {
-        ...formValue,
-        email: this.dataUser.User_Detail.email,
-        phone: this.dataUser.phone,
-        userID: this.dataUser.id,
-        city_code: this.cityCode,
-      };
-      formData.append('file', this.fileImage);
-      formData.append('data', JSON.stringify(rawData));
-      this.sellerService.createShop(formData).subscribe((data) => {
+      this.sellerService.updateShop(formData).subscribe((data) => {
         if (+data.EC === 1 || +data.EC === -1) {
           this.toastrService.error(data.EM);
         } else {
-          this.authService.dataUser$.subscribe((data: IUser) => {
+          this.authService.accountUser().subscribe((dataUser: any) => {
+            this.dataUser = dataUser;
             this.loading = false;
-            this.dataUser = data;
-            window.location.href = `${environment.frontendUrl}/seller`;
+            if (
+              +data.EC === errorCode.ERROR_PARAMS ||
+              +data.EC === errorCode.ERROR_SERVER
+            ) {
+              this.toastrService.error(data.EM);
+              return;
+            }
+            if (+data.EC === errorCode.SUCCESS) {
+              this.authService.dataUser = dataUser.DT;
+              this.toastrService.success(data.EM);
+            }
           });
         }
       });
@@ -99,18 +109,12 @@ export class SellerPortalFormComponent implements OnInit {
         })
       )
       .subscribe();
-
-    // [...this.districts].forEach((data) => {
-    //   if (data.name === districtName) {
-    //     this.wards = data.wards;
-    //   }
-    // });
   }
   shopForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(30)]],
-    email: [{ value: '', disabled: true }, Validators.required],
+    email: ['', Validators.required],
     phone: [
-      { value: '', disabled: true },
+      '',
       Validators.compose([
         Validators.required,
         Validators.minLength(10),
@@ -173,17 +177,41 @@ export class SellerPortalFormComponent implements OnInit {
     private authService: AuthService,
     private toastrService: ToastrService,
     private fb: FormBuilder,
-    private router: Router
+    private shopService: ShopService
   ) {}
   ngOnInit(): void {
     this.cities$ = this.customerService.readAllCity();
     this.authService.dataUser$.subscribe((data: IUser) => {
-      // this.authService.dataUser = data;
       this.dataUser = data;
-      this.shopForm.patchValue({
-        phone: data.phone,
-        email: data.User_Detail?.email,
-      });
+      if (data) {
+        this.shopForm.patchValue({
+          phone: data?.Shop?.Shop_Detail?.phone,
+          email: data?.Shop?.Shop_Detail?.email,
+          slug: data?.Shop?.slug,
+          name: data?.Shop?.Shop_Detail?.name,
+          city: data?.Shop?.Shop_Detail?.city,
+          address: data?.Shop?.Shop_Detail?.address,
+          district: data?.Shop?.Shop_Detail?.district,
+          ward: data?.Shop?.Shop_Detail?.ward,
+        });
+        this.shopService
+          .readSingleShop(String(data?.Shop?.id))
+          .subscribe((data) => {
+            if (data) {
+              const dataDistricts$ = this.handleChooseCity(
+                data.DT.Shop_Detail?.city_code
+              );
+              dataDistricts$.subscribe(() => {
+                this.shopForm.patchValue({
+                  district: data.DT.Shop_Detail?.district,
+                  ward: data.DT.Shop_Detail?.ward,
+                });
+                this.handleChooseDistrict(data.DT.Shop_Detail?.district);
+              });
+            }
+          });
+      }
     });
+    // this.handleChooseCity()
   }
 }

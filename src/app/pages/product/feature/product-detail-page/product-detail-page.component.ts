@@ -58,7 +58,12 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
     spaceBetween: 15,
     slidesPerGroup: 6, // Set number of slides to be grouped together
   };
-
+  handleInputChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    setTimeout(() => {
+      this.valueCounter = +input.value;
+    }, 1);
+  }
   handleChooseOptions({
     option,
     index,

@@ -13,6 +13,7 @@ export class InputCounterComponent {
 
   onInputChange(event: Event) {
     const input = event.target as HTMLInputElement;
+    this.valueCounter = +input.value;
     if (input.value !== '0') {
       this.valueCounter = +input.value;
     }

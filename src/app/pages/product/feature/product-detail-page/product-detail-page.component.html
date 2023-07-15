@@ -123,7 +123,7 @@
             </div>
             <div class="flex flex-wrap items-center flex-1 gap-3">
               <app-input-counter [valueCounter]="valueCounter" (checkedMinus)="onCountMinus($event)"
-                (checkedPlus)="onCountPlus($event)"></app-input-counter>
+                (checkedPlus)="onCountPlus($event)" (handleInputChange)="handleInputChange($event)"></app-input-counter>
             </div>
           </div>
 

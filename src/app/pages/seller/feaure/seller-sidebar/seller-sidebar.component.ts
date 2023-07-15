@@ -67,21 +67,21 @@ export class SellerSidebarComponent {
     {
       title: 'Quản lý Shop',
       submenus: [
-        {
-          name: 'Đánh giá Shop',
-          url: '',
-          isActive: false,
-        },
+        // {
+        //   name: 'Đánh giá Shop',
+        //   url: '',
+        //   isActive: false,
+        // },
         {
           name: 'Hồ sơ Shop',
-          url: '',
+          url: '/seller/portal/profile',
           isActive: false,
         },
-        {
-          name: 'Tài khoản',
-          url: '',
-          isActive: false,
-        },
+        // {
+        //   name: 'Tài khoản',
+        //   url: '',
+        //   isActive: false,
+        // },
       ],
     },
     {
