@@ -27,6 +27,7 @@ import { TableSellerComponent } from './UI/table/table-seller/table-seller.compo
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HeaderSellerComponent } from '../layouts/header/header-seller/header-seller.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -47,6 +48,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     InputFileComponent,
     FormProductRowComponent,
     TableSellerComponent,
+    HeaderSellerComponent,
   ],
   imports: [
     CommonModule,
@@ -79,6 +81,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     InputFileComponent,
     FormProductRowComponent,
     TableSellerComponent,
+    HeaderSellerComponent,
   ],
 })
 export class SharedModule {}

@@ -46,7 +46,7 @@ import { SellerProfileComponent } from './feaure/profile/seller-profile/seller-p
 @NgModule({
   declarations: [
     SellerComponent,
-    HeaderSellerComponent,
+    // HeaderSellerComponent,
     SellerPortalComponent,
     SellerPortalFormComponent,
     SellerPortalWelcomeComponent,
@@ -74,8 +74,8 @@ import { SellerProfileComponent } from './feaure/profile/seller-profile/seller-p
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
-    MatSelectModule,
     MatRadioModule,
+    MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatStepperModule,
