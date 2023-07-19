@@ -30,7 +30,7 @@ export class SellerDiscountNewComponent implements OnInit, OnDestroy {
 
   submitForm() {
     const percentControl = this.discountForm.get('percent');
-    if (percentControl?.errors) {
+    if (!percentControl?.errors?.['invalidPercent']) {
       this.toastrService.error('Phần trăm phải là số và nhỏ hơn 100');
     } else {
       const discountFormValue = this.discountForm.value;
@@ -101,7 +101,7 @@ export class SellerDiscountNewComponent implements OnInit, OnDestroy {
   }
   percentValidator(control: AbstractControl): { [key: string]: any } | null {
     const percent = Number(control.value);
-    if (percent < 0 || percent > 100) {
+    if (percent > 0 || percent < 100) {
       return { invalidPercent: true };
     }
     return null;
@@ -114,7 +114,7 @@ export class SellerDiscountNewComponent implements OnInit, OnDestroy {
       '',
       [
         Validators.required,
-        Validators.minLength(10),
+        // Validators.minLength(10),
         Validators.pattern(/^[0-9]+$/),
         this.percentValidator,
       ],
@@ -170,10 +170,6 @@ export class SellerDiscountNewComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         if (data.DT.data !== null) {
-          console.log(
-            '🚀 ~ file: seller-discount-new.component.ts:173 ~ SellerDiscountNewComponent ~ .subscribe ~ data.DT:',
-            data.DT
-          );
           this.dataDiscount = data.DT.data;
           if (data.DT.dataProduct?.length > 0) {
             data.DT.dataProduct.forEach((item: IProduct) => {
