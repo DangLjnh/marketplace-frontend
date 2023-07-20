@@ -15,6 +15,7 @@ export const statusProduct = {
   ACTIVE: 1,
   PENDING: 2,
   BAN: 3,
+  DELETE: 4,
 };
 
 export const groupAccess = {

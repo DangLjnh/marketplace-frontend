@@ -5,6 +5,7 @@ import { AdminUserComponent } from './feature/admin-user/admin-user.component';
 import { AdminPortalLayoutComponent } from './feature/admin-portal-layout/admin-portal-layout.component';
 import { AdminGroupRoleComponent } from './feature/admin-group-role/admin-group-role.component';
 import { AdminGroupRoleCreateEditComponent } from './feature/admin-group-role-create-edit/admin-group-role-create-edit.component';
+import { AdminProductComponent } from './feature/admin-product/admin-product.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
           {
             path: 'user',
             component: AdminUserComponent,
+          },
+          {
+            path: 'product',
+            component: AdminProductComponent,
           },
           {
             path: 'group',

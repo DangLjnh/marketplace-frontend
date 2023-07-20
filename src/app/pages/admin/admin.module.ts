@@ -21,6 +21,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AdminProductComponent } from './feature/admin-product/admin-product.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     AdminPortalLayoutComponent,
     AdminEditGroupModalComponent,
     AdminGroupRoleCreateEditComponent,
+    AdminProductComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatRadioModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatPaginatorModule,
   ],
 })
 export class AdminModule {}

@@ -19,11 +19,26 @@ export class AdminSidebarComponent {
       ],
     },
     {
-      title: 'Quản lý phân loại',
+      title: 'Quản lý sản phẩm',
       submenus: [
         {
           name: 'Tất cả sản phẩm',
-          url: '/seller/portal/product/list',
+          url: '/admin/portal/product',
+          isActive: false,
+        },
+      ],
+    },
+    {
+      title: 'Quản lý phân loại',
+      submenus: [
+        {
+          name: 'Tất cả phân loại',
+          url: '/admin/portal/product',
+          isActive: false,
+        },
+        {
+          name: 'Thêm phân loại',
+          url: '/admin/portal/product',
           isActive: false,
         },
       ],

@@ -43,5 +43,13 @@ export class ProductService {
       `${environment.backendUrl}/product/read-all-shop?shopID=${shopID}&offset=${offset}&limit=${limit}`
     );
   }
+
+  updateStatusProduct(rawProductData: { productID: number; statusID: number }) {
+    return this.http.post<IResponse>(
+      `${environment.backendUrl}/product/update-status`,
+      rawProductData
+    );
+  }
+
   constructor(private http: HttpClient) {}
 }
