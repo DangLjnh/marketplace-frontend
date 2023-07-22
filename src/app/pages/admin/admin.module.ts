@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { IconModule } from 'src/app/shared/UI/icon/icon.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from 'src/app/layouts/admin/admin.component';
 import { HeaderSellerComponent } from 'src/app/layouts/header/header-seller/header-seller.component';
 import { AdminUserComponent } from './feature/admin-user/admin-user.component';
@@ -54,6 +54,7 @@ import { AdminCategoryCreateEditComponent } from './feature/admin-category-creat
     MatSelectModule,
     MatCheckboxModule,
     MatPaginatorModule,
+    FormsModule
   ],
 })
 export class AdminModule {}

@@ -25,6 +25,13 @@ export class CategoryService {
     );
   }
 
+  updateCategory(rawCategoryData: any): Observable<IResponse> {
+    return this.http.put<IResponse>(
+      `${environment.backendUrl}/category/update`,
+      rawCategoryData
+    );
+  }
+
   readAllCategoryFilterOfCategory(categoryID: number): Observable<IResponse> {
     return this.http.get<any>(
       `${environment.backendUrl}/category-filter/read/${categoryID}`

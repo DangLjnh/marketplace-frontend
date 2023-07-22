@@ -25,9 +25,7 @@ import { toBase64 } from 'src/app/shared/utils/function';
   templateUrl: './admin-category-create-edit.component.html',
   styleUrls: ['./admin-category-create-edit.component.scss'],
 })
-export class AdminCategoryCreateEditComponent
-  implements OnInit, AfterViewChecked
-{
+export class AdminCategoryCreateEditComponent implements OnInit {
   base64Image!: string;
   fileImage!: File;
   dataCategory!: ICategory;
@@ -55,7 +53,7 @@ export class AdminCategoryCreateEditComponent
       this.fileImage = e.target.files[0];
     }
   }
-  handleChangeInput() {}
+  handleChangeInput(e: any) {}
   categoryForm = this.fb.group({
     name_category: [''],
   });
@@ -71,16 +69,30 @@ export class AdminCategoryCreateEditComponent
       dataCategoryFilter: JSON.stringify(this.valueCategoryOption),
     };
     formData.append('file', this.fileImage);
-    formData.append('data', JSON.stringify(rawData));
     if (this?.dataCategory) {
-      // this.categoryService.updateCategory(rawData).subscribe((data) => {
-      //   if (+data.EC == errorCode.SUCCESS) {
-      //     this.toastrService.success(data.EM);
-      //   } else {
-      //     this.toastrService.error(data.EM);
-      //   }
-      // });
+      const categoryFilterList = document.querySelectorAll(
+        '.category_filter'
+      ) as NodeListOf<HTMLInputElement>;
+      const value: any = [];
+      categoryFilterList?.forEach((item, index) => {
+        const dataIndex = item.getAttribute('data-index');
+        const data = {
+          name: this.valueCategoryOption[index],
+          id: dataIndex,
+        };
+        value.push(data);
+      });
+      rawData.dataCategoryFilter = value;
+      formData.append('data', JSON.stringify(rawData));
+      this.categoryService.updateCategory(formData).subscribe((data) => {
+        if (+data.EC == errorCode.SUCCESS) {
+          this.toastrService.success(data.EM);
+        } else {
+          this.toastrService.error(data.EM);
+        }
+      });
     } else {
+      formData.append('data', JSON.stringify(rawData));
       this.categoryService.createCategory(formData).subscribe((data) => {
         if (+data.EC == errorCode.SUCCESS) {
           this.toastrService.success(data.EM);
@@ -111,10 +123,10 @@ export class AdminCategoryCreateEditComponent
     private categoryService: CategoryService,
     private readonly changeDetectorRef: ChangeDetectorRef
   ) {}
-  ngAfterViewChecked(): void {
-    this.showDataUpdate();
-    this.changeDetectorRef.detectChanges();
-  }
+  // ngAfterViewChecked(): void {
+
+  //   this.changeDetectorRef.detectChanges();
+  // }
   ngOnInit() {
     this.route.params
       .pipe(
@@ -129,12 +141,10 @@ export class AdminCategoryCreateEditComponent
             name_category: data?.name_category,
           });
           this.dataCategory = data;
-          if (
-            this.categoryFilterOption &&
-            this?.categoryFilterOption?.length > 0
-          ) {
-            this.categoryFilterOption = data?.Category_Filters;
-          }
+          this.categoryFilterOption = data?.Category_Filters;
+          setTimeout(() => {
+            // this.showDataUpdate();
+          }, 1000);
         }
       });
   }

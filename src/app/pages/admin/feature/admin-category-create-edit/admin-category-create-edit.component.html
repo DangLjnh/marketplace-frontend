@@ -22,7 +22,8 @@
                 <mat-form-field class="w-full">
                   <mat-label>ví dụ: quần dài,...</mat-label>
                   <input type="text" #category_filter matInput name="category_filter" class="category_filter"
-                    [value]="option.length ? option: ''" (change)="handleChangeInput()">
+                    [value]="option?.name_category_filter ? option?.name_category_filter : ''"
+                    [attr.data-index]="option.id" (change)="handleChangeInput($event)">
                 </mat-form-field>
                 <app-icon-plus (click)="addSecondOption(i)"></app-icon-plus>
                 <app-icon-trash (click)="deleteSecondOption(i)"></app-icon-trash>
