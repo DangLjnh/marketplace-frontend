@@ -215,6 +215,7 @@ export interface IProduct {
   Category_Filter: ICategoryFilter;
   Product_Price_Options: IProductPriceOption[];
   Product_Types: IProductType[];
+  revenue: number;
 }
 
 export interface IDiscountPercent {

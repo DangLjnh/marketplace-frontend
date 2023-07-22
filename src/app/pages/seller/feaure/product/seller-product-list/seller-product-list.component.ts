@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { AuthService } from 'src/app/pages/auth/data-access/auth.service';
 import { ProductService } from '../../../data-access/product.service';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { IProduct, IUser } from 'src/app/shared/model/interface';
 import { statusProduct } from 'src/app/shared/model/model';
 import { ActivatedRoute } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
+import { OrderService } from '../../../data-access/order.service';
 
 @Component({
   selector: 'app-seller-product-list',
   templateUrl: './seller-product-list.component.html',
   styleUrls: ['./seller-product-list.component.scss'],
 })
-export class SellerProductListComponent implements OnInit {
+export class SellerProductListComponent implements OnInit, AfterViewChecked {
   dataUser!: IUser;
   productList!: any[];
   productOptions!: any[];
@@ -24,6 +25,9 @@ export class SellerProductListComponent implements OnInit {
   pageSizeOptions = [5, 10, 25];
   showFirstLastButtons = true;
   pageEvent!: PageEvent;
+  calculatedRevenue: number[] = [];
+  productRevenues: { [cacheKey: string]: Observable<number> } = {};
+
   navTabs = [
     {
       name: 'Tất cả',
@@ -57,6 +61,23 @@ export class SellerProductListComponent implements OnInit {
       e.pageSize,
       this.currentOption
     );
+  }
+
+  calculateRevenue(
+    productID: number,
+    productPriceOptionID: number
+  ): Observable<number> {
+    const cacheKey = productPriceOptionID
+      ? `${productID}-${productPriceOptionID}`
+      : `${productID}`;
+
+    if (!this.productRevenues[cacheKey]) {
+      this.productRevenues[cacheKey] = this.orderService
+        .readRevenueOfProduct({ productID, productPriceOptionID })
+        .pipe(map((data) => data.DT));
+    }
+
+    return this.productRevenues[cacheKey];
   }
 
   handlePageWithOption(offset: number, limit: number, current: string) {
@@ -129,8 +150,10 @@ export class SellerProductListComponent implements OnInit {
     private authService: AuthService,
     private productService: ProductService,
     private toastrService: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private orderService: OrderService
   ) {}
+  ngAfterViewChecked(): void {}
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {

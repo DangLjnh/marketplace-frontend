@@ -44,6 +44,16 @@ export class OrderService {
     );
   }
 
+  readRevenueOfProduct(rawDataOrder: {
+    productID: number;
+    productPriceOptionID: number;
+  }): Observable<IResponse> {
+    return this.http.post<IResponse>(
+      `${environment.backendUrl}/order-product/read-single`,
+      rawDataOrder
+    );
+  }
+
   updateStatusOrder(rawDataOrder: any): Observable<IResponse> {
     return this.http.put<IResponse>(
       `${environment.backendUrl}/order/update/status`,

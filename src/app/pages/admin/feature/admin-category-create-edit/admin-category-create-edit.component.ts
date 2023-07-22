@@ -102,17 +102,6 @@ export class AdminCategoryCreateEditComponent implements OnInit {
       });
     }
   }
-  showDataUpdate() {
-    const listCategory = this?.dataCategory?.Category_Filters;
-    if (listCategory?.length > 0) {
-      const categoryFilterList = document.querySelectorAll(
-        '.category_filter'
-      ) as NodeListOf<HTMLInputElement>;
-      categoryFilterList?.forEach((item, index) => {
-        item.value = String(listCategory[index]?.name_category_filter);
-      });
-    }
-  }
   getDataServer() {}
   constructor(
     public dialog: MatDialog,
@@ -141,10 +130,8 @@ export class AdminCategoryCreateEditComponent implements OnInit {
             name_category: data?.name_category,
           });
           this.dataCategory = data;
-          this.categoryFilterOption = data?.Category_Filters;
-          setTimeout(() => {
-            // this.showDataUpdate();
-          }, 1000);
+          if (data?.Category_Filters?.length > 0)
+            this.categoryFilterOption = data?.Category_Filters;
         }
       });
   }

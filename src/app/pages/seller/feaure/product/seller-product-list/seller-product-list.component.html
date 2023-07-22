@@ -70,7 +70,7 @@
                       <p>{{option.secondFilter.name_filter}}</p>
                       <p>{{option.price.toLocaleString('en-US')}}₫</p>
                       <p>{{option.quantity_stock}}</p>
-                      <p>khong</p>
+                      <p>{{ (calculateRevenue(product.id, option.id) | async)?.toLocaleString('en-US') }}₫</p>
                     </div>
                   </ng-container>
                   <ng-template #noHasSecondOption>
@@ -79,7 +79,7 @@
                       <p>Không có</p>
                       <p>{{option.price.toLocaleString('en-US')}}₫</p>
                       <p>{{option.quantity_stock}}</p>
-                      <p>khong</p>
+                      <p>{{ (calculateRevenue(product.id, option.id) | async)?.toLocaleString('en-US') }}₫</p>
                     </div>
                   </ng-template>
                 </ng-container>
@@ -90,7 +90,7 @@
                   <p>Không có</p>
                   <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
                   <p>{{product.Stock.quantity}}</p>
-                  <p>khong</p>
+                  <p>{{ (calculateRevenue(product.id, 0) | async)?.toLocaleString('en-US') }}₫</p>
                 </div>
               </ng-template>
             </th>
