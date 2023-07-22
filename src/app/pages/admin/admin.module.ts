@@ -23,6 +23,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AdminProductComponent } from './feature/admin-product/admin-product.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AdminCategoryComponent } from './feature/admin-category/admin-category.component';
+import { AdminCategoryCreateEditComponent } from './feature/admin-category-create-edit/admin-category-create-edit.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AdminEditGroupModalComponent,
     AdminGroupRoleCreateEditComponent,
     AdminProductComponent,
+    AdminCategoryComponent,
+    AdminCategoryCreateEditComponent,
   ],
   imports: [
     CommonModule,

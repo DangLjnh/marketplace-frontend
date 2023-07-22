@@ -212,6 +212,5 @@ export class SellerProfileComponent {
           });
       }
     });
-    // this.handleChooseCity()
   }
 }

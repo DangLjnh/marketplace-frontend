@@ -1,0 +1,85 @@
+<div class="bg-white rounded">
+  <div class="flex items-center justify-between p-4">
+    <ng-container *ngIf="categoryList; else noProduct">
+      <span class="text-lg font-bold">{{categoryList.length || 0}} Sản Phẩm</span>
+    </ng-container>
+    <ng-template #noProduct>
+      <span class="text-lg font-bold">0 Sản Phẩm</span>
+    </ng-template>
+    <app-button [routerLink]="'/seller/portal/product/list'">
+      <div class="flex items-center gap-x-3">
+        <app-icon-plus></app-icon-plus>
+        <span>Thêm 1 danh mục mới</span>
+      </div>
+    </app-button>
+  </div>
+  <div class="relative p-3 overflow-x-auto">
+    <table class="w-full text-sm text-left">
+      <thead class="bg-gray-100">
+        <tr class="">
+          <td class="w-[50px]"></td>
+          <th scope="col" class="px-6 py-4 w-[50px]">
+            ID
+          </th>
+          <th scope="col" class="px-6 py-4 w-[250px]">
+            Tên danh mục
+          </th>
+          <th scope="col" class="px-6 py-4">
+            Trạng thái
+          </th>
+          <th scope="col" class="px-6 py-4 w-[180px]">
+            Thao tác
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="categoryList">
+          <tr *ngFor="let category of categoryList " class="bg-white border-b-2">
+            <td class="w-[50px]"></td>
+            <th scope="col" class="px-6 py-5 ">
+              {{category.id}}
+            </th>
+            <th scope="col" class="px-6 py-5 w-[250px]">
+              <div class="flex items-center gap-x-8">
+                <img [src]="category.photo_url" alt="" class="w-[56px] h-[70px] object-cover rounded-sm ">
+                <div>
+                  <p class="font-medium line-clamp-2">{{category.name_category}}</p>
+                </div>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-4 w-[130px]">
+              <ng-container *ngIf="+category.status === 1">
+                <span class="px-4 py-2 bg-green-300 rounded whitespace-nowrap">Đang hoạt động</span>
+              </ng-container>
+              <ng-container *ngIf="+category.status === 2">
+                <span class="px-4 py-2 bg-yellow-300 rounded whitespace-nowrap">Chờ duyệt</span>
+              </ng-container>
+              <ng-container *ngIf="+category.status === 3">
+                <span class="px-4 py-2 bg-orange-300 rounded whitespace-nowrap">Vi phạm</span>
+              </ng-container>
+              <ng-container *ngIf="+category.status === 4">
+                <span class="px-4 py-2 bg-red-300 rounded whitespace-nowrap">Đã xóa</span>
+              </ng-container>
+            </th>
+            <th scope="col" class="px-6 py-5 w-[180px]">
+              <div class="flex items-center text-xs gap-x-3">
+                <!-- <a class="px-4 py-2 bg-red-100 rounded cursor-pointer" (click)="handleBanProduct(product.id)">Chặn</a> -->
+                <!-- <a [routerLink]="'/product/'+product.id" class="px-4 py-2 bg-blue-100 rounded">Xem</a> -->
+                <a class="px-4 py-2 bg-yellow-100 rounded cursor-pointer" [routerLink]="'edit/'+category.id">Sửa</a>
+              </div>
+            </th>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <div class="mt-5">
+      <!-- <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+        [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex" aria-label="Select page">
+      </mat-paginator> -->
+    </div>
+
+  </div>
+
+</div>

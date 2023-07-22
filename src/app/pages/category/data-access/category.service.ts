@@ -8,6 +8,23 @@ import { environment } from 'src/environments/environment.prod';
   providedIn: 'root',
 })
 export class CategoryService {
+  readAllCategory(): Observable<IResponse> {
+    return this.http.get<IResponse>(`${environment.backendUrl}/category/read`);
+  }
+
+  readSingleCategory(categoryID: number): Observable<IResponse> {
+    return this.http.get<IResponse>(
+      `${environment.backendUrl}/category/read-single/${categoryID}`
+    );
+  }
+
+  createCategory(rawCategoryData: any): Observable<IResponse> {
+    return this.http.post<IResponse>(
+      `${environment.backendUrl}/category/create`,
+      rawCategoryData
+    );
+  }
+
   readAllCategoryFilterOfCategory(categoryID: number): Observable<IResponse> {
     return this.http.get<any>(
       `${environment.backendUrl}/category-filter/read/${categoryID}`

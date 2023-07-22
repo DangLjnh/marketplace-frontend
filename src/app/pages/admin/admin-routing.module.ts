@@ -6,6 +6,8 @@ import { AdminPortalLayoutComponent } from './feature/admin-portal-layout/admin-
 import { AdminGroupRoleComponent } from './feature/admin-group-role/admin-group-role.component';
 import { AdminGroupRoleCreateEditComponent } from './feature/admin-group-role-create-edit/admin-group-role-create-edit.component';
 import { AdminProductComponent } from './feature/admin-product/admin-product.component';
+import { AdminCategoryComponent } from './feature/admin-category/admin-category.component';
+import { AdminCategoryCreateEditComponent } from './feature/admin-category-create-edit/admin-category-create-edit.component';
 
 const routes: Routes = [
   {
@@ -24,6 +26,18 @@ const routes: Routes = [
           {
             path: 'product',
             component: AdminProductComponent,
+          },
+          {
+            path: 'category',
+            component: AdminCategoryComponent,
+          },
+          {
+            path: 'category/new',
+            component: AdminCategoryCreateEditComponent,
+          },
+          {
+            path: 'category/edit/:id',
+            component: AdminCategoryCreateEditComponent,
           },
           {
             path: 'group',

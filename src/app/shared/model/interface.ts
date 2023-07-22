@@ -164,6 +164,7 @@ export interface ICategory {
   photo_url: string;
   status: number;
   createdAt: any;
+  Category_Filters: ICategoryFilter[];
 }
 export interface ICategoryFilter {
   id: number;

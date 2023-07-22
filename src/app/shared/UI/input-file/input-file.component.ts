@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { IUser } from '../../model/interface';
+import { ICategory, IUser } from '../../model/interface';
 
 @Component({
   selector: 'app-input-file',
@@ -10,5 +10,6 @@ export class InputFileComponent {
   @Input() base64Image!: string;
   @Input() dataUser!: IUser;
   @Input() dataShop!: IUser;
+  @Input() dataCategory!: ICategory;
   @Output() handleChange = new EventEmitter<any>();
 }

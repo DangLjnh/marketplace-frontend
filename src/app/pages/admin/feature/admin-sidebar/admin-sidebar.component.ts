@@ -29,16 +29,16 @@ export class AdminSidebarComponent {
       ],
     },
     {
-      title: 'Quản lý phân loại',
+      title: 'Quản lý danh mục',
       submenus: [
         {
-          name: 'Tất cả phân loại',
-          url: '/admin/portal/product',
+          name: 'Tất cả danh mục',
+          url: '/admin/portal/category',
           isActive: false,
         },
         {
-          name: 'Thêm phân loại',
-          url: '/admin/portal/product',
+          name: 'Thêm danh mục',
+          url: '/admin/portal/category/new',
           isActive: false,
         },
       ],

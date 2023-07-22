@@ -1,0 +1,40 @@
+<div class="">
+  <p class="mb-5 text-2xl font-medium">Tạo danh mục mới</p>
+  <div class="p-5 bg-white rounded">
+    <div>
+      <p class="mb-5 text-xl">Thông tin cơ bản</p>
+      <div class="flex flex-col gap-5">
+        <form [formGroup]="categoryForm" (ngSubmit)="submitForm()" class="flex flex-col gap-5">
+          <div class="mb-5 text-center">
+            <p class="mb-2 text-darkGray">Ảnh danh mục</p>
+            <app-input-file [base64Image]="base64Image" (handleChange)="handleChangeFile($event)"
+              [dataCategory]="dataCategory"></app-input-file>
+          </div>
+          <app-form-product-row title="Tên danh mục">
+            <mat-form-field class="w-full">
+              <mat-label>Nhập vào</mat-label>
+              <input type="text" matInput formControlName="name_category">
+            </mat-form-field>
+          </app-form-product-row>
+          <app-form-product-row title="Danh mục con" [className]="'flex-wrap'">
+            <ng-container *ngFor="let option of categoryFilterOption; let i = index">
+              <div class="flex items-center gap-x-2">
+                <mat-form-field class="w-full">
+                  <mat-label>ví dụ: quần dài,...</mat-label>
+                  <input type="text" #category_filter matInput name="category_filter" class="category_filter"
+                    [value]="option.length ? option: ''" (change)="handleChangeInput()">
+                </mat-form-field>
+                <app-icon-plus (click)="addSecondOption(i)"></app-icon-plus>
+                <app-icon-trash (click)="deleteSecondOption(i)"></app-icon-trash>
+              </div>
+            </ng-container>
+          </app-form-product-row>
+          <div class="flex items-center ml-auto gap-x-3">
+            <button class="w-[93.16px] py-2 border rounded hover:bg-slate-100 transition-all">Hủy</button>
+            <app-button types="submit" className="w-[93.16px]">Lưu</app-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

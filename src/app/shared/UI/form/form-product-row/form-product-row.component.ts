@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class FormProductRowComponent {
   @Input() title!: string;
+  @Input() className!: string;
 }
