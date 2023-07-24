@@ -1,0 +1,28 @@
+<div>
+  <p class="mb-5 text-2xl font-medium">Biểu đồ doanh thu</p>
+  <div class="flex flex-col gap-5">
+    <div class="p-3 bg-white rounded">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <p class="text-2xl">Doanh thu theo năm</p>
+        </div>
+      </div>
+
+      <div class="relative p-3 overflow-x-auto">
+        <app-bill-chart></app-bill-chart>
+      </div>
+    </div>
+    <div class="p-3 bg-white rounded">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <p class="text-2xl">Doanh thu theo tháng</p>
+        </div>
+      </div>
+
+      <div class="relative p-3 overflow-x-auto">
+        <app-bill-chart-line></app-bill-chart-line>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,4 @@
+<ng-container *ngIf="lineChartData?.datasets && lineChartData?.labels">
+  <canvas baseChart [datasets]="lineChartData.datasets" [labels]="lineChartData.labels" [options]="barChartOptions"
+    [plugins]="barChartPlugins" [legend]="true" [type]="lineChartType"></canvas>
+</ng-container>

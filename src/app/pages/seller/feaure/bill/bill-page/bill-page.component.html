@@ -1,0 +1,68 @@
+<div>
+  <p class="mb-5 text-2xl font-medium">Doanh thu trên mỗi đơn hàng</p>
+  <div class="p-3 bg-white rounded">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <p class="text-2xl">Danh sách hóa đơn</p>
+        <p class="my-2 text-darkGray">Quản lý hóa đơn
+        </p>
+      </div>
+    </div>
+
+    <div class="relative p-3 overflow-x-auto">
+      <table class="w-full text-sm text-left">
+        <thead class="bg-gray-100">
+          <tr class="">
+            <td class="w-[50px]"></td>
+            <th scope="col" class="px-6 py-4 ">
+              Mã đơn hàng
+            </th>
+            <th scope="col" class="px-6 py-4">
+              <div class="grid grid-cols-5">
+                <p>Phương thức thanh toán</p>
+                <p>Tổng giá tiền (trước phí)</p>
+                <p>Số tiền thực nhận</p>
+                <p>Phí của sàn (13%)</p>
+                <p>Ngày hoàn thành</p>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-4 w-[180px]">
+              Thao tác
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bill of listBill " class="bg-white border-b-2">
+            <td class="w-[50px]"></td>
+            <th scope="col" class="px-6 py-5">
+              <p class="font-medium">{{bill.orderID}}</p>
+            </th>
+            <th scope="col" class="px-6 py-5 ">
+              <div class="grid grid-cols-5">
+                <p class="mr-5">{{bill.payment_method}}</p>
+                <p>{{bill.total_price.toLocaleString('en-US')}}₫</p>
+                <p>{{bill.total_price_charge.toLocaleString('en-US')}}₫</p>
+                <p>{{bill.price_charge.toLocaleString('en-US')}}₫</p>
+                <p>{{formatDate(bill.createdAt)}}</p>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-5 w-[180px]">
+              <div class="flex items-center text-xs gap-x-3">
+                <a (click)="openModalOrderDetail(bill.orderID)"
+                  class="px-4 py-2 bg-cyan-100 rounded whitespace-nowrap cursor-pointer">Xem chi tiết</a>
+              </div>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="mt-5">
+        <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+          [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions"
+          [pageIndex]="pageIndex" aria-label="Select page">
+        </mat-paginator>
+      </div>
+
+    </div>
+  </div>
+</div>
