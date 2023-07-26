@@ -24,8 +24,8 @@
             </div>
           </ng-container>
           <span class="text-hotRed uppercase">
-            {{ order.statusID === 1 ? "Đang vận chuyển" : order.statusID === 2 ? "Hoàn tất" : order.statusID === 3
-            ? "Đã thanh toán | Đang vận chuyển" : "Hủy" }}
+            {{ order.statusID === 1 ? "Đang vận chuyển" : order.statusID === 2 ? "Hoàn tất" : order.statusID === 4
+            ? "Đang chờ cửa hàng xác nhận" : "Đơn hàng đã bị hủy" }} | {{order.payment_method}}
           </span>
         </div>
       </div>

@@ -14,7 +14,7 @@ export class HomeDailyDiscoverComponent implements OnInit, AfterViewInit {
   length: number = 0;
   pageSize: number = 0;
   pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
+  pageSizeOptions = [20, 30, 40];
   showFirstLastButtons = true;
   pageEvent!: PageEvent;
 
@@ -42,7 +42,7 @@ export class HomeDailyDiscoverComponent implements OnInit, AfterViewInit {
     }
   }
   ngOnInit(): void {
-    const page = { offset: 0, limit: 5 };
+    const page = { offset: 0, limit: 20 };
     this.productService.readAllProduct(page).subscribe((data) => {
       this.length = data.DT.totalItems;
       this.listProduct = data.DT.data;

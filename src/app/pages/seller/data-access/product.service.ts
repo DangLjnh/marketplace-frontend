@@ -81,5 +81,11 @@ export class ProductService {
       rawProductData
     );
   }
+
+  readQuantityProductStatus(rawProductData: any): Observable<IResponse> {
+    return this.http.get<IResponse>(
+      `${environment.backendUrl}/product/read-count-status?shopID=${rawProductData.shopID}&statusID=${rawProductData.statusID}`
+    );
+  }
   constructor(private http: HttpClient) {}
 }

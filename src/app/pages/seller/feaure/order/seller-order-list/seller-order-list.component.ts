@@ -24,7 +24,7 @@ export class SellerOrderListComponent implements OnInit {
   length: number = 0;
   pageSize: number = 0;
   pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
+  pageSizeOptions = [20, 30, 40];
   showFirstLastButtons = true;
   pageEvent!: PageEvent;
 
@@ -158,32 +158,43 @@ export class SellerOrderListComponent implements OnInit {
       }
     });
     this.currentOption = current;
-    this.handlePageWithOption(0, 5, current);
+    this.handlePageWithOption(0, 20, current);
     this.pageIndex = 0;
   }
-  updateStatusDone(orderID: number) {
-    const rawData = {
-      orderID,
-      statusID: statusOrder.DELIVERED,
+  updateStatusDone(order: any) {
+    const rawBillData = {
+      total_price: order.total_price,
+      payment_method: order.payment_method,
+      orderID: order.id,
+      shopID: order.shopID,
     };
-
-    this.orderService.updateStatusOrder(rawData).subscribe((data) => {
-      if (+data.EC === errorCode.SUCCESS) {
-        this.toastrService.success(data.EM);
-        this.listOrderActive$ = this.authService.dataUser$.pipe(
-          switchMap((data) =>
-            this.orderService.readAllOrderActiveOfShop({
-              shopID: data?.Shop?.id,
-              offset: 0,
-              limit: 5,
-            })
-          ),
-          filter((order) => !!order),
-          tap((order) => {
-            this.length = order.DT.totalItems;
-          }),
-          map((order) => order.DT.data)
-        );
+    this.orderService.createBill(rawBillData).subscribe((data) => {
+      if (+data.EC === 0) {
+        const rawData = {
+          orderID: order.id,
+          statusID: statusOrder.DELIVERED,
+        };
+        this.orderService.updateStatusOrder(rawData).subscribe((data) => {
+          if (+data.EC === errorCode.SUCCESS) {
+            this.toastrService.success(data.EM);
+            this.listOrderActive$ = this.authService.dataUser$.pipe(
+              switchMap((data) =>
+                this.orderService.readAllOrderActiveOfShop({
+                  shopID: data?.Shop?.id,
+                  offset: 0,
+                  limit: 20,
+                })
+              ),
+              filter((order) => !!order),
+              tap((order) => {
+                this.length = order.DT.totalItems;
+              }),
+              map((order) => order.DT.data)
+            );
+          } else {
+            this.toastrService.error(data.EM);
+          }
+        });
       } else {
         this.toastrService.error(data.EM);
       }
@@ -225,7 +236,7 @@ export class SellerOrderListComponent implements OnInit {
                 this.orderService.readAllOrderActiveOfShop({
                   shopID: data?.Shop?.id,
                   offset: 0,
-                  limit: 5,
+                  limit: 20,
                 })
               ),
               filter((order) => !!order),
@@ -254,7 +265,7 @@ export class SellerOrderListComponent implements OnInit {
             this.orderService.readAllOrderActiveOfShop({
               shopID: data?.Shop?.id,
               offset: 0,
-              limit: 5,
+              limit: 20,
             })
           ),
           filter((order) => !!order),
@@ -282,7 +293,7 @@ export class SellerOrderListComponent implements OnInit {
   ngOnInit() {
     this.route.queryParamMap.subscribe((params) => {
       const type = params.get('type');
-      this.listOrderActive$ = this.getOrderActiveObservable(type, 0, 5);
+      this.listOrderActive$ = this.getOrderActiveObservable(type, 0, 20);
     });
   }
   getOrderActiveObservable(type: string | null, offset: number, limit: number) {

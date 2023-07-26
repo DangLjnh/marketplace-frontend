@@ -1,6 +1,6 @@
 <div class="flex -mt-5 app-container">
   <app-seller-sidebar></app-seller-sidebar>
-  <div class="flex-1 m-5">
+  <div class="flex-1 m-5 flex flex-col gap-5">
     <div class="bg-white rounded">
       <div class="p-4">
         <div class="mb-5 head-task">
@@ -8,37 +8,34 @@
           <p class="text-[13px] text-darkGray">Những việc bạn sẽ phải làm</p>
         </div>
         <div class="grid grid-cols-3 gap-y-5">
-          <div
-            class="h-[100px] hover:bg-whiteGray transition-all text-center flex flex-col items-center justify-center border-r mission">
-            <span class="text-lg font-medium text-primary">0</span>
-            <p>Chờ xác nhận</p>
-          </div>
-          <div
-            class="h-[100px] hover:bg-whiteGray transition-all text-center flex flex-col items-center justify-center border-r mission">
-            <span class="text-lg font-medium text-primary">0</span>
-            <p>Chờ xác nhận</p>
-          </div>
-          <div
-            class="h-[100px] hover:bg-whiteGray transition-all text-center flex flex-col items-center justify-center border-r mission">
-            <span class="text-lg font-medium text-primary">0</span>
-            <p>Chờ xác nhận</p>
-          </div>
-          <div
-            class="h-[100px] hover:bg-whiteGray transition-all text-center flex flex-col items-center justify-center border-r mission">
-            <span class="text-lg font-medium text-primary">0</span>
-            <p>Chờ xác nhận</p>
-          </div>
-          <div
-            class="h-[100px] hover:bg-whiteGray transition-all text-center flex flex-col items-center justify-center border-r mission">
-            <span class="text-lg font-medium text-primary">0</span>
-            <p>Chờ xác nhận</p>
-          </div>
-          <div
-            class="h-[100px] hover:bg-whiteGray transition-all text-center flex flex-col items-center justify-center border-r mission">
-            <span class="text-lg font-medium text-primary">0</span>
-            <p>Chờ xác nhận</p>
-          </div>
+          <ng-container *ngFor="let work of listNeedWork">
+            <ng-container *ngIf="work.id === 1; else noRevenue">
+              <div
+                class="h-[100px] hover:bg-whiteGray transition-all text-center flex flex-col items-center justify-center border-r mission">
+                <span class="text-lg font-medium text-primary">{{work.data.toLocaleString('en-US')}} ₫</span>
+                <p>{{work.title}}</p>
+              </div>
+            </ng-container>
+            <ng-template #noRevenue>
+              <div
+                class="h-[100px] hover:bg-whiteGray transition-all text-center flex flex-col items-center justify-center border-r mission">
+                <span class="text-lg font-medium text-primary">{{work.data}}</span>
+                <p>{{work.title}}</p>
+              </div>
+            </ng-template>
+          </ng-container>
         </div>
+      </div>
+    </div>
+    <div class="p-3 bg-white rounded">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <p class="text-2xl">Doanh thu ngày hôm nay</p>
+        </div>
+      </div>
+
+      <div class="relative p-3 overflow-x-auto">
+        <app-bill-chart-line type="day"></app-bill-chart-line>
       </div>
     </div>
   </div>

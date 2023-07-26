@@ -20,6 +20,10 @@ export class CheckoutPageComponent {
   ) {}
   ngOnInit(): void {
     this.cartService.listCheckCart$.subscribe((data) => {
+      console.log(
+        '🚀 ~ file: checkout-page.component.ts:23 ~ CheckoutPageComponent ~ this.cartService.listCheckCart$.subscribe ~ data:',
+        data
+      );
       this.dataCarts = data;
     });
   }

@@ -44,6 +44,10 @@ export class CustomerPurchaseComponent {
     this.checkoutService
       .readAllOrderOfUser(this.dataUser.id)
       .subscribe((data) => {
+        console.log(
+          '🚀 ~ file: customer-purchase.component.ts:47 ~ CustomerPurchaseComponent ~ .subscribe ~ data:',
+          data
+        );
         this.dataOrders = data.DT;
       });
   }

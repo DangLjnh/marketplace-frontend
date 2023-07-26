@@ -34,7 +34,6 @@
               <p class="whitespace-nowrap">Phân loại 2</p>
               <p>Giá</p>
               <p>Kho hàng</p>
-              <p>Doanh số</p>
             </div>
           </th>
           <th scope="col" class="px-6 py-4 w-[130px]">
@@ -70,7 +69,6 @@
                       <p>{{option.secondFilter.name_filter}}</p>
                       <p>{{option.price.toLocaleString('en-US')}}₫</p>
                       <p>{{option.quantity_stock}}</p>
-                      <p>khong</p>
                     </div>
                   </ng-container>
                   <ng-template #noHasSecondOption>
@@ -79,7 +77,6 @@
                       <p>Không có</p>
                       <p>{{option.price.toLocaleString('en-US')}}₫</p>
                       <p>{{option.quantity_stock}}</p>
-                      <p>khong</p>
                     </div>
                   </ng-template>
                 </ng-container>
@@ -90,7 +87,6 @@
                   <p>Không có</p>
                   <p>{{product.Product_Detail.price_original.toLocaleString('en-US')}}₫</p>
                   <p>{{product.Stock.quantity}}</p>
-                  <p>khong</p>
                 </div>
               </ng-template>
             </th>
@@ -110,9 +106,11 @@
             </th>
             <th scope="col" class="px-6 py-5 w-[180px]">
               <div class="flex items-center text-xs gap-x-3">
-                <a class="px-4 py-2 bg-red-100 rounded cursor-pointer" (click)="handleBanProduct(product.id)">Chặn</a>
+                <a *ngIf="product.status !== 4" class="px-4 py-2 bg-red-100 rounded cursor-pointer"
+                  (click)="handleBanProduct(product.id)">Chặn</a>
                 <a [routerLink]="'/product/'+product.id" class="px-4 py-2 bg-blue-100 rounded">Xem</a>
-                <a class="px-4 py-2 bg-yellow-100 rounded cursor-pointer" (click)="handleBrowse(product.id)">Duyệt</a>
+                <a *ngIf="product.status === 2" class="px-4 py-2 bg-yellow-100 rounded cursor-pointer"
+                  (click)="handleBrowse(product.id)">Duyệt</a>
               </div>
             </th>
           </tr>

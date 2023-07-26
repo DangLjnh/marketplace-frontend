@@ -13,6 +13,9 @@ import { SellerDiscountListComponent } from './feaure/discount/seller-discount-l
 import { SellerDiscountNewComponent } from './feaure/discount/seller-discount-new/seller-discount-new.component';
 import { SellerOrderListComponent } from './feaure/order/seller-order-list/seller-order-list.component';
 import { SellerProfileComponent } from './feaure/profile/seller-profile/seller-profile.component';
+import { BillPageComponent } from './feaure/bill/bill-page/bill-page.component';
+import { BillChartComponent } from './feaure/bill/bill-chart/bill-chart.component';
+import { BillChartPageComponent } from './feaure/bill/bill-chart-page/bill-chart-page.component';
 
 const routes: Routes = [
   {
@@ -51,6 +54,14 @@ const routes: Routes = [
           {
             path: 'profile',
             component: SellerProfileComponent,
+          },
+          {
+            path: 'bill/list',
+            component: BillPageComponent,
+          },
+          {
+            path: 'bill/chart',
+            component: BillChartPageComponent,
           },
         ],
       },

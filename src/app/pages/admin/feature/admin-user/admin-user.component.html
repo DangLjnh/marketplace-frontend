@@ -1,1 +1,76 @@
-<p>admin-user works!</p>
+<div>
+  <div class="p-3 bg-white rounded">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <p class="text-2xl">Danh sách người dùng</p>
+        <p class="my-2 text-darkGray">Quản lý người dùng
+        </p>
+      </div>
+    </div>
+
+    <div class="relative p-3 overflow-x-auto">
+      <table class="w-full text-sm text-left">
+        <thead class="bg-gray-100">
+          <tr class="">
+            <th scope="col" class="px-6 py-4 ">
+              Tên
+            </th>
+            <th scope="col" class="px-6 py-4">
+              <div class="grid grid-cols-5">
+                <p>Email</p>
+                <p>Nhóm quyền</p>
+                <p>Số điện thoại</p>
+                <p>Trạng thái</p>
+                <p>Ngày tham gia</p>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-4 w-[180px]">
+              Thao tác
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of listUser " class="bg-white border-b-2">
+            <th scope="col" class="px-6 py-5">
+              <p class="mr-5">{{user.User_Detail.full_name || "Chưa cập nhật"}}</p>
+            </th>
+            <th scope="col" class="px-6 py-5 ">
+              <div class="grid grid-cols-5">
+                <p>{{user.User_Detail.email}}</p>
+                <p>{{user.Group.name}}</p>
+                <p>{{user.phone}}</p>
+                <div>
+                  <ng-container *ngIf="user.id_status">
+                    <ng-container *ngIf="user.id_status === 1">
+                      <span class="px-4 py-2 bg-blue-300 rounded whitespace-nowrap">Đang hoạt động</span>
+                    </ng-container>
+                    <ng-container *ngIf="user.id_status === 3">
+                      <span class="px-4 py-2 bg-red-300 rounded whitespace-nowrap">Đã chặn</span>
+                    </ng-container>
+                  </ng-container>
+                </div>
+                <p>{{formatDate(user.createdAt)}}</p>
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-5 w-[180px]">
+              <div class="flex items-center text-xs gap-x-3">
+                <a class="px-4 py-2 bg-yellow-100 rounded whitespace-nowrap cursor-pointer"
+                  (click)="handleUpdateUser(user.id)">Cập nhật</a>
+                <a *ngIf="user.id_status !== 3" class="px-4 py-2 bg-red-100 rounded whitespace-nowrap cursor-pointer"
+                  (click)="handleBanUser(user.id)">Chặn người dùng</a>
+              </div>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- <div class="mt-5">
+        <mat-paginator #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+          [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions"
+          [pageIndex]="pageIndex" aria-label="Select page">
+        </mat-paginator>
+      </div> -->
+
+    </div>
+  </div>
+</div>

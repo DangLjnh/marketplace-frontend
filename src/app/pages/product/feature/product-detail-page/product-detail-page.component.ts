@@ -17,7 +17,7 @@ import {
   IUser,
   TProductFilter,
 } from 'src/app/shared/model/interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/pages/cart/data-access/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
@@ -193,6 +193,39 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
       });
     }
   }
+  handleBuyNow() {
+    const rawCartData = {
+      quantity: this.valueCounter,
+      productID: this.dataProduct.id,
+      productPriceOptionID: this.optionResult?.id ?? null,
+      shopID: this.dataProduct.shopID,
+      userID: this.dataUser.id,
+      cartID: this.cartDefault.id,
+    };
+    this.cartService.createCartItem(rawCartData).subscribe((data) => {
+      if (+data.EC === 1 || +data.EC === -1) {
+        this.toastrService.error(data.EM);
+      }
+      if (+data.EC === 0) {
+        const rawCartData = {
+          Product: this.dataProduct,
+          Product_Price_Option: this.optionResult ?? null,
+          Shop: this.dataUser.Shop,
+          quantity: this.valueCounter,
+          checked: true,
+          id: data.DT.id,
+        };
+        const price =
+          this.dataProduct.Product_Price_Options[0]?.price_discount ||
+          this.dataProduct.Product_Price_Options[0]?.price ||
+          this.dataProduct?.Product_Detail?.price_discount ||
+          this.dataProduct?.Product_Detail?.price_original;
+        this.cartService.listCheckCart = [[rawCartData]];
+        this.router.navigate(['/checkout']);
+        this.cartService.totalPrice = price;
+      }
+    });
+  }
   onCountPlus(num: number) {
     this.valueCounter = num + 1;
   }
@@ -211,7 +244,8 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
     private toastrService: ToastrService,
     private categoryService: CategoryService,
     private cartService: CartService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {}
   ngOnInit(): void {
     window.scrollTo(0, 0);

@@ -43,6 +43,13 @@ import { SellerOrderListCancelComponent } from './feaure/order/seller-order-list
 import { SellerOrderDetailModalComponent } from './feaure/order/seller-order-detail-modal/seller-order-detail-modal.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { SellerProfileComponent } from './feaure/profile/seller-profile/seller-profile.component';
+import { BillPageComponent } from './feaure/bill/bill-page/bill-page.component';
+import { BillChartComponent } from './feaure/bill/bill-chart/bill-chart.component';
+import { NgChartsModule } from 'ng2-charts';
+import { BillChartLineComponent } from './feaure/bill/bill-chart-line/bill-chart-line.component';
+import { BillChartDayComponent } from './feaure/bill/bill-chart-day/bill-chart-day.component';
+import { BillChartPageComponent } from './feaure/bill/bill-chart-page/bill-chart-page.component';
+import { AdminUpdateUserModalComponent } from './feaure/profile/admin-update-user-modal/admin-update-user-modal.component';
 @NgModule({
   declarations: [
     SellerComponent,
@@ -65,6 +72,12 @@ import { SellerProfileComponent } from './feaure/profile/seller-profile/seller-p
     SellerOrderListCancelComponent,
     SellerOrderDetailModalComponent,
     SellerProfileComponent,
+    BillPageComponent,
+    BillChartComponent,
+    BillChartLineComponent,
+    BillChartDayComponent,
+    BillChartPageComponent,
+    AdminUpdateUserModalComponent,
   ],
   imports: [
     CommonModule,
@@ -87,6 +100,7 @@ import { SellerProfileComponent } from './feaure/profile/seller-profile/seller-p
     NgxMatNativeDateModule,
     FormsModule,
     MatPaginatorModule,
+    NgChartsModule,
   ],
 })
 export class SellerModule {}

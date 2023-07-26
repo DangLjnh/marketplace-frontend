@@ -15,7 +15,7 @@ export class AdminProductComponent implements OnInit {
   length: number = 0;
   pageSize: number = 0;
   pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
+  pageSizeOptions = [20, 30, 40];
   showFirstLastButtons = true;
   pageEvent!: PageEvent;
   handlePageEvent(e: PageEvent) {
@@ -41,7 +41,7 @@ export class AdminProductComponent implements OnInit {
     this.productService.updateStatusProduct(rawData).subscribe((data) => {
       if (+data.EC === 0) {
         this.productService
-          .readAllProduct({ offset: 0, limit: 5 })
+          .readAllProduct({ offset: 0, limit: 20 })
           .subscribe((val) => {
             this.productList = val.DT.data;
             this.pageIndex = 0;
@@ -60,7 +60,7 @@ export class AdminProductComponent implements OnInit {
     this.productService.updateStatusProduct(rawData).subscribe((data) => {
       if (+data.EC === 0) {
         this.productService
-          .readAllProduct({ offset: 0, limit: 5 })
+          .readAllProduct({ offset: 0, limit: 20 })
           .subscribe((val) => {
             this.productList = val.DT.data;
             this.pageIndex = 0;
@@ -77,7 +77,7 @@ export class AdminProductComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.productService
-      .readAllProduct({ offset: 0, limit: 5 })
+      .readAllProduct({ offset: 0, limit: 20 })
       .subscribe((data) => {
         this.length = data.DT.totalItems;
         this.productList = data.DT.data;

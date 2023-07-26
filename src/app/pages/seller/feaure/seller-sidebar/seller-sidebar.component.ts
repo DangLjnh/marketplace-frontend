@@ -59,7 +59,12 @@ export class SellerSidebarComponent {
       submenus: [
         {
           name: 'Doanh thu',
-          url: '',
+          url: '/seller/portal/bill/list',
+          isActive: false,
+        },
+        {
+          name: 'Biểu đồ doanh thu',
+          url: '/seller/portal/bill/chart',
           isActive: false,
         },
       ],

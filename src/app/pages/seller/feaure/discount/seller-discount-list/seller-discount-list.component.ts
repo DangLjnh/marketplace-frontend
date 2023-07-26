@@ -15,7 +15,7 @@ export class SellerDiscountListComponent implements OnInit {
   length: number = 0;
   pageSize: number = 0;
   pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
+  pageSizeOptions = [20, 30, 40];
   showFirstLastButtons = true;
   pageEvent!: PageEvent;
   navTabs = [
@@ -78,7 +78,7 @@ export class SellerDiscountListComponent implements OnInit {
         .readAllDiscountPercentOfShop({
           shopID: data?.Shop?.id,
           offset: 0,
-          limit: 5,
+          limit: 20,
         })
         .subscribe((data) => {
           this.length = data.DT.totalItems;

@@ -76,7 +76,7 @@
                     (click)="handleChooseCancel(order.id)">Hủy đơn</a>
                 </ng-container>
                 <ng-container *ngIf="order.statusID === 1">
-                  <a (click)="updateStatusDone(order.id)"
+                  <a (click)="updateStatusDone(order)"
                     class="px-4 py-2 bg-green-100 rounded whitespace-nowrap cursor-pointer">Hoàn tất</a>
                 </ng-container>
               </div>

@@ -40,6 +40,7 @@ type TUserDetail = {
 };
 
 export interface IGroup {
+  id: number;
   name: string;
   desc?: string;
 }
@@ -126,6 +127,7 @@ export interface IUser {
   phone: string;
   id_login_method: string;
   id_status: number;
+  createdAt: any;
   User_Detail: TUserDetail;
   Group: IGroup;
   Shop: IShop;
