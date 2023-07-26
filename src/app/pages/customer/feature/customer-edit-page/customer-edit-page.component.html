@@ -2,14 +2,14 @@
   <div class="pb-3 mb-3 border-b ">
     <p class="text-lg font-medium">Thông tin cá nhân</p>
     <ng-container *ngIf="dataUser?.id">
-      <p class="text-darkGray">Quản lý và bảo vệ tài khoản của bạn.</p>
+      <!-- <p class="text-darkGray">Quản lý và bảo vệ tài khoản của bạn.</p> -->
       <p class="text-darkGray">Mã tài khoản của bạn: <span class="text-black font-medium">{{dataUser.id}}</span></p>
     </ng-container>
   </div>
   <form class="grid grid-cols-3 gap-x-5" [formGroup]="editUserForm" (ngSubmit)="submitForm()">
     <div class="flex flex-col col-span-2 gap-5 px-10 py-5 border-r">
       <div class="flex items-center gap-x-5">
-        <span class="flex-1">Full name</span>
+        <span class="flex-1">Họ tên</span>
         <input type="text" class="w-[80%] px-2 py-2 border" formControlName="fullName">
       </div>
       <div class="flex items-center gap-x-5">
@@ -17,15 +17,15 @@
         <input type="text" class="w-[80%] px-2 py-2 border" formControlName="email">
       </div>
       <div class="flex items-center gap-x-5">
-        <span class="flex-1 whitespace-nowrap">Phone number</span>
+        <span class="flex-1 whitespace-nowrap">Số điện thoại</span>
         <input type="text" class="w-[80%] px-2 py-2 border" formControlName="phone">
       </div>
       <div class="flex items-center gap-x-5">
-        <span class="whitespace-nowrap">Gender</span>
+        <span class="whitespace-nowrap">Giới tính</span>
         <mat-radio-group aria-label="Select an option" formControlName="sex">
-          <mat-radio-button value="0">Male</mat-radio-button>
-          <mat-radio-button value="1">Female</mat-radio-button>
-          <mat-radio-button value="2">Other</mat-radio-button>
+          <mat-radio-button value="0">Nam</mat-radio-button>
+          <mat-radio-button value="1">Nữ</mat-radio-button>
+          <mat-radio-button value="2">Khác</mat-radio-button>
         </mat-radio-group>
       </div>
     </div>
@@ -35,7 +35,7 @@
         (handleChange)="handleChangeFile($event)"></app-input-file>
     </div>
 
-    <app-button types="submit" class="col-span-2 mx-[200px]" className="w-[237.6px] h-[40px]" [loading]="loading">Save
-      change</app-button>
+    <app-button types="submit" class="col-span-2 mx-[200px]" className="w-[237.6px] h-[40px]" [loading]="loading">Lưu
+      thay đổi</app-button>
   </form>
 </div>

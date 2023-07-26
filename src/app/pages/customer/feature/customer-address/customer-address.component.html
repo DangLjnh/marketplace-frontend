@@ -1,14 +1,14 @@
 <div class="p-3 bg-white rounded">
   <div class="flex items-center justify-between pb-5 mb-5 border-b">
     <div class="">
-      <p class="text-lg font-medium">My Addresses</p>
-      <p class="text-darkGray">Manage your address</p>
+      <p class="text-lg font-medium">Sổ địa chỉ của tôi</p>
+      <p class="text-darkGray">Quản lý sổ địa chỉ</p>
     </div>
 
     <app-button (click)="openModalCreateAddress()">
       <div class="flex items-center gap-x-3">
         <app-icon-plus></app-icon-plus>
-        <span>Add new address</span>
+        <span>Thêm địa chỉ</span>
       </div>
     </app-button>
   </div>
@@ -25,13 +25,13 @@
               <div class="flex items-center justify-center w-4 h-4 border rounded-full border-lightGreen">
                 <app-icon-check [color]="'#00AB56'"></app-icon-check>
               </div>
-              <p class="text-xs text-lightGreen">Default address</p>
+              <p class="text-xs text-lightGreen">Địa chỉ mặc định</p>
             </div>
           </div>
           <div class="flex items-center gap-x-2">
-            <button class="text-primary" (click)="openModalEditAddress(address.id)">Edit</button>
+            <button class="text-primary" (click)="openModalEditAddress(address.id)">Chỉnh sửa</button>
             <button *ngIf="!address.isDefault" class="p-2 rounded bg-whiteGray text-hotRed"
-              (click)="handleDeleteAddress(address.id)">Delete</button>
+              (click)="handleDeleteAddress(address.id)">Xóa</button>
           </div>
         </div>
         <div class="flex items-center justify-between text-darkGray">
@@ -41,8 +41,8 @@
               {{address.Address_Detail.city}}</p>
           </div>
           <button *ngIf="!address.isDefault" (click)="handleChangeDefaultAddress(address.id)"
-            class="px-2 py-1 text-black transition-all border rounded hover:bg-gray-50">Set as
-            default</button>
+            class="px-2 py-1 text-black transition-all border rounded hover:bg-gray-50">Đặt làm địa chỉ mặc
+            định</button>
         </div>
       </div>
     </ng-container>

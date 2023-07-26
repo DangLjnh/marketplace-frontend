@@ -3,7 +3,7 @@
     <img *ngIf="dataUser" [src]="dataUser.User_Detail.photo_url || '../../../../../assets/img/default-user.png'" alt=""
       class="w-[45px] h-[45px] rounded-full object-cover">
     <div class="">
-      <span class="font-light">Account of</span>
+      <span class="font-light">Tài khoản của</span>
       <p *ngIf="dataUser" class="font-medium">{{dataUser.User_Detail.full_name || dataUser.User_Detail.email}}</p>
     </div>
   </div>

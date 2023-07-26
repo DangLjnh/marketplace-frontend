@@ -22,6 +22,10 @@ export class CheckoutOrderComponent implements OnInit, OnDestroy {
   submitOrder() {
     if (this.checkoutService.choosePayment === 'cash') {
       this.checkoutService.createOrder(this.dataOrders).subscribe((data) => {
+        console.log(
+          '🚀 ~ file: checkout-order.component.ts:25 ~ CheckoutOrderComponent ~ this.checkoutService.createOrder ~ this.dataOrders:',
+          this.dataOrders
+        );
         if (+data.EC === errorCode.SUCCESS) {
           this.toastrService.success(data.EM);
           this.router.navigate(['customer/account/purchase']);

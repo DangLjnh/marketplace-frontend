@@ -7,7 +7,7 @@
     </a>
   </div>
 
-  <app-input-search placeholder="You can search by Shop name, Order ID or Product name"></app-input-search>
+  <!-- <app-input-search placeholder="You can search by Shop name, Order ID or Product name"></app-input-search> -->
 
   <ng-container *ngFor="let order of dataOrders">
     <div class="p-3 bg-white rounded">
@@ -64,11 +64,14 @@
             </ng-container>
             <ng-template #noOption>
               <ng-container *ngIf="orderDetail.Product.Product_Detail.price_discount;else noDiscount">
-                <span class="line-through text-lightGray">₫479.000</span>
-                <span class="text-hotRed">₫352.000</span>
+                <span
+                  class="line-through text-lightGray">{{orderDetail.Product.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
+                <span
+                  class="text-hotRed">{{orderDetail.Product.Product_Detail.price_discount.toLocaleString('en-US')}}₫</span>
               </ng-container>
               <ng-template #noDiscount>
-                <span class="text-hotRed">₫352.000</span>
+                <span
+                  class="text-hotRed">{{orderDetail.Product.Product_Detail.price_original.toLocaleString('en-US')}}₫</span>
               </ng-template>
             </ng-template>
 

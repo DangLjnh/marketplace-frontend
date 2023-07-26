@@ -3,24 +3,24 @@
   <div class="content max-w-[550px]">
     <div class="flex items-center gap-x-5">
       <mat-form-field class="w-full example-full-width">
-        <mat-label>Full name</mat-label>
+        <mat-label>Họ tên (người nhận)</mat-label>
         <input type="text" matInput formControlName="fullName">
       </mat-form-field>
       <mat-form-field class="w-full example-full-width">
-        <mat-label>Phone number</mat-label>
+        <mat-label>Số điện thoại</mat-label>
         <input type="text" matInput formControlName="phone">
       </mat-form-field>
     </div>
     <div class="flex items-center gap-x-5">
       <mat-form-field appearance="fill" class="w-full">
-        <mat-label>City</mat-label>
+        <mat-label>Email</mat-label>
         <mat-select formControlName="city">
           <mat-option *ngFor="let city of cities" [value]="city.name"
             (click)="handleChooseCity(city.code)">{{city.name}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-full">
-        <mat-label>District</mat-label>
+        <mat-label>Quận</mat-label>
         <mat-select formControlName="district">
           <mat-option *ngFor="let district of districts" [value]="district.name"
             (click)="handleChooseDistrict(district.name)">{{district.name}}</mat-option>
@@ -28,32 +28,31 @@
       </mat-form-field>
     </div>
     <mat-form-field appearance="fill" class="w-full">
-      <mat-label>Ward</mat-label>
+      <mat-label>Phường</mat-label>
       <mat-select formControlName="ward">
         <mat-option *ngFor="let ward of wards" [value]="ward.name">{{ward.name}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="w-full example-full-width">
-      <mat-label>Street name</mat-label>
+      <mat-label>Tên đường</mat-label>
       <input type="text" matInput placeholder="Street name, building, house,..." formControlName="address">
     </mat-form-field>
     <ng-container *ngIf="type==='create' || dataAddress?.isDefault == false;else addressDefault">
-      <mat-checkbox [checked]=" check" (change)="!check" formControlName="isDefault">Set a
-        default
-        address</mat-checkbox>
+      <mat-checkbox [checked]=" check" (change)="!check" formControlName="isDefault">Đặt làm địa chỉ mặc
+        định</mat-checkbox>
     </ng-container>
     <ng-template #addressDefault>
       <button
         matTooltip="The default address cannot be un-selected. You can set another address as default address instead"
         class="cursor-not-allowed" disabled>
-        <mat-checkbox [disabled]="true" [checked]="true">Set a default address</mat-checkbox>
+        <mat-checkbox [disabled]="true" [checked]="true">Chọn làm địa chỉ mặc định</mat-checkbox>
       </button>
     </ng-template>
   </div>
   <div mat-dialog-actions class="flex items-center !justify-end">
     <div class="flex items-center gap-x-2">
       <app-button mat-dialog-close className="bg-white !text-black hover:bg-slate-100">Đóng</app-button>
-      <app-button [loading]="loading" types="submit" className="w-[66.21px] h-[40px]">Save</app-button>
+      <app-button [loading]="loading" types="submit" className="w-[66.21px] h-[40px]">Lưu</app-button>
     </div>
   </div>
 </form>

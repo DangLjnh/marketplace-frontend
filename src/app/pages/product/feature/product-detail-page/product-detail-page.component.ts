@@ -150,7 +150,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
   }
   handleAddToCart() {
     const rawCartData = {
-      quantity: this.valueCounter,
+      quantity: this?.valueCounter,
       productID: this.dataProduct.id,
       productPriceOptionID: this.optionResult?.id ?? null,
       shopID: this.dataProduct.shopID,
@@ -203,6 +203,10 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
       cartID: this.cartDefault.id,
     };
     this.cartService.createCartItem(rawCartData).subscribe((data) => {
+      console.log(
+        '🚀 ~ file: product-detail-page.component.ts:206 ~ ProductDetailPageComponent ~ this.cartService.createCartItem ~ data:',
+        data
+      );
       if (+data.EC === 1 || +data.EC === -1) {
         this.toastrService.error(data.EM);
       }
@@ -213,11 +217,11 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
           Shop: this.dataUser.Shop,
           quantity: this.valueCounter,
           checked: true,
-          id: data.DT.id,
+          id: data.DT,
         };
         const price =
-          this.dataProduct.Product_Price_Options[0]?.price_discount ||
-          this.dataProduct.Product_Price_Options[0]?.price ||
+          this.optionResult?.price_discount ||
+          this.optionResult?.price ||
           this.dataProduct?.Product_Detail?.price_discount ||
           this.dataProduct?.Product_Detail?.price_original;
         this.cartService.listCheckCart = [[rawCartData]];

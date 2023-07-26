@@ -46,7 +46,7 @@ export class CustomerPurchaseComponent {
       .subscribe((data) => {
         console.log(
           '🚀 ~ file: customer-purchase.component.ts:47 ~ CustomerPurchaseComponent ~ .subscribe ~ data:',
-          data
+          data.DT
         );
         this.dataOrders = data.DT;
       });

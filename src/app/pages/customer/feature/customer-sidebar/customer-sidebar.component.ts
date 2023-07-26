@@ -14,22 +14,22 @@ export class CustomerSidebarComponent implements OnInit {
   currentRoute: string = '';
   accountNav = [
     {
-      name: 'My account',
+      name: 'Tài khoản',
       url: '/customer/account/edit',
       icon: 'account',
     },
     {
-      name: 'Change password',
+      name: 'Thay đổi mật khẩu',
       url: '/customer/account/password',
       icon: 'lock',
     },
     {
-      name: 'Addresses',
+      name: 'Sổ địa chỉ',
       url: '/customer/account/address',
       icon: 'location',
     },
     {
-      name: 'My Purchase',
+      name: 'Đơn hàng của tôi',
       url: '/customer/account/purchase',
       icon: 'order',
     },
