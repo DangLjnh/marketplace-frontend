@@ -2,22 +2,27 @@
 <form mat-dialog-content>
   <div class="content max-w-[1000px]">
     <div class="flex flex-col gap">
-      <ng-container *ngFor="let data of listComparePrice">
-        <div class="flex items-center gap-x-20 border-b py-8">
-          <div class="flex items-center gap-x-3 w-[400px]">
-            <img class="w-16 h-16 object-cover rounded-full border-[2px] border-whiteBlue"
-              [src]="data.current_seller_logo" alt="">
-            <div>
-              <p class="font-semibold text-black">{{data.current_seller_name}}</p>
-              <p class="text-base">{{data.name}}</p>
+      <ng-container *ngIf="listComparePrice.length; else noData">
+        <ng-container *ngFor="let data of listComparePrice">
+          <div class="flex items-center gap-x-20 border-b py-8">
+            <div class="flex items-center gap-x-3 w-[400px]">
+              <img class="w-16 h-16 object-cover rounded-full border-[2px] border-whiteBlue"
+                [src]="data.current_seller_logo" alt="">
+              <div>
+                <p class="font-semibold text-black">{{data.current_seller_name}}</p>
+                <p class="text-base">{{data.name}}</p>
+              </div>
             </div>
+            <div class="w-[200px]">
+              <h3 class="text-2xl text-hotRed">{{data.price.toLocaleString('en-US')}} ₫</h3>
+            </div>
+            <app-button className="w-full" theme="blue" (click)="handleOpenTab(data.short_url)">Xem ngay</app-button>
           </div>
-          <div class="w-[200px]">
-            <h3 class="text-2xl text-hotRed">{{data.price.toLocaleString('en-US')}} ₫</h3>
-          </div>
-          <app-button className="w-full" theme="blue" (click)="handleOpenTab(data.short_url)">Xem ngay</app-button>
-        </div>
+        </ng-container>
       </ng-container>
+      <ng-template #noData>
+        Xin lỗi hiện chưa tìm thấy sản phẩm phù hợp
+      </ng-template>
     </div>
   </div>
   <div mat-dialog-actions class="flex items-center !justify-end">

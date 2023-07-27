@@ -1,10 +1,10 @@
 <div>
   <div class="flex flex-col gap-3 pb-3 mb-3 border-b">
     <div class="flex items-center justify-between">
-      <span class="text-darkGray">Merchandise Subtotal:</span>
+      <span class="text-darkGray">Tạm tính:</span>
       <span>{{subtotal.toLocaleString('en-US')}} ₫</span>
     </div>
-    <div class="flex items-center justify-between">
+    <!-- <div class="flex items-center justify-between">
       <span class="text-darkGray">Shipping Total:</span>
       <span>46.000đ</span>
     </div>
@@ -12,14 +12,14 @@
       <span class="text-darkGray">Shipping Discount:</span>
       <span class="text-lightGreen"> - {{(totalPrice >= 300000 ? 30000:totalPrice >= 150000 ? 15000 :
         0).toLocaleString('en-US')}} ₫</span>
-    </div>
+    </div> -->
     <div class="flex items-center justify-between">
-      <span class="text-darkGray">Merchandise Discount:</span>
+      <span class="text-darkGray">Số tiền tiết kiệm: </span>
       <span class="text-lightGreen"> - {{totalDiscount.toLocaleString('en-US')}} đ</span>
     </div>
   </div>
   <div class="flex items-center justify-between">
-    <span>Total price: </span>
+    <span>Tổng tiền: </span>
     <span class="text-xl font-medium text-hotRed">{{totalPrice.toLocaleString('en-US')}} ₫</span>
   </div>
   <div class="flex items-center my-3">

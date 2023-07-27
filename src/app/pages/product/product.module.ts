@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HeaderChooseCartModalComponent } from './feature/header-choose-cart-modal/header-choose-cart-modal.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { HeaderChooseCartModalComponent } from './feature/header-choose-cart-mod
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatTooltipModule,
   ],
   exports: [HeaderChooseCartModalComponent],
 })

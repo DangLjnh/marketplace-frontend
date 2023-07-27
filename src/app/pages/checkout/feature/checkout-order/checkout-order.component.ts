@@ -74,7 +74,9 @@ export class CheckoutOrderComponent implements OnInit, OnDestroy {
                 this.subtotal +=
                   item.Product_Price_Option.price * item.quantity;
                 this.totalDiscount +=
-                  item.Product_Price_Option?.price_discount * item.quantity;
+                  (item.Product_Price_Option.price -
+                    item.Product_Price_Option?.price_discount) *
+                  item.quantity;
               }
             } else {
               if (data.length > 1 || index === 0) {
@@ -82,7 +84,9 @@ export class CheckoutOrderComponent implements OnInit, OnDestroy {
                   item.Product.Product_Detail.price_original * item.quantity;
                 if (item.Product.Product_Detail?.price_discount) {
                   this.totalDiscount +=
-                    item.Product.Product_Detail.price_discount * item.quantity;
+                    (item.Product.Product_Detail.price_original -
+                      item.Product.Product_Detail.price_discount) *
+                    item.quantity;
                 }
               }
             }

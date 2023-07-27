@@ -28,6 +28,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HeaderSellerComponent } from '../layouts/header/header-seller/header-seller.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -61,6 +62,7 @@ import { HeaderSellerComponent } from '../layouts/header/header-seller/header-se
     SwiperModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatTooltipModule,
   ],
   exports: [
     HeaderComponent,

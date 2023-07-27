@@ -1,5 +1,9 @@
 <div class="container flex flex-col gap-5">
-  <div class="w-full h-[360px] rounded bg-red-200"></div>
+  <div class="w-full h-[360px] rounded bg-red-200">
+    <img
+      src="https://res.cloudinary.com/dwkckmmr7/image/upload/v1690391820/vn-50009109-67379c35fbf2bb306c2fbb1b13a916ee_bxisbv.png"
+      class="w-full h-full rounded" alt="">
+  </div>
 
   <div class="p-3 bg-white rounded">
     <div class="flex items-center justify-between mb-3 font-medium text-hotRed">
@@ -7,10 +11,11 @@
       <span class="text-md ">See All</span>
     </div>
     <div class="grid grid-cols-6 border-t border-l">
-      <div class="h-[120px] border-b border-r">
-        <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
-          class="object-contain w-full h-full">
-      </div>
+      <ng-container *ngFor="let shop of listShop$ | async">
+        <div class="h-[120px] border-b border-r cursor-pointer" [routerLink]="'/shop/'+shop.id">
+          <img [src]="shop.Shop_Detail.photo_url" alt="" class="object-contain w-full h-full">
+        </div>
+      </ng-container>
       <div class="h-[120px] border-b border-r">
         <img src="https://cf.shopee.vn/file/513f589c10254512669d3d8b50a6dea7" alt=""
           class="object-contain w-full h-full">

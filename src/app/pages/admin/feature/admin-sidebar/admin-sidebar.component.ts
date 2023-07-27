@@ -58,21 +58,21 @@ export class AdminSidebarComponent {
         },
       ],
     },
-    {
-      title: 'Dữ liệu',
-      submenus: [
-        {
-          name: 'Doanh thu',
-          url: '/seller/portal/profile',
-          isActive: false,
-        },
-        // {
-        //   name: 'Tài khoản',
-        //   url: '',
-        //   isActive: false,
-        // },
-      ],
-    },
+    // {
+    //   title: 'Dữ liệu',
+    //   submenus: [
+    //     {
+    //       name: 'Doanh thu',
+    //       url: '/seller/portal/profile',
+    //       isActive: false,
+    //     },
+    //     // {
+    //     //   name: 'Tài khoản',
+    //     //   url: '',
+    //     //   isActive: false,
+    //     // },
+    //   ],
+    // },
   ];
   handleChoose(sub: any) {
     this.sidebars.forEach((item: any) => {

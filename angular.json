@@ -34,6 +34,11 @@
           },
           "configurations": {
             "production": {
+              "styles": [
+                "src/styles.scss",
+                "src/theme.scss",
+                "node_modules/ngx-toastr/toastr.css"
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

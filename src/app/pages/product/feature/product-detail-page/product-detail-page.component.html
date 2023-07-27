@@ -90,11 +90,11 @@
         <div class="flex flex-col gap-12">
           <div class="flex items-center gap-x-2">
             <div class="w-[110px]">
-              <span class="text-darkGray">Shipping</span>
+              <span class="text-darkGray">Giao hàng</span>
             </div>
             <div class="flex items-center flex-1 gap-x-3">
               <app-icon-truck color="black" stroke="black"></app-icon-truck>
-              <span class="text-darkGray">Shipping Voucher:</span>
+              <span class="text-darkGray">Giao hàng Voucher:</span>
               <span class="px-2 py-1 text-sm font-medium rounded text-hotRed bg-red-50">₫15k OFF</span>
               <span class="px-2 py-1 text-sm font-medium rounded text-hotRed bg-red-50">₫30k OFF</span>
             </div>
@@ -105,10 +105,16 @@
               (handleChooseOption)="handleChooseOptions($event)"></app-product-category-option>
           </ng-container>
 
-          <ng-container *ngIf="optionResult?.quantity_stock">
+          <ng-container *ngIf="optionResult?.quantity_stock; else noQuantity">
             <p class="text-darkGray">Hiện còn lại <span
                 class="text-black font-medium">{{optionResult.quantity_stock}}</span> sản phẩm</p>
           </ng-container>
+
+          <ng-template #noQuantity>
+            <ng-container *ngIf="optionResult">
+              <p class="text-hotRed uppercase">Hết hàng</p>
+            </ng-container>
+          </ng-template>
 
           <ng-container *ngIf="dataProduct?.Stock">
             <p class="text-darkGray">Hiện còn lại <span
@@ -119,7 +125,7 @@
 
           <div class="flex items-center gap-x-2">
             <div class="w-[110px]">
-              <span class="text-darkGray">Quantity</span>
+              <span class="text-darkGray">Số lượng</span>
             </div>
             <div class="flex flex-wrap items-center flex-1 gap-3">
               <app-input-counter [valueCounter]="valueCounter" (checkedMinus)="onCountMinus($event)"
@@ -128,7 +134,7 @@
           </div>
 
           <div class="flex items-center justify-between">
-            <div class="flex items-center gap-x-5">
+            <div class="flex items-center gap-x-5" [class]="outOfStock ? 'opacity-70 pointer-events-none' :''">
               <app-button theme="blue" className="flex items-center gap-x-2" (click)="openModalChooseCart()"
                 [disable]="notChooseOption">
                 <app-icon-plus-cart color="#0A68FF" stroke="#0A68FF"></app-icon-plus-cart>
@@ -199,45 +205,47 @@
 
   <div class="container bg-white rounded">
     <div class="flex flex-col gap-5 p-3">
-      <div class="p-3 bg-gray-100 rounded">
-        <p class="text-lg font-medium tracking-wide uppercase">Product Specifications</p>
+      <div class="p-3 bg-gray-100 rounded opacity-70">
+        <p class="text-lg font-medium tracking-wide uppercase">Chi tiết sản phẩm</p>
       </div>
 
-      <div class="flex flex-col gap-5">
-        <div class="flex items-center gap-x-3">
-          <span class="w-36">
-            Category
-          </span>
-          <span>Men Clothes</span>
-        </div>
-        <div class="flex items-center gap-x-3">
-          <span class="w-36">
-            Brand
-          </span>
-          <span>COOLMATE</span>
-        </div>
-        <div class="flex items-center gap-x-3">
-          <span class="w-36">
-            Style
-          </span>
-          <span>Basic, Athletic, Nam tính</span>
-        </div>
-        <div class="flex items-center gap-x-3">
-          <span class="w-36">
-            Country of Origin
-          </span>
-          <span>Vietnam</span>
-        </div>
-        <div class="flex items-center gap-x-3">
-          <span class="w-36">
-            Material
-          </span>
-          <span>Mềm mại và khử mùi hiệu quả, 50% S.Café + 50% Recycled PET</span>
+      <div class="cursor-not-allowed opacity-70" matTooltip="Đang phát triển">
+        <div class="flex flex-col gap-5 pointer-events-none">
+          <div class="flex items-center gap-x-3">
+            <span class="w-36">
+              Category
+            </span>
+            <span>Men Clothes</span>
+          </div>
+          <div class="flex items-center gap-x-3">
+            <span class="w-36">
+              Brand
+            </span>
+            <span>COOLMATE</span>
+          </div>
+          <div class="flex items-center gap-x-3">
+            <span class="w-36">
+              Style
+            </span>
+            <span>Basic, Athletic, Nam tính</span>
+          </div>
+          <div class="flex items-center gap-x-3">
+            <span class="w-36">
+              Country of Origin
+            </span>
+            <span>Vietnam</span>
+          </div>
+          <div class="flex items-center gap-x-3">
+            <span class="w-36">
+              Material
+            </span>
+            <span>Mềm mại và khử mùi hiệu quả, 50% S.Café + 50% Recycled PET</span>
+          </div>
         </div>
       </div>
 
       <div class="p-3 bg-gray-100 rounded">
-        <p class="text-lg font-medium tracking-wide uppercase">Product Description</p>
+        <p class="text-lg font-medium tracking-wide uppercase">Mô tả sản phẩm</p>
       </div>
 
       <ng-container *ngIf="dataProduct?.Product_Detail?.desc">
@@ -246,44 +254,46 @@
     </div>
   </div>
 
-  <div class="container bg-white rounded">
-    <div class="flex flex-col gap-5 p-3">
-      <p class="text-xl">Product Ratings</p>
-      <div class="flex items-center gap-7 p-5 border border-yellow-100 bg-[#fffbf8]">
-        <div class="flex flex-col items-center min-w-[130px]">
-          <p class="text-[30px] text-hotRed font-medium">4.9 <span class="text-xl font-normal">out of 5</span></p>
-          <app-star-list sizeStar="20"></app-star-list>
+  <div class="opacity-70 cursor-not-allowed" matTooltip="Đang phát triển">
+    <div class="container pointer-events-none bg-white rounded">
+      <div class="flex flex-col gap-5 p-3">
+        <p class="text-xl">Product Ratings</p>
+        <div class="flex items-center gap-7 p-5 border border-yellow-100 bg-[#fffbf8]">
+          <div class="flex flex-col items-center min-w-[130px]">
+            <p class="text-[30px] text-hotRed font-medium">4.9 <span class="text-xl font-normal">out of 5</span></p>
+            <app-star-list sizeStar="20"></app-star-list>
+          </div>
+          <app-product-category-option [hasType]="false"
+            [nameOptionList]="['All','5 Star','4 Star']"></app-product-category-option>
         </div>
-        <app-product-category-option [hasType]="false"
-          [nameOptionList]="['All','5 Star','4 Star']"></app-product-category-option>
-      </div>
 
-      <div class="flex items-start border-b mb-7 pb-7 gap-x-5">
-        <app-icon-avatar-default></app-icon-avatar-default>
-        <div class="flex flex-col gap-1">
-          <p>Dang Linh</p>
-          <app-star-list></app-star-list>
-          <p class="text-xs text-lightGray">2023-01-11 18:50 | Variation: Xám Nhạt,XL</p>
-          <p>Bố mình mặc rất vừa . Shop tv size chuẩn . Vải còn đẹp nữa . LikeeeeeeBố mình mặc rất vừa </p>
-          <div class="flex flex-wrap gap-3">
-            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
-            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
-            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+        <div class="flex items-start border-b mb-7 pb-7 gap-x-5">
+          <app-icon-avatar-default></app-icon-avatar-default>
+          <div class="flex flex-col gap-1">
+            <p>Dang Linh</p>
+            <app-star-list></app-star-list>
+            <p class="text-xs text-lightGray">2023-01-11 18:50 | Variation: Xám Nhạt,XL</p>
+            <p>Bố mình mặc rất vừa . Shop tv size chuẩn . Vải còn đẹp nữa . LikeeeeeeBố mình mặc rất vừa </p>
+            <div class="flex flex-wrap gap-3">
+              <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+              <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+              <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="flex items-start border-b mb-7 pb-7 gap-x-5">
-        <app-icon-avatar-default></app-icon-avatar-default>
-        <div class="flex flex-col gap-1">
-          <p>Dang Linh</p>
-          <app-star-list></app-star-list>
-          <p>2023-01-11 18:50 | Variation: Xám Nhạt,XL</p>
-          <p>Bố mình mặc rất vừa . Shop tv size chuẩn . Vải còn đẹp nữa . LikeeeeeeBố mình mặc rất vừa </p>
-          <div class="flex flex-wrap gap-3">
-            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
-            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
-            <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+        <div class="flex items-start border-b mb-7 pb-7 gap-x-5">
+          <app-icon-avatar-default></app-icon-avatar-default>
+          <div class="flex flex-col gap-1">
+            <p>Dang Linh</p>
+            <app-star-list></app-star-list>
+            <p>2023-01-11 18:50 | Variation: Xám Nhạt,XL</p>
+            <p>Bố mình mặc rất vừa . Shop tv size chuẩn . Vải còn đẹp nữa . LikeeeeeeBố mình mặc rất vừa </p>
+            <div class="flex flex-wrap gap-3">
+              <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+              <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+              <img src="https://cf.shopee.vn/file/21a64463b0502f51971e4dfe0a98a291" alt="" class="w-[72px] h-[72px]">
+            </div>
           </div>
         </div>
       </div>

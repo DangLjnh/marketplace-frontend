@@ -11,6 +11,7 @@ import { IconModule } from 'src/app/shared/UI/icon/icon.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './feature/register/register.component';
 import { LoginPageComponent } from './feature/login-page/login-page.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [LoginPageComponent, RegisterComponent, AuthComponent],
   imports: [
@@ -22,6 +23,7 @@ import { LoginPageComponent } from './feature/login-page/login-page.component';
     ReactiveFormsModule,
     MatIconModule,
     IconModule,
+    MatTooltipModule,
   ],
 })
 export class AuthModule {}

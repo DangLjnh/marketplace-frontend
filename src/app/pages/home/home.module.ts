@@ -10,6 +10,7 @@ import { HomeDailyDiscoverComponent } from './feature/home-daily-discover/home-d
 import { HomePageComponent } from './feature/home-page/home-page.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { IconModule } from 'src/app/shared/UI/icon/icon.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { IconModule } from 'src/app/shared/UI/icon/icon.module';
     SharedModule,
     MatPaginatorModule,
     IconModule,
+    MatTooltipModule,
   ],
   exports: [HomeDailyDiscoverComponent],
 })

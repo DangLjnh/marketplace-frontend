@@ -5,7 +5,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, pluck } from 'rxjs';
 import { IProduct } from 'src/app/shared/model/interface';
 import SwiperCore, { Swiper, SwiperOptions, Virtual } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
@@ -44,7 +44,7 @@ export class SwiperListComponent implements AfterViewInit, OnInit {
       this.isStart = this.swiper.swiperRef.isBeginning;
     }
   }
-
+  constructor() {}
   ngOnInit(): void {}
   ngAfterViewInit(): void {
     if (this.swiper?.swiperRef.activeIndex !== undefined) {

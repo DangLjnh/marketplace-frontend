@@ -58,6 +58,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
     spaceBetween: 15,
     slidesPerGroup: 6, // Set number of slides to be grouped together
   };
+  outOfStock = false;
   handleInputChange(event: Event) {
     const input = event.target as HTMLInputElement;
     setTimeout(() => {
@@ -111,6 +112,14 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
         this.currentChooseOptions[1].idOption === priceOption.secondFilter.id
       ) {
         this.optionResult = priceOption;
+        if (
+          !this?.optionResult?.quantity_stock ||
+          this?.optionResult?.quantity_stock == 0
+        ) {
+          this.outOfStock = true;
+        } else {
+          this.outOfStock = false;
+        }
       }
       if (
         this.currentChooseOptions.length === 1 &&
@@ -118,6 +127,14 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
         priceOption.secondFilter === null
       ) {
         this.optionResult = priceOption;
+        if (
+          !this?.optionResult?.quantity_stock ||
+          this?.optionResult?.quantity_stock == 0
+        ) {
+          this.outOfStock = true;
+        } else {
+          this.outOfStock = false;
+        }
       }
       if (option.name_filter === priceOption.firstFilter.name_filter) {
         this.listFilterAfterChoose.push(priceOption.secondFilter);
@@ -203,10 +220,6 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
       cartID: this.cartDefault.id,
     };
     this.cartService.createCartItem(rawCartData).subscribe((data) => {
-      console.log(
-        '🚀 ~ file: product-detail-page.component.ts:206 ~ ProductDetailPageComponent ~ this.cartService.createCartItem ~ data:',
-        data
-      );
       if (+data.EC === 1 || +data.EC === -1) {
         this.toastrService.error(data.EM);
       }
@@ -295,7 +308,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
           .readAllProductByCategoryFilter(data.DT.categoryFilterID)
           .pipe(
             map((product) => product.DT),
-            filter((product) =>
+            map((product) =>
               product.filter((item: IProduct) => item.id !== Number(productID))
             )
           );
@@ -306,7 +319,12 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
             offset: 0,
             limit: 10,
           })
-          .pipe(map((data) => data.DT.data));
+          .pipe(
+            map((data) => data.DT.data),
+            map((product) =>
+              product.filter((item: IProduct) => item.id !== Number(productID))
+            )
+          );
 
         if (data.DT.Product_Price_Options.length > 0) {
           this.notChooseOption = true;

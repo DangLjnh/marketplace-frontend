@@ -28,23 +28,13 @@ export class LoginPageComponent implements OnInit {
   });
 
   submitForm() {
-    const formErrors = this.getFormErrors(this.loginForm);
-    if (formErrors.length > 0) {
-      for (let i = 0; i < formErrors.length; i++) {
-        const item: any = formErrors[i];
-        this.toastrService.error(item.error);
-        if (item) {
-          break;
-        }
-      }
-    } else {
-      this.loading = true;
-      const rawUserDataLogin = {
-        username: this.loginForm.value['username'],
-        password: this.loginForm.value['password'],
-      };
-      this.authService.loginUser(rawUserDataLogin).subscribe({
-        next: (data: any) => {
+    const rawUserDataLogin = {
+      username: this.loginForm.value['username'],
+      password: this.loginForm.value['password'],
+    };
+    this.authService.loginUser(rawUserDataLogin).subscribe({
+      next: (data: any) => {
+        if (rawUserDataLogin.username === 'admin') {
           localStorage.setItem('access_token', data.access_token);
           localStorage.setItem('refresh_token', data.refresh_token);
           this.authService.accountUser().subscribe((data: any) => {
@@ -56,16 +46,55 @@ export class LoginPageComponent implements OnInit {
             if (data.EC === errorCode.SUCCESS) {
               this.loading = false;
               this.authService.dataUser = data.DT;
-              this.router.navigate(['home']);
+              this.router.navigate(['admin/portal/user']);
             }
           });
-        },
-        error: (err) => {
-          this.loading = false;
-          this.toastrService.error(err.error);
-        },
-      });
-    }
+        } else {
+          const formErrors = this.getFormErrors(this.loginForm);
+          if (formErrors.length > 0) {
+            for (let i = 0; i < formErrors.length; i++) {
+              const item: any = formErrors[i];
+              this.toastrService.error(item.error);
+              if (item) {
+                break;
+              }
+            }
+          } else {
+            this.loading = true;
+            const rawUserDataLogin = {
+              username: this.loginForm.value['username'],
+              password: this.loginForm.value['password'],
+            };
+            this.authService.loginUser(rawUserDataLogin).subscribe({
+              next: (data: any) => {
+                localStorage.setItem('access_token', data.access_token);
+                localStorage.setItem('refresh_token', data.refresh_token);
+                this.authService.accountUser().subscribe((data: any) => {
+                  this.loading = false;
+                  if (data.EC === errorCode.ERROR_PARAMS) {
+                    this.toastrService.error(data.EM);
+                    return;
+                  }
+                  if (data.EC === errorCode.SUCCESS) {
+                    this.loading = false;
+                    this.authService.dataUser = data.DT;
+                    this.router.navigate(['home']);
+                  }
+                });
+              },
+              error: (err) => {
+                this.loading = false;
+                this.toastrService.error(err.error);
+              },
+            });
+          }
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+        this.toastrService.error(err.error);
+      },
+    });
   }
   getFormErrors(formGroup: FormGroup): string[] {
     const errors: any[] = [];

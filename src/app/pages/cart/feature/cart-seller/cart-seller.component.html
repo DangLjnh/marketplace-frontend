@@ -9,9 +9,9 @@
   <div class="flex flex-col gap-7">
     <div *ngFor="let cart of cartItems">
       <div>
-        <button *ngIf="cart.statusID === 0" class="mb-2 text-white bg-gray-500 px-2 py-1 rounded-full text-[10px]">Hết
+        <button *ngIf="cart.statusID === 1" class="mb-2 text-white bg-gray-500 px-2 py-1 rounded-full text-[10px]">Hết
           hàng</button>
-        <div [class]="cart.statusID === 0 ? 'opacity-50 cursor-not-allowed pointer-events-none':''">
+        <div [class]="cart.statusID === 1 ? 'opacity-50 cursor-not-allowed pointer-events-none':''">
           <ng-container *ngIf="cart.User">
             <h2 class="mb-3">Được thêm vào giỏ hàng bởi <span
                 class="font-medium text-hotRed">{{cart.User.User_Detail.full_name ||

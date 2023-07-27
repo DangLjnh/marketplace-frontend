@@ -14,7 +14,7 @@ export class CustomerSidebarComponent implements OnInit {
   currentRoute: string = '';
   accountNav = [
     {
-      name: 'Tài khoản',
+      name: 'Thông tin tài khoản',
       url: '/customer/account/edit',
       icon: 'account',
     },

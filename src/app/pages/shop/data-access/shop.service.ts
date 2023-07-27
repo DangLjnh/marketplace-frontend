@@ -26,5 +26,10 @@ export class ShopService {
       `${environment.backendUrl}/category-filter/shop?shopID=${rawData.shopID}&categoryFilterID=${rawData.categoryFilterID}`
     );
   }
+  readAllShopByCategory(categoryID: number): Observable<IResponse> {
+    return this.http.get<IResponse>(
+      `${environment.backendUrl}/shop/read-all-category?categoryID=${categoryID}`
+    );
+  }
   constructor(private http: HttpClient) {}
 }

@@ -4,7 +4,7 @@
       <div class="absolute flex items-center p-2 translate-y-1/2 bg-white left-2 bottom-full gap-x-1">
         <img class="w-6 h-6" src="https://salt.tikicdn.com/ts/upload/ad/b7/93/7094a85d0b6d299f30ed89b03511deb9.png"
           alt="">
-        <p class="text-lightGreen">Package 1: Delivery on Saturday, 22/04</p>
+        <p class="text-lightGreen">Gói {{idx +1}}</p>
       </div>
       <div class="flex items-center justify-between">
         <div class="max-w-xl">
@@ -36,7 +36,7 @@
                     <div class="flex flex-col flex-1 gap-1 ml-3">
                       <p class="line-clamp-1 text-darkGray">{{cart.Product.Product_Detail.name}}
                       <div class="flex items-center justify-between gap-x-5">
-                        <span class="text-darkGray">Quantity: x{{cart.quantity}}</span>
+                        <span class="text-darkGray">Số lượng: x{{cart.quantity}}</span>
                         <span class="font-medium">{{cart.Product.Product_Detail.price_discount ??
                           cart.Product.Product_Detail.price_original.toLocaleString('en-US')}} ₫</span>
                       </div>
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="px-4 py-2 rounded-lg text-md bg-whiteGray text-darkGray">
-          Order Total ({{carts?.length}} Item): <span
+          Tổng đơn ({{carts?.length}} sản phẩm): <span
             class="text-lg font-medium text-hotRed">{{updateTotalPrice(idx).toLocaleString('en-US')}} ₫</span>
         </div>
       </div>

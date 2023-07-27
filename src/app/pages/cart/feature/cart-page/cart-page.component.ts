@@ -108,21 +108,39 @@ export class CartPageComponent implements OnInit, OnDestroy {
   handleInputChange(event: Event) {
     const input = event.target as HTMLInputElement;
     setTimeout(() => {
-      const rawData = {
-        id: this.productItem.id,
-        quantity: input.value,
-      };
-      this.cartService
-        .updateQuantityCartItem(rawData)
-        .subscribe((dataUpdateCart) => {
-          if (+dataUpdateCart.EC === 1) {
-            this.toastService.error(dataUpdateCart.EM);
-            input.value = this.productItem.Product.Stock.quantity;
-          }
-          if (+dataUpdateCart.EC === 0) {
-            this.handleUpdateCart(this.dataUser.id);
-          }
-        });
+      if (this.productItem.Product_Price_Option) {
+        const rawData = {
+          id: this.productItem.id,
+          quantity: input.value,
+        };
+        this.cartService
+          .updateQuantityCartItemOption(rawData)
+          .subscribe((dataUpdateCart) => {
+            if (+dataUpdateCart.EC === 1) {
+              this.toastService.error(dataUpdateCart.EM);
+              input.value = this.productItem.Product.Stock.quantity;
+            }
+            if (+dataUpdateCart.EC === 0) {
+              this.handleUpdateCart(this.dataUser.id);
+            }
+          });
+      } else {
+        const rawData = {
+          id: this.productItem.id,
+          quantity: input.value,
+        };
+        this.cartService
+          .updateQuantityCartItem(rawData)
+          .subscribe((dataUpdateCart) => {
+            if (+dataUpdateCart.EC === 1) {
+              this.toastService.error(dataUpdateCart.EM);
+              input.value = this.productItem.Product.Stock.quantity;
+            }
+            if (+dataUpdateCart.EC === 0) {
+              this.handleUpdateCart(this.dataUser.id);
+            }
+          });
+      }
     }, 1);
   }
   handleUpdateCart(userID: number) {
