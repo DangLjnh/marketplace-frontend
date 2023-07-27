@@ -14,6 +14,7 @@ import { toBase64 } from 'src/app/shared/utils/function';
 import { SellerService } from '../../../data-access/seller.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
+import { errorCode } from 'src/app/shared/model/model';
 
 @Component({
   selector: 'app-seller-portal-form',
@@ -59,10 +60,21 @@ export class SellerPortalFormComponent implements OnInit {
         if (+data.EC === 1 || +data.EC === -1) {
           this.toastrService.error(data.EM);
         } else {
-          this.authService.dataUser$.subscribe((data: IUser) => {
+          this.authService.accountUser().subscribe((dataUser: any) => {
             this.loading = false;
-            this.dataUser = data;
-            window.location.href = `${environment.frontendUrl}/seller`;
+            if (
+              +data.EC === errorCode.ERROR_PARAMS ||
+              +data.EC === errorCode.ERROR_SERVER
+            ) {
+              this.toastrService.error(data.EM);
+              return;
+            }
+            if (+data.EC === errorCode.SUCCESS) {
+              this.authService.dataUser = dataUser.DT;
+              this.dataUser = dataUser.DT;
+              this.router.navigate(['/seller']);
+              this.toastrService.success(data.EM);
+            }
           });
         }
       });
@@ -108,9 +120,9 @@ export class SellerPortalFormComponent implements OnInit {
   }
   shopForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(30)]],
-    email: [{ value: '', disabled: true }, Validators.required],
+    email: ['', Validators.required],
     phone: [
-      { value: '', disabled: true },
+      '',
       Validators.compose([
         Validators.required,
         Validators.minLength(10),
