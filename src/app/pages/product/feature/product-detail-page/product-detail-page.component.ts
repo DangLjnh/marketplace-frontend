@@ -227,7 +227,7 @@ export class ProductDetailPageComponent implements AfterViewInit, OnInit {
         const rawCartData = {
           Product: this.dataProduct,
           Product_Price_Option: this.optionResult ?? null,
-          Shop: this.dataUser.Shop,
+          Shop: this.dataProduct.Shop.id,
           quantity: this.valueCounter,
           checked: true,
           id: data.DT,
