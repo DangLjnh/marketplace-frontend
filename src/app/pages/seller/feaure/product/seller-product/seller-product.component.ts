@@ -260,6 +260,8 @@ export class SellerProductComponent implements OnInit, AfterViewInit {
           }
           if (+data.EC === 0) {
             this.router.navigate(['/seller/portal/product/list']);
+            this.categoryService.categoryFilter = 0;
+            this.resultType = [];
             this.toastrService.success(data.EM);
           }
         });
@@ -289,6 +291,8 @@ export class SellerProductComponent implements OnInit, AfterViewInit {
           }
           if (+data.EC === 0) {
             this.toastrService.success(data.EM);
+            this.categoryService.categoryFilter = 0;
+            this.resultType = [];
             this.router.navigate(['/seller/portal/product/list']);
           }
         });

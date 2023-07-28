@@ -1,6 +1,7 @@
 import { map, Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { GroupRoleService } from '../../data-access/group-role/group-role.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-group-role',
@@ -13,7 +14,10 @@ export class AdminGroupRoleComponent implements OnInit {
     const date = new Date(time);
     return date.toLocaleString('en-GB');
   }
-  constructor(private groupRoleService: GroupRoleService) {}
+  constructor(
+    private groupRoleService: GroupRoleService,
+    private toastService: ToastrService
+  ) {}
   ngOnInit(): void {
     this.listGroup$ = this.groupRoleService
       .readAllGroup()
