@@ -7,7 +7,7 @@
       <p>Kết quả tìm kiếm cho từ khóa '<span class="text-primary">{{keyword}}</span>'</p>
     </div>
   </div>
-  <div class="grid grid-cols-6 gap-3">
+  <div class="grid grid-cols-6 gap-3 ">
     <ng-container *ngFor="let product of listProduct">
       <app-product-item [productItem]="product" class="cursor-pointer"></app-product-item>
     </ng-container>

@@ -41,7 +41,8 @@
               <p class="line-clamp-2">{{orderDetail.Product.Product_Detail.name}}
               </p>
               <ng-container *ngIf="orderDetail?.Product_Price_Option">
-                <span class="text-lightGray">Option: {{orderDetail.Product_Price_Option?.firstFilter?.name_filter}}
+                <span class="text-lightGray">Nhóm phân loại:
+                  {{orderDetail.Product_Price_Option?.firstFilter?.name_filter}}
                   {{orderDetail.Product_Price_Option?.secondFilter ?
                   ", " + orderDetail.Product_Price_Option?.secondFilter?.name_filter:""}}</span>
               </ng-container>
@@ -82,7 +83,7 @@
       <div class="flex flex-col items-end">
         <div class="flex items-center gap-x-2">
           <app-icon-guard></app-icon-guard>
-          <p class="text-lg">Order total: <span
+          <p class="text-lg">Tổng đơn hàng: <span
               class="ml-2 text-2xl text-hotRed">{{order.total_price.toLocaleString('en-US')}} ₫</span></p>
         </div>
       </div>

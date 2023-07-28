@@ -19,6 +19,15 @@ export class ProductService {
     limit: number;
   }): Observable<IResponse> {
     return this.http.get<IResponse>(
+      `${environment.backendUrl}/product/read-all-no-status?offset=${paginate.offset}&limit=${paginate.limit}`
+    );
+  }
+
+  readAllProductActive(paginate: {
+    offset: number;
+    limit: number;
+  }): Observable<IResponse> {
+    return this.http.get<IResponse>(
       `${environment.backendUrl}/product/read-all?offset=${paginate.offset}&limit=${paginate.limit}`
     );
   }

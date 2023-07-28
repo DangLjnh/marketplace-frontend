@@ -18,6 +18,14 @@ export class HomeDailyDiscoverComponent implements OnInit, AfterViewInit {
   showFirstLastButtons = true;
   pageEvent!: PageEvent;
 
+  shuffleArray(array: []) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
@@ -28,9 +36,9 @@ export class HomeDailyDiscoverComponent implements OnInit, AfterViewInit {
       limit: e.pageSize,
     };
 
-    this.productService.readAllProduct(page).subscribe((data) => {
+    this.productService.readAllProductActive(page).subscribe((data) => {
       this.length = data.DT.totalItems;
-      this.listProduct = data.DT.data;
+      this.listProduct = this.shuffleArray(data.DT.data);
     });
   }
 
@@ -43,9 +51,9 @@ export class HomeDailyDiscoverComponent implements OnInit, AfterViewInit {
   }
   ngOnInit(): void {
     const page = { offset: 0, limit: 20 };
-    this.productService.readAllProduct(page).subscribe((data) => {
+    this.productService.readAllProductActive(page).subscribe((data) => {
       this.length = data.DT.totalItems;
-      this.listProduct = data.DT.data;
+      this.listProduct = this.shuffleArray(data.DT.data);
     });
   }
 }

@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-5 -mt-5">
-  <div class="container grid grid-cols-[450px,auto] mt-5 bg-white rounded gap-x-10">
+  <div class="container wrapper-product grid grid-cols-[450px,auto] mt-5 bg-white rounded gap-x-10">
     <div class="max-w-[450px]">
       <div class="p-3">
         <div class="w-[450px]">
@@ -158,7 +158,7 @@
 
   </div>
 
-  <div class="container bg-white rounded">
+  <div class="container bg-white rounded wrapper-product">
 
     <div *ngIf="dataProduct?.Shop" class="flex items-center p-3">
       <div class="flex items-start gap-x-5 max-w-[27.5rem] min-w-[250px] pr-5 mr-5 border-r">
@@ -203,7 +203,7 @@
 
   </div>
 
-  <div class="container bg-white rounded">
+  <div class="container bg-white rounded wrapper-product">
     <div class="flex flex-col gap-5 p-3">
       <div class="p-3 bg-gray-100 rounded opacity-70">
         <p class="text-lg font-medium tracking-wide uppercase">Chi tiết sản phẩm</p>
@@ -255,7 +255,7 @@
   </div>
 
   <div class="opacity-70 cursor-not-allowed" matTooltip="Đang phát triển">
-    <div class="container pointer-events-none bg-white rounded">
+    <div class="container wrapper-product pointer-events-none bg-white rounded">
       <div class="flex flex-col gap-5 p-3">
         <p class="text-xl">Product Ratings</p>
         <div class="flex items-center gap-7 p-5 border border-yellow-100 bg-[#fffbf8]">
@@ -300,14 +300,14 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="container wrapper-product">
     <p class="my-5 text-xl text-darkGray uppercase">Các sản phẩm khác của shop</p>
     <app-swiper-list [listProduct$]="listProductSameShop$"></app-swiper-list>
   </div>
 
-  <div class="container">
+  <div class="container wrapper-product">
     <p class="my-5 text-xl text-darkGray uppercase">Có thể bạn sẽ thích</p>
-    <div class="grid grid-cols-6 gap-5">
+    <div class="grid grid-cols-6 gap-5 ">
       <ng-container *ngFor="let product of listProductSameCategoryFilter$ | async">
         <app-product-item (click)="scrollTop()" [productItem]="product"></app-product-item>
       </ng-container>

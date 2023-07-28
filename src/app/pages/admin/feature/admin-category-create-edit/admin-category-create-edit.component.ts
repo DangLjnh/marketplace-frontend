@@ -126,12 +126,20 @@ export class AdminCategoryCreateEditComponent implements OnInit {
       )
       .subscribe((data) => {
         if (data) {
+          console.log(
+            '🚀 ~ file: admin-category-create-edit.component.ts:129 ~ AdminCategoryCreateEditComponent ~ .subscribe ~ data:',
+            data
+          );
           this.categoryForm.patchValue({
             name_category: data?.name_category,
           });
           this.dataCategory = data;
           if (data?.Category_Filters?.length > 0)
             this.categoryFilterOption = data?.Category_Filters;
+          console.log(
+            '🚀 ~ file: admin-category-create-edit.component.ts:135 ~ AdminCategoryCreateEditComponent ~ .subscribe ~ this.categoryFilterOption:',
+            this.categoryFilterOption
+          );
         }
       });
   }
