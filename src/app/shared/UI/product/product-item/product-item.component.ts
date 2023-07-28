@@ -8,13 +8,24 @@ import { IProduct, IProductPriceOption } from 'src/app/shared/model/interface';
 })
 export class ProductItemComponent {
   @Input() productItem!: IProduct;
+  getDiscountHigh(listProductOption: IProductPriceOption[]) {
+    let discountHigh = 0;
+    listProductOption.forEach((item) => {
+      const itemDiscount = item?.Discount_Percent?.percent
+        ? item?.Discount_Percent?.percent
+        : 0;
+      if (+itemDiscount > discountHigh) {
+        discountHigh = +itemDiscount; // Update discountHigh only if the current item's price is lower
+      }
+    });
+    return discountHigh;
+  }
   getLowPrice(listProductOption: IProductPriceOption[]) {
-    let priceLow = 0;
-    listProductOption.forEach((item, index) => {
-      if (index == 0) {
-        priceLow = item.price_discount ? item.price_discount : item.price;
-      } else {
-        priceLow = item.price_discount ? item.price_discount : item.price;
+    let priceLow = Infinity;
+    listProductOption.forEach((item) => {
+      const itemPrice = item.price_discount ? item.price_discount : item.price;
+      if (itemPrice < priceLow) {
+        priceLow = itemPrice; // Update priceLow only if the current item's price is lower
       }
     });
     return priceLow;

@@ -189,6 +189,7 @@ export interface IProductPriceOption {
   productSecondFilterID: number;
   quantity_stock: number;
   secondFilter: TProductFilter;
+  Discount_Percent: IDiscountPercent;
 }
 
 export type TProductFilter = {
@@ -216,13 +217,14 @@ export interface IProduct {
   Discount_Percent: IDiscountPercent;
   Category_Filter: ICategoryFilter;
   Product_Price_Options: IProductPriceOption[];
+  Product_Price_Option: IProductPriceOption[];
   Product_Types: IProductType[];
   revenue: number;
 }
 
 export interface IDiscountPercent {
   id?: number;
-  percent: string | null | undefined;
+  percent: string | null | undefined | number;
   date_start?: Date | null | undefined;
   date_end?: Date | null | undefined;
   list_product: number[] | null | undefined;

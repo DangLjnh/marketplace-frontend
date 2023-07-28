@@ -110,7 +110,7 @@
             </th>
             <th scope="col" class="px-6 py-5 w-[180px]">
               <div class="flex items-center text-xs gap-x-3">
-                <a class="px-4 py-2 bg-red-100 rounded cursor-pointer">Xóa</a>
+                <a class="px-4 py-2 bg-red-100 rounded cursor-pointer" (click)="handleDelete(product.id)">Xóa</a>
                 <a [routerLink]="'/seller/portal/product/'+product.id" class="px-4 py-2 bg-yellow-100 rounded">Sửa</a>
               </div>
             </th>

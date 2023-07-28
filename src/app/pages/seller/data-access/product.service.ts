@@ -87,5 +87,12 @@ export class ProductService {
       `${environment.backendUrl}/product/read-count-status?shopID=${rawProductData.shopID}&statusID=${rawProductData.statusID}`
     );
   }
+
+  updateStatusProduct(rawProductData: { productID: number; statusID: number }) {
+    return this.http.post<IResponse>(
+      `${environment.backendUrl}/product/update-status`,
+      rawProductData
+    );
+  }
   constructor(private http: HttpClient) {}
 }

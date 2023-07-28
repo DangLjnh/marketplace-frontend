@@ -1,10 +1,10 @@
 <div class="bg-white rounded">
   <div class="flex items-center justify-between p-4">
     <ng-container *ngIf="categoryList; else noProduct">
-      <span class="text-lg font-bold">{{categoryList.length || 0}} Sản Phẩm</span>
+      <span class="text-lg font-bold">{{categoryList.length || 0}} danh mục</span>
     </ng-container>
     <ng-template #noProduct>
-      <span class="text-lg font-bold">0 Sản Phẩm</span>
+      <span class="text-lg font-bold">0 danh mục</span>
     </ng-template>
     <app-button [routerLink]="'/seller/portal/product/list'">
       <div class="flex items-center gap-x-3">

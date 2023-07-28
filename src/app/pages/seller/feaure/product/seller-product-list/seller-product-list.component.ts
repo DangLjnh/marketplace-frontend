@@ -80,6 +80,30 @@ export class SellerProductListComponent implements OnInit, AfterViewChecked {
     return this.productRevenues[cacheKey];
   }
 
+  handleDelete(productID: number) {
+    this.productService
+      .updateStatusProduct({
+        productID: productID,
+        statusID: statusProduct.DELETE,
+      })
+      .subscribe((data) => {
+        if (+data.EC === 0) {
+          this.handleChooseOption('Tất cả');
+          this.productService
+            .readAllProductOfShop({
+              shopID: this.dataUser?.Shop?.id,
+              offset: 0,
+              limit: 20,
+            })
+            .subscribe((data) => {
+              this.toastrService.success('Xóa thành công!');
+              this.length = data.DT.totalItems;
+              this.productList = data.DT.data;
+            });
+        }
+      });
+  }
+
   handlePageWithOption(offset: number, limit: number, current: string) {
     if (current === 'Tất cả') {
       this.productService
@@ -184,10 +208,6 @@ export class SellerProductListComponent implements OnInit, AfterViewChecked {
             .subscribe((data) => {
               this.length = data.DT.totalItems;
               this.productList = data.DT.data;
-              console.log(
-                '🚀 ~ file: seller-product-list.component.ts:187 ~ SellerProductListComponent ~ .subscribe ~ this.productList:',
-                this.productList
-              );
             });
         }
       });

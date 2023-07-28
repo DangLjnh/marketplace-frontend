@@ -8,9 +8,16 @@
       </p>
     </div>
     <div class="my-2">
-      <ng-container *ngIf="productItem.Discount_Percent">
+      <ng-container *ngIf="productItem?.Discount_Percent?.percent; else discountOption">
         <app-icon-discount [percent]="productItem.Discount_Percent.percent+'%'"></app-icon-discount>
       </ng-container>
+      <ng-template #discountOption>
+        <ng-container *ngIf="productItem.Product_Price_Options.length > 0">
+          <ng-container *ngIf="getDiscountHigh(productItem.Product_Price_Options)!==0">
+            <app-icon-discount [percent]="getDiscountHigh(productItem.Product_Price_Options)+'%'"></app-icon-discount>
+          </ng-container>
+        </ng-container>
+      </ng-template>
     </div>
     <div class="flex items-center justify-between mt-auto">
       <ng-container *ngIf="productItem.Product_Price_Options.length > 0; else noOption">
