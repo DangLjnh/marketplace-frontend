@@ -33,7 +33,7 @@ export class AdminUpdateUserModalComponent implements OnInit {
         this.toastService.success(data.EM);
         this.dialogRef.close();
         this.userService
-          .readAllUser({ offset: 0, limit: 20 })
+          .readAllUser({ offset: 0, limit: 24 })
           .subscribe((data) => {
             this.userService.listUser = data.DT;
           });

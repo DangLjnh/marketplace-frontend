@@ -18,7 +18,7 @@ export class BillPageComponent implements OnInit {
   length: number = 0;
   pageSize: number = 0;
   pageIndex = 0;
-  pageSizeOptions = [20, 30, 40];
+  pageSizeOptions = [24, 48];
   showFirstLastButtons = true;
   pageEvent!: PageEvent;
 
@@ -60,7 +60,7 @@ export class BillPageComponent implements OnInit {
         const rawData = {
           shopID: data?.Shop?.id,
           offset: 0,
-          limit: 20,
+          limit: 24,
         };
         this.billService.readAllBill(rawData).subscribe((data) => {
           this.length = data.DT.totalItems;

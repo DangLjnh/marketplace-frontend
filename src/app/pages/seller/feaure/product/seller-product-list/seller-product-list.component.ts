@@ -22,7 +22,7 @@ export class SellerProductListComponent implements OnInit, AfterViewChecked {
   length: number = 0;
   pageSize: number = 0;
   pageIndex = 0;
-  pageSizeOptions = [20, 30, 40];
+  pageSizeOptions = [24, 48];
   showFirstLastButtons = true;
   pageEvent!: PageEvent;
   calculatedRevenue: number[] = [];
@@ -93,7 +93,7 @@ export class SellerProductListComponent implements OnInit, AfterViewChecked {
             .readAllProductOfShop({
               shopID: this.dataUser?.Shop?.id,
               offset: 0,
-              limit: 20,
+              limit: 24,
             })
             .subscribe((data) => {
               this.toastrService.success('Xóa thành công!');
@@ -166,7 +166,7 @@ export class SellerProductListComponent implements OnInit, AfterViewChecked {
       }
     });
     this.currentOption = current;
-    this.handlePageWithOption(0, 20, current);
+    this.handlePageWithOption(0, 24, current);
     this.pageIndex = 0;
   }
 
@@ -191,7 +191,7 @@ export class SellerProductListComponent implements OnInit, AfterViewChecked {
               shopID: data?.Shop?.id,
               statusID: statusProduct.PENDING,
               offset: 0,
-              limit: 20,
+              limit: 24,
             })
             .subscribe((data) => {
               this.length = data.DT.totalItems;
@@ -203,7 +203,7 @@ export class SellerProductListComponent implements OnInit, AfterViewChecked {
             .readAllProductOfShop({
               shopID: data?.Shop?.id,
               offset: 0,
-              limit: 20,
+              limit: 24,
             })
             .subscribe((data) => {
               this.length = data.DT.totalItems;

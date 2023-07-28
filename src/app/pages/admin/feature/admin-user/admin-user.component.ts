@@ -30,7 +30,7 @@ export class AdminUserComponent implements OnInit {
         this.toastService.success(data.EM);
         const rawData = {
           offset: 0,
-          limit: 20,
+          limit: 24,
         };
         this.userService.readAllUser(rawData).subscribe((data) => {
           this.listUser = data.DT;
@@ -48,7 +48,7 @@ export class AdminUserComponent implements OnInit {
   ngOnInit(): void {
     const rawData = {
       offset: 0,
-      limit: 20,
+      limit: 24,
     };
     this.userService.listUser$.subscribe((data) => {
       if (data.length > 0) {

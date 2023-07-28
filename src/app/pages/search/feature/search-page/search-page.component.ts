@@ -17,7 +17,7 @@ export class SearchPageComponent {
   length: number = 0;
   pageSize: number = 0;
   pageIndex = 0;
-  pageSizeOptions = [20, 30, 40];
+  pageSizeOptions = [24, 48];
   showFirstLastButtons = true;
   pageEvent!: PageEvent;
 
@@ -49,7 +49,7 @@ export class SearchPageComponent {
     }
   }
   ngOnInit(): void {
-    const page = { offset: 0, limit: 20 };
+    const page = { offset: 0, limit: 24 };
     // this.productService.readAllProduct(page).subscribe((data) => {
     //   this.length = data.DT.totalItems;
     //   this.listProduct = data.DT.data;
